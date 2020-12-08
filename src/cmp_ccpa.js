@@ -2,18 +2,10 @@ var synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
 const pageLoadBlueprint = async function () {
-
-    // INSERT URL here
     const URL = "https://www.theguardian.com/us";
 
     let page = await synthetics.getPage();
 
-    //clear cookies
-    //const client = await page.target().createCDPSession();
-    //await client.send('Network.clearBrowserCookies');
-
-    //You can customize the wait condition here. For instance,
-    //using 'networkidle2' may be less restrictive.
     const response = await page.goto(URL, {waitUntil: 'domcontentloaded', timeout: 30000});
     if (!response) {
         throw "Failed to load page!";
@@ -33,7 +25,7 @@ const pageLoadBlueprint = async function () {
     await page.waitForSelector('[id*="sp_message_container"]');
     log.info('CMP loaded');
 
-    //click Do not sell my information
+    // click Do not sell my information
     const frame = page.frames().find(f => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
     await frame.click('button[title="Do not sell my personal information"]');
 
