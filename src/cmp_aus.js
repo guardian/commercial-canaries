@@ -1,4 +1,4 @@
-var synthetics = require('Synthetics');
+const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
 const pageLoadBlueprint = async function () {
