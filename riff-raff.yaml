@@ -1,0 +1,16 @@
+regions:
+  - eu-west-1
+stacks:
+  - commercial
+deployments:
+  builds-s3-files:
+    type: aws-s3
+    parameters:
+      cacheControl: max-age=10
+      publicReadAcl: false
+      prefixPackage: false
+      bucket: aws-canaries
+      prefixStage: false
+      prefixStack: false
+  second-deployment:
+    type: not-s3
