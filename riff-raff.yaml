@@ -3,7 +3,7 @@ regions:
 stacks:
   - commercial
 deployments:
-  builds:
+  builds-s3-files:
     type: aws-s3
     parameters:
       cacheControl: max-age=10
