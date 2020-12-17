@@ -3,13 +3,13 @@ regions:
 stacks:
   - commercial
 deployments:
-  builds-s3-files:
+  builds:
     type: aws-s3
     parameters:
       cacheControl: max-age=10
       publicReadAcl: false
       prefixPackage: false
-      bucket: aws-canaries
+      bucket: aws-commercial-canaries
       prefixStage: false
       prefixStack: false
   second-deployment:
