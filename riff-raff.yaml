@@ -12,3 +12,7 @@ deployments:
       bucket: aws-commercial-canaries
       prefixStage: false
       prefixStack: false
+  builds:
+    type: cloud-formation
+    parameters:
+      templatePath: cmp_tcfv2.yaml
