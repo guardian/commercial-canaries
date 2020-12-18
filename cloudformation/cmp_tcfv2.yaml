@@ -19,7 +19,4 @@ Resources:
         TimeoutInSeconds: 60
       FailureRetentionPeriod: 30
       SuccessRetentionPeriod: 30
-      Tags:
-        - Key: key00AtCreate
-          Value: value001AtCreate
       StartCanaryAfterCreation: true
