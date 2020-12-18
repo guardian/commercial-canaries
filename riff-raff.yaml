@@ -1,7 +1,7 @@
 regions:
   - eu-west-1
 stacks:
-  - commercial
+  - frontend
 deployments:
   builds-s3-files:
     type: aws-s3
