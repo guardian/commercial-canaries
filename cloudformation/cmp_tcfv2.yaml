@@ -2,7 +2,7 @@ Resources:
   SyntheticsCanary:
     Type: 'AWS::Synthetics::Canary'
     Properties:
-      Name: samplecanary
+      Name: commercial-canary
       ExecutionRoleArn: >-
         arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-test-team-city-943-efdbad9be37d
       Code:
@@ -10,7 +10,7 @@ Resources:
         S3Bucket: aws-commercial-canaries
         S3Key: commercial-cmp-tcfv.zip
       ArtifactS3Location: >-
-        s3://cw-syn-results-642631414762-eu-west-1/canary/test-team-city-943-efdbad9be37d/
+        s3://aws-commercial-canaries/logs/
       RuntimeVersion: syn-nodejs-2.2
       Schedule:
         Expression: rate(0 minute)
