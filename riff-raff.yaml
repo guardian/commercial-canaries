@@ -12,5 +12,3 @@ deployments:
       bucket: aws-commercial-canaries
       prefixStage: false
       prefixStack: false
-  second-deployment:
-    type: not-s3
