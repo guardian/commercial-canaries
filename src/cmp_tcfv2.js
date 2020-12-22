@@ -31,6 +31,7 @@ const checkPage = async function (URL) {
     await page.waitFor(500);
     await frame.click('button[title="Yes, I’m happy"]')
 
+
     //ads are loaded
     await page.waitForSelector('.ad-slot--top-above-nav .ad-slot__content iframe');
 }
@@ -38,9 +39,6 @@ const checkPage = async function (URL) {
 const pageLoadBlueprint = async function () {
     // Check Front
     await checkPage("https://www.theguardian.com");
-
-    // Check Article
-    await checkPage("https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake");
 };
 
 exports.handler = async () => {
