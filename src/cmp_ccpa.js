@@ -1,12 +1,14 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
-const pageLoadBlueprint = async function () {
-
-    // INSERT URL here
-    const URL = "https://www.theguardian.com/us";
+const checkPage = async function (URL) {
+    log.info(`Checking Page URL ${URL}`);
 
     let page = await synthetics.getPage();
+
+    //clear cookies
+    const client = await page.target().createCDPSession();
+    await client.send('Network.clearBrowserCookies');
 
     const response = await page.goto(URL, {waitUntil: 'domcontentloaded', timeout: 30000});
     if (!response) {
@@ -28,7 +30,14 @@ const pageLoadBlueprint = async function () {
     //click Do not sell my information
     const frame = page.frames().find(f => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
     await frame.click('button[title="Do not sell my personal information"]');
+};
 
+const pageLoadBlueprint = async function () {
+    // Check Front
+    await checkPage("https://www.theguardian.com/us");
+
+    // Check Article
+    await checkPage("https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake");
 };
 
 exports.handler = async () => {
