@@ -1,12 +1,15 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
-const pageLoadBlueprint = async function () {
-
-    // INSERT URL here
-    const URL = "https://www.theguardian.com/uk";
+const checkPage = async function (URL) {
+    log.info(`Checking Page URL ${URL}`);
 
     let page = await synthetics.getPage();
+
+    //clear cookies
+    const client = await page.target().createCDPSession();
+    await client.send('Network.clearBrowserCookies');
+
 
     const response = await page.goto(URL, {waitUntil: 'domcontentloaded', timeout: 30000});
     if (!response) {
@@ -30,6 +33,14 @@ const pageLoadBlueprint = async function () {
 
     //ads are loaded
     await page.waitForSelector('.ad-slot--top-above-nav .ad-slot__content iframe');
+}
+
+const pageLoadBlueprint = async function () {
+    // Check Front
+    await checkPage("https://www.theguardian.com");
+
+    // Check Article
+    await checkPage("https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake");
 };
 
 exports.handler = async () => {
