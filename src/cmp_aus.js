@@ -22,7 +22,8 @@ const checkPage = async function (URL) {
     //await synthetics.takeScreenshot('loaded', 'loaded');
 
     //Ads loaded before interacting with CMP
-    await page.waitForSelector('.ad-slot--top-above-nav .ad-slot__content iframe');
+    // Uncomment when AUS house ads are fixed
+    //await page.waitForSelector('.ad-slot--top-above-nav .ad-slot__content iframe');
 
     //click OK
     const frame = page.frames().find(f => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
