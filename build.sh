@@ -10,7 +10,7 @@ zip -r commercial-cmp-tcfv.zip commercial-cmp-tcfv
 rm -rf commercial-cmp-tcfv
 echo "TCFV2 artifact created"
 
-echo "Creating CCPA artfact..."
+echo "Creating CCPA artifact..."
 mkdir "commercial-cmp-ccpa"
 mkdir commercial-cmp-ccpa/node_modules
 cp ../src/cmp_ccpa.js commercial-cmp-ccpa/node_modules/pageLoadBlueprint.js
