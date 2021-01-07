@@ -7,7 +7,7 @@ Resources:
         arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-test-team-city-943-efdbad9be37d
       Code:
         Handler: pageLoadBlueprint.handler
-        S3Bucket: aws-commercial-canaries
+        S3Bucket: canaries
         S3Key: nodejs.zip
       ArtifactS3Location: >-
         s3://cw-syn-results-642631414762-eu-west-1/canary/test-team-city-943-efdbad9be37d/
