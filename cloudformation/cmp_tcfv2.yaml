@@ -10,7 +10,7 @@ Resources:
         S3Bucket: aws-commercial-canaries
         S3Key: nodejs.zip
       ArtifactS3Location: >-
-        s3://aws-commercial-canaries/logs/
+        s3://cw-syn-results-642631414762-eu-west-1/canary/test-team-city-943-efdbad9be37d/
       RuntimeVersion: syn-nodejs-2.2
       Schedule:
         Expression: rate(0 minute)
