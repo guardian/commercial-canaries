@@ -28,7 +28,7 @@ const checkPage = async function (URL) {
     //click on Yes I'm happy
 
     const frame = page.frames().find(f => f.url().startsWith('https://sourcepoint.theguardian.com'));
-    await page.waitFor(500);
+    await page.waitFor(1000);
     await frame.click('button[title="Yes, I’m happy"]')
 
 
