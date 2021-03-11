@@ -27,7 +27,7 @@ const checkPage = async function (URL) {
 
     //click OK
     const frame = page.frames().find(f => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
-    await synthetics.takeScreenshot('CMP', 'Visible');
+    await page.waitFor(2000);
     await frame.click('button[title="Continue"]')
 };
 
