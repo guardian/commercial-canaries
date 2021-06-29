@@ -30,6 +30,22 @@ const checkPage = async function (URL) {
     //click Do not sell my information
     const frame = page.frames().find(f => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
     await frame.click('button[title="Do not sell my personal information"]');
+
+    // Reload page
+    const reloadResponse = await page.reload({
+      waitUntil: "domcontentloaded",
+      timeout: 30000,
+    });
+    if (!reloadResponse) {
+      throw "Failed to refresh page!";
+    }
+
+    // Check top-above-nav on page after clicking do not sell and then reloading
+    await page.waitForSelector(
+      ".ad-slot--top-above-nav .ad-slot__content iframe"
+    );
+
+    log.info("Ads on page after do-not-sell and reload");
 };
 
 const pageLoadBlueprint = async function () {
