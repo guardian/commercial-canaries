@@ -169,6 +169,11 @@
     eslint-plugin-import "2.23.4"
     eslint-plugin-prettier "3.4.0"
 
+"@guardian/prettier@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-0.6.0.tgz#b3dcbef0e2a9232d2afe04dff075426b2939f44e"
+  integrity sha512-RN8GBRth5BXHoWymCZIYDbmZM8DkUbgecf+wyv+9hdXA/ad4Ob4qP9u/ARU689qMo+JSC1z3FRKelvkkjtYzJw==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -1251,6 +1256,11 @@ prettier-linter-helpers@^1.0.0:
   integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
+
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 progress@^2.0.0:
   version "2.0.3"
