@@ -1,6 +1,5 @@
 # aws-canaries
 
-
 > Guardian AWS Synthetics Canaries
 
 ### Requirements
@@ -10,16 +9,18 @@
 
 ### Manual Update
 
-There are currently 3 canary tests running that check the CMP is loaded successfully and ads are 
-loaded at the right time in US, AUS and UK respectively.
+There are currently 4 canary tests running that check the CMP is loaded successfully and ads are loaded at the right time in US, Canada, AUS and UK respectively.
 
-File | AWS Region |  Canary configuration name | 
---- | --- | --- | 
-`src/cmp_tcfv2`  | eu-west-1  | commercial_cmp_tcfv2 | 
-`src/cmp_ccpa`  | us-west-1  | commercial_cmp_us |  
-`src/cmp_aus`  | ap-southeast-2  | commercial_cmp_aus |   
+Note that US and Canada canaries currently use the same source file but are deployed as two separate canaries in two different regions. Even though Canada also operates under CCPA we use another canary to monitor this region separately as it has different possible failure modes, as ads are controlled by a third party.
 
-Login to AWS frontend via Janus, and replace the code via the build in Script Editor
+| File            | AWS Region     | Canary configuration name |
+| --------------- | -------------- | ------------------------- |
+| `src/cmp_tcfv2` | eu-west-1      | commercial_cmp_tcfv2      |
+| `src/cmp_ccpa`  | us-west-1      | commercial_cmp_us         |
+| `src/cmp_ccpa`  | ca-central-1   | commercial_cmp_ca         |
+| `src/cmp_aus`   | ap-southeast-2 | commercial_cmp_aus        |
+
+Login to AWS frontend via Janus, and replace the code via the built in Script Editor
 
 ### Automatic Update
 
