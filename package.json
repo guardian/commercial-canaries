@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@aws-cdk/aws-synthetics": "^1.77.0",
-    "aws-sdk": "^2.811.0"
+    "aws-sdk": "^2.811.0",
+    "puppeteer": "^10.1.0"
   },
   "devDependencies": {
     "@guardian/eslint-config": "^0.6.0",
