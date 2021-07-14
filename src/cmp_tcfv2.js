@@ -132,7 +132,7 @@ const checkPage = async function (URL) {
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
 	);
 
-	// TODO
+	// Check CMP is not present on page after reload
 	await checkCMPDidNotLoad(page);
 };
 
