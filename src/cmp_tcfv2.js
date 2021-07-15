@@ -1,6 +1,41 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
+const checkAdsDidNotLoad = async (page) => {
+	const frame = await page.$(
+		'.ad-slot--top-above-nav .ad-slot__content iframe',
+	);
+
+	log.info('Top above nav frame on page:', frame !== null);
+
+	if (frame !== null) {
+		throw Error('Top above nav frame present on page');
+	}
+};
+
+const checkCMPDidNotLoad = async (page) => {
+	const spMessageContainer = await page.$('[id*="sp_message_container"]');
+
+	log.info('sp_message_container on page:', spMessageContainer !== null);
+
+	if (spMessageContainer !== null) {
+		throw Error('CMP present on page');
+	}
+};
+
+const checkCMPIsHidden = async (page) => {
+	const display = await page.evaluate(
+		`window.getComputedStyle(document.querySelector('[id*=\\"sp_message_container\\"]')).getPropertyValue('display')`,
+	);
+
+	// Use `!=` rather than `!==` here because display is a DOMString type
+	if (display != 'none') {
+		throw Error('CMP still present on page');
+	}
+
+	log.info('CMP hidden on page');
+};
+
 const checkArticle = async function (URL) {
 	log.info(`Checking Article URL ${URL}`);
 
@@ -32,6 +67,9 @@ const checkArticle = async function (URL) {
 	if (!reloadResponse) {
 		throw 'Failed to refresh page!';
 	}
+
+	// Check no ads load
+	await checkAdsDidNotLoad(page);
 
 	// Check banner is shown
 	await page.waitForSelector('[id*="sp_message_container"]');
@@ -71,6 +109,10 @@ const checkPage = async function (URL) {
 	await page.waitFor(1000);
 	await frame.click('button[title="Yes, I’m happy"]');
 
+	await page.waitFor(5000);
+
+	await checkCMPIsHidden(page);
+
 	//ads are loaded
 	await page.waitForSelector(
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
@@ -89,6 +131,9 @@ const checkPage = async function (URL) {
 	await page.waitForSelector(
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
 	);
+
+	// Check CMP is not present on page after reload
+	await checkCMPDidNotLoad(page);
 };
 
 const pageLoadBlueprint = async function () {
