@@ -1,6 +1,19 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
+const checkCMPIsHidden = async (page) => {
+	const display = await page.evaluate(
+		`window.getComputedStyle(document.querySelector('[id*=\\"sp_message_container\\"]')).getPropertyValue('display')`,
+	);
+
+	// Use `!=` rather than `!==` here because display is a DOMString type
+	if (display != 'none') {
+		throw Error('CMP still present on page');
+	}
+
+	log.info('CMP hidden on page');
+};
+
 const checkArticle = async function (URL) {
 	// Load article
 	let page = await synthetics.getPage();
@@ -84,7 +97,10 @@ const checkPage = async function (URL, nextURL) {
 		.find((f) => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
 	await frame.click('button[title="Continue"]');
 
-	await page.waitFor(2000);
+	await page.waitFor(5000);
+
+	// Check CMP is now hidden on page
+	await checkCMPIsHidden(page);
 
 	// Reload page
 	const reloadResponse = await page.reload({
