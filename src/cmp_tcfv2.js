@@ -102,11 +102,13 @@ const checkPage = async function (URL) {
 	await page.waitForSelector('[id*="sp_message_container"]');
 	log.info('CMP loaded');
 
+	// Wait for iframe to load into sp_message_container
+	await page.waitFor(5000);
+
 	// Click on Yes I'm happy
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
-	await page.waitFor(1000);
 	await frame.click('button[title="Yes, I’m happy"]');
 
 	await page.waitFor(5000);
