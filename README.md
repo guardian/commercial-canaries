@@ -11,18 +11,18 @@
 
 **US (CCPA)**
 
-1 Load a front
-2 Check ads _do_ load before banner is interacted with
-3 Check the banner shows
-4 Click the button in the banner
-5 Check the banner goes away
-6 refresh the page (without clearing cookies)
-7 Check ads have loaded
-8 Load an article page
-9 check ads have loaded
-10 clear cookies. reload the page
-11 Check ads load before banner is interacted with
-12 check the banner shows
+1. Load a front
+2. Check ads _do_ load before banner is interacted with
+3. Check the banner shows
+4. Click the button in the banner
+5. Check the banner goes away
+6. refresh the page (without clearing cookies)
+7. Check ads have loaded
+8. Load an article page
+9. check ads have loaded
+10. clear cookies. reload the page
+11. Check ads load before banner is interacted with
+12. check the banner shows
 
 **Canada**
 
@@ -34,19 +34,19 @@ Same as US, except we use the "Continue" banner button rather "Do not sell my in
 
 **TCFv2 (Ireland and Canada)**
 
-1 Load a front
-2 Check that _no_ ads load before banner is interacted with
-3 Check the banner shows
-4 Click on "yes I'm happy" in the banner
-5 Check the banner goes away
-6 Check that ads load.
-7 refresh the page (without clearing cookies)
-8 Check ads have loaded, and no banner is shown.
-9 Load an article page
-10 check ads have loaded, and no banner is shown.
-11 Clear cookies. reload the page
-12 Check that _no_ ads load before banner is interacted with
-13 Check the banner shows
+1. Load a front
+2. Check that _no_ ads load before banner is interacted with
+3. Check the banner shows
+4. Click on "yes I'm happy" in the banner
+5. Check the banner goes away
+6. Check that ads load.
+7. refresh the page (without clearing cookies)
+8. Check ads have loaded, and no banner is shown.
+9. Load an article page
+10. check ads have loaded, and no banner is shown.
+11. Clear cookies. reload the page
+12. Check that _no_ ads load before banner is interacted with
+13. Check the banner shows
 
 ### Manual Update
 
