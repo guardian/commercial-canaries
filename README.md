@@ -1,6 +1,23 @@
 # aws-canaries
 
-> Guardian AWS Synthetics Canaries
+The Canary monitoring is a series of lambda scripts that run a headless browser and load the site, and check it behaves as expected.
+These checks run every minute in 4 different regions, Canada, Australia, the US, and Ireland.
+
+They're hosted on the frontend AWS account.
+
+The code for the canaries is here:
+<https://github.com/guardian/aws-canaries>
+
+Alert notifications are sent to commercial.canaries@guardian.co.uk, and another notification on recovery.
+
+- On **failure** the email subjects look like this: `ALARM: "US CMP failed" in US West (N. California)`
+- On **recovery** the email subject looks like this: `OK: "US CMP failed" in US West (N. California)`
+
+When you are logged into the AWS account for frontend via [Janus](https://janus.gutools.co.uk/) you can see more detailed status information or the raw output from the Lambda run that failed.
+A [combined dashboard of the status checks](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=Commercial-Canaries;start=PT3H) is also available.
+
+You can also find it the status by logging into the frontend AWS console, and navigating to CloudWatch > Application Monitoring > Synthetics Canaries, although this is region-by-region and you'll switch regions at the top of the screen to see each one.
+
 
 ### Requirements
 
