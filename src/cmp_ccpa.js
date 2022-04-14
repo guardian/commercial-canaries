@@ -1,17 +1,38 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
+// Initial timestamp used in logging
+const startTime = new Date().getTime();
+const getTimeSinceStart = () => new Date().getTime() - startTime
+
+// Random ID used in logger below
+const runID = Math.floor(Math.random()*10000000000).toString(36);
+
+const taggedLogger = (message) => {
+	log.info(`GUCanaryRun:${runID}:${getTimeSinceStart()}ms: ${message}`);
+}
+
 const checkCMPIsHidden = async (page) => {
-	const display = await page.evaluate(
-		`window.getComputedStyle(document.querySelector('[id*=\\"sp_message_container\\"]')).getPropertyValue('display')`,
-	);
+	taggedLogger(`Checking CMP is Hidden: Start`);
+
+	const getSpMessageDisplayProperty = function () {
+		const element = document.querySelector(
+			'[id*="sp_message_container"]',
+		);
+		if (element) {
+			const computedStyle = window.getComputedStyle(element);
+			return computedStyle.getPropertyValue('display');
+		}
+	};
+
+	const display = await page.evaluate(getSpMessageDisplayProperty);
 
 	// Use `!=` rather than `!==` here because display is a DOMString type
-	if (display != 'none') {
+	if (display && display != 'none') {
 		throw Error('CMP still present on page');
 	}
 
-	log.info('CMP hidden on page');
+	taggedLogger('CMP hidden or removed from page');
 };
 
 const checkArticle = async function (URL) {
@@ -26,7 +47,7 @@ const checkArticle = async function (URL) {
 		throw 'Failed to load page!';
 	}
 
-	//If the response status code is not a 2xx success code
+	// If the response status code is not a 2xx success code
 	if (response.status() < 200 || response.status() > 299) {
 		throw 'Failed to load page!';
 	}
@@ -57,11 +78,11 @@ const checkArticle = async function (URL) {
 	// Check CMP on page
 	await page.waitForSelector('[id*="sp_message_container"]');
 
-	log.info('Article follow on check complete');
+	taggedLogger('Article follow on check complete');
 };
 
 const checkPage = async function (URL, nextURL) {
-	log.info(`Checking Page URL ${URL}`);
+	taggedLogger(`Checking Page URL ${URL}`);
 
 	let page = await synthetics.getPage();
 
@@ -89,7 +110,7 @@ const checkPage = async function (URL, nextURL) {
 
 	// wait for CMP
 	await page.waitForSelector('[id*="sp_message_container"]');
-	log.info('CMP loaded');
+	taggedLogger('CMP loaded');
 
 	//click Do not sell my information
 	const frame = page

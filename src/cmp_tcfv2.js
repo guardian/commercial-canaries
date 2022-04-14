@@ -3,14 +3,12 @@ const log = require('SyntheticsLogger');
 
 // Initial timestamp used in logging
 const startTime = new Date().getTime();
-function getTimeSinceStart() {
-	return (new Date().getTime() - startTime);
-}
+const getTimeSinceStart = () => new Date().getTime() - startTime
 
 // Random ID used in logger below
 const runID = Math.floor(Math.random()*10000000000).toString(36);
 
-function taggedLogger(message) {
+const taggedLogger = (message) => {
 	log.info(`GUCanaryRun:${runID}:${getTimeSinceStart()}ms: ${message}`);
 }
 
@@ -38,20 +36,29 @@ const checkCMPDidNotLoad = async (page) => {
 
 const checkCMPIsHidden = async (page) => {
 	taggedLogger(`Checking CMP is Hidden: Start`);
-	const display = await page.evaluate(
-		`window.getComputedStyle(document.querySelector('[id*=\\"sp_message_container\\"]')).getPropertyValue('display')`,
-	);
+
+	const getSpMessageDisplayProperty = function () {
+		const element = document.querySelector(
+			'[id*="sp_message_container"]',
+		);
+		if (element) {
+			const computedStyle = window.getComputedStyle(element);
+			return computedStyle.getPropertyValue('display');
+		}
+	};
+
+	const display = await page.evaluate(getSpMessageDisplayProperty);
 
 	// Use `!=` rather than `!==` here because display is a DOMString type
-	if (display != 'none') {
+	if (display && display != 'none') {
 		throw Error('CMP still present on page');
 	}
 
-	log.info('CMP hidden on page');
+	taggedLogger('CMP hidden or removed from page');
 };
 
 const checkArticle = async function (URL) {
-	log.info(`Checking Article URL ${URL}`);
+	taggedLogger(`Checking Article URL ${URL}`);
 
 	let page = await synthetics.getPage();
 
@@ -87,7 +94,7 @@ const checkArticle = async function (URL) {
 
 	// Check banner is shown
 	await page.waitForSelector('[id*="sp_message_container"]');
-	log.info('CMP loaded');
+	taggedLogger('CMP loaded');
 };
 
 const checkPage = async function (URL) {
