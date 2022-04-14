@@ -1,6 +1,19 @@
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
+// Initial timestamp used in logging
+const startTime = new Date().getTime();
+function getTimeSinceStart() {
+	return (new Date().getTime() - startTime);
+}
+
+// Random ID used in logger below
+const runID = Math.floor(Math.random()*10000000000).toString(36);
+
+function taggedLogger(message) {
+	log.info(`GUCanaryRun:${runID}:${getTimeSinceStart()}ms: ${message}`);
+}
+
 const checkAdsDidNotLoad = async (page) => {
 	const frame = await page.$(
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
@@ -24,6 +37,7 @@ const checkCMPDidNotLoad = async (page) => {
 };
 
 const checkCMPIsHidden = async (page) => {
+	taggedLogger(`Checking CMP is Hidden: Start`);
 	const display = await page.evaluate(
 		`window.getComputedStyle(document.querySelector('[id*=\\"sp_message_container\\"]')).getPropertyValue('display')`,
 	);
@@ -77,40 +91,48 @@ const checkArticle = async function (URL) {
 };
 
 const checkPage = async function (URL) {
-	log.info(`Checking Page URL ${URL}`);
+
+	taggedLogger(`Start checking Page URL ${URL}`);
 
 	let page = await synthetics.getPage();
 
 	//clear cookies
 	const client = await page.target().createCDPSession();
 	await client.send('Network.clearBrowserCookies');
+	taggedLogger(`Cleared Cookies`);
 
+	taggedLogger(`Loading URL: Start`);
 	const response = await page.goto(URL, {
 		waitUntil: 'domcontentloaded',
 		timeout: 30000,
 	});
 	if (!response) {
+		taggedLogger('Loading URL: Failed');
 		throw 'Failed to load page!';
 	}
 
 	//If the response status code is not a 2xx success code
 	if (response.status() < 200 || response.status() > 299) {
+		taggedLogger(`Loading URL: Error: Status ${response.status()}`);
 		throw 'Failed to load page!';
 	}
+	taggedLogger(`Loading URL: OK`);
 
+	taggedLogger(`Waiting for CMP Container: Start`);
 	// wait for CMP
 	await page.waitForSelector('[id*="sp_message_container"]');
-	log.info('CMP loaded');
+	taggedLogger(`Waiting for CMP Container: Loaded`);
 
 	// Wait for iframe to load into sp_message_container
 	await page.waitFor(5000);
+
+	taggedLogger(`Clicking on "Yes I'm Happy`);
 
 	// Click on Yes I'm happy
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Yes, I’m happy"]');
-
 	await page.waitFor(5000);
 
 	await checkCMPIsHidden(page);
