@@ -1,0 +1,44 @@
+Resources:
+  SyntheticsCanary:
+    Type: AWS::Synthetics::Canary
+    Properties:
+      ArtifactS3Location: s3://cw-syn-results-642631414762-us-west-1/canary/commercial_cmp_ccpa-36a-1942e1bb8e94
+      Code:
+        Handler: pageLoadBlueprint.handler
+        S3Bucket: aws-commercial-canaries
+        S3Key: nodejs.zip
+      ExecutionRoleArn: arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-commercial_cmp_ccpa-36a-1942e1bb8e94
+      Name: commercial_cmp_ccpa
+      RunConfig: 
+        TimeoutInSeconds: 120
+      RuntimeVersion: syn-nodejs-puppeteer-3.5
+      Schedule: 
+        Expression: rate(2 minutes)
+      StartCanaryAfterCreation: true
+      Tags:
+        - Key: blueprint
+          Value: heartbeat
+  Alarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+          - arn:aws:sns:us-west-1:642631414762:USCommercialCanaries
+      AlarmDescription: Either a Front or an Article CMP has failed
+      AlarmName: US CMP failed
+      ComparisonOperator: LessThanOrEqualToThreshold
+      DatapointsToAlarm: 3
+      Dimensions:
+          - Name: CanaryName
+            Value: commercial_cmp_ccpa
+      EvaluationPeriods: 3
+      InsufficientDataActions: []
+      MetricName: SuccessPercent
+      Namespace: CloudWatchSynthetics
+      OKActions:
+          - arn:aws:sns:us-west-1:642631414762:USCommercialCanaries
+      Period: 120
+      Statistic: Average
+      Threshold: 80
+      TreatMissingData: missing
+

@@ -1,0 +1,44 @@
+Resources:
+  SyntheticsCanary:
+    Type: AWS::Synthetics::Canary
+    Properties:
+      ArtifactS3Location: s3://cw-syn-results-642631414762-eu-west-1/canary/commercial_cmp_tcfv2-211-821c7b2195bf
+      Code:
+        Handler: pageLoadBlueprint.handler
+        S3Bucket: aws-commercial-canaries
+        S3Key: nodejs.zip
+      ExecutionRoleArn: arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-commercial_cmp_tcfv2-211-821c7b2195bf
+      Name: commercial_cmp_tcfv2
+      RunConfig: 
+        TimeoutInSeconds: 120
+      RuntimeVersion: syn-nodejs-puppeteer-3.5
+      Schedule: 
+        Expression: rate(2 minutes)
+      StartCanaryAfterCreation: true
+      Tags:
+        - Key: blueprint
+          Value: heartbeat
+  Alarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+          - arn:aws:sns:eu-west-1:642631414762:CommercialCanaries
+      AlarmDescription: Either a Front or an Article CMP has failed
+      AlarmName: CMP TCFV2 failed
+      ComparisonOperator: LessThanOrEqualToThreshold
+      DatapointsToAlarm: 3
+      Dimensions:
+          - Name: CanaryName
+            Value: commercial_cmp_tcfv2
+      EvaluationPeriods: 3
+      InsufficientDataActions: []
+      MetricName: SuccessPercent
+      Namespace: CloudWatchSynthetics
+      OKActions:
+          - arn:aws:sns:eu-west-1:642631414762:CommercialCanaries
+      Period: 120
+      Statistic: Average
+      Threshold: 80
+      TreatMissingData: missing
+
