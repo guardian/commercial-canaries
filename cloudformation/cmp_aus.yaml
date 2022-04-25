@@ -1,4 +1,18 @@
 Resources:
+  CloudWatchSyntheticsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Description: CloudWatch Synthetics lambda execution role for running canaries
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess
+      RoleName: CloudWatchSyntheticsRole-commercial_cmp_aus-ap-southeast-2
   SyntheticsCanary:
     Type: AWS::Synthetics::Canary
     Properties:
@@ -18,7 +32,7 @@ Resources:
       Tags:
         - Key: blueprint
           Value: heartbeat
-  Alarm:
+  CloudWatchAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
       ActionsEnabled: true
