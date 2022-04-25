@@ -5,9 +5,6 @@ These checks run every minute in 4 different regions, Canada, Australia, the US,
 
 They're hosted on the frontend AWS account.
 
-The code for the canaries is here:
-<https://github.com/guardian/aws-canaries>
-
 Alert notifications are sent to commercial.canaries@guardian.co.uk, and another notification on recovery.
 
 - On **failure** the email subjects look like this: `ALARM: "US CMP failed" in US West (N. California)`
@@ -16,7 +13,7 @@ Alert notifications are sent to commercial.canaries@guardian.co.uk, and another 
 When you are logged into the AWS account for frontend via [Janus](https://janus.gutools.co.uk/) you can see more detailed status information or the raw output from the Lambda run that failed.
 A [combined dashboard of the status checks](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=Commercial-Canaries;start=PT3H) is also available.
 
-You can also find it the status by logging into the frontend AWS console, and navigating to CloudWatch > Application Monitoring > Synthetics Canaries, although this is region-by-region and you'll switch regions at the top of the screen to see each one.
+You can also find it the status by logging into the frontend AWS console, and navigating to CloudWatch > Application Monitoring > Synthetics Canaries, although this is region-by-region and you'll need to switch regions at the top of the screen to see each one.
 
 
 ### Requirements
@@ -41,15 +38,11 @@ You can also find it the status by logging into the frontend AWS console, and na
 11. Check ads load before banner is interacted with
 12. check the banner shows
 
-**Canada**
-
-Same as Ireland
-
 **Aus**
 
 Same as US, except we use the "Continue" banner button rather "Do not sell my information"
 
-**TCFv2 (Ireland and Canada)**
+**Ireland and Canada (TCFv2)**
 
 1. Load a front
 2. Check that _no_ ads load before banner is interacted with
@@ -67,18 +60,30 @@ Same as US, except we use the "Continue" banner button rather "Do not sell my in
 
 ### Manual Update
 
-There are currently 4 canary tests running that check the CMP is loaded successfully and ads are loaded at the right time in US, Canada, AUS and UK respectively.
+There are currently 4 canary tests running that check the CMP is loaded successfully and ads are loaded at the right time in Canada, Australia, the US, and Ireland.
 
-Note that US and Canada canaries currently use the same source file but are deployed as two separate canaries in two different regions. Even though Canada also operates under TCFV2 we use another canary to monitor this region separately as it has different possible failure modes, as ads are controlled by a third party.
+Login to AWS frontend via Janus. The code is run using Lambda, but since the relevant code is found in a [layer](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html?icmpid=docs_lambda_help), you will need to navigate to Cloudwatch -> Synthetic Canaries to update the code. Select the relevant Canary, then select "Edit Canary".
 
-| File            | AWS Region     | Canary configuration name |
-| --------------- | -------------- | ------------------------- |
-| `src/cmp_tcfv2` | eu-west-1      | commercial_cmp_tcfv2      |
-| `src/cmp_ccpa`  | us-west-1      | commercial_cmp_us         |
-| `src/cmp_tcfv2` | ca-central-1   | commercial_cmp_ca         |
-| `src/cmp_aus`   | ap-southeast-2 | commercial_cmp_aus        |
+| Region          | File            | AWS Region     | Canary configuration name |
+| --------------- | --------------- | -------------- | ------------------------- |
+| US              | `src/cmp_ccpa`  | us-west-1      | commercial_cmp_us         |
+| Australia       | `src/cmp_aus`   | ap-southeast-2 | commercial_cmp_aus        |
+| Ireland         | `src/cmp_tcfv2` | eu-west-1      | commercial_cmp_tcfv2      |
+| Canada          | `src/cmp_tcfv2` | ca-central-1   | commercial_cmp_ca         |
 
-Login to AWS frontend via Janus, and replace the code via the built in Script Editor
+Note that US and Canada canaries currently use the same source file, but are deployed as two separate canaries in two different regions. Even though Canada also operates under [TCFV2](https://iabeurope.eu/tcf-2-0/) we use another canary to monitor this region separately as it has different possible failure modes, as ads are controlled by a third party.
+
+### Testing
+
+Create a test version of the canary you want to test:
+- Go to Cloudwatch (sidebar) -> Synthetics Canaries in the same region of the canary you want to test.
+- Search for and select the canary.
+- Click Actions (dropdown) -> Clone.
+- Give your new canary a suitable name. Ensure to include the word “test” in the name, so that it is not confused by the production canary.
+- Paste your test code in the editor and select the runtime version.
+- Ensure that a new IAM role is created for the canary. If you use a different canary IAM role, it may not have permission to create logs.
+- Click Create canary.
+- How to delete a canary: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/synthetics_canaries_deletion.html
 
 ### Automatic Update
 
