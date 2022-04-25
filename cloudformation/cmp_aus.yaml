@@ -21,7 +21,10 @@ Resources:
         Handler: pageLoadBlueprint.handler
         S3Bucket: aws-commercial-canaries
         S3Key: nodejs.zip
-      ExecutionRoleArn: arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-commercial_cmp_aus-ac4-26bcc72af596
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - CloudWatchSyntheticsRole
+          - Arn
       Name: commercial_cmp_aus
       RunConfig: 
         TimeoutInSeconds: 120
@@ -44,9 +47,11 @@ Resources:
       DatapointsToAlarm: 3
       Dimensions:
           - Name: CanaryName
-            Value: commercial_cmp_aus
+            Value:
+              Fn::GetAtt:
+                - SyntheticsCanary
+                - name
       EvaluationPeriods: 3
-      InsufficientDataActions: []
       MetricName: SuccessPercent
       Namespace: CloudWatchSynthetics
       OKActions:

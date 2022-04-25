@@ -21,7 +21,10 @@ Resources:
         Handler: pageLoadBlueprint.handler
         S3Bucket: aws-commercial-canaries
         S3Key: nodejs.zip
-      ExecutionRoleArn: arn:aws:iam::642631414762:role/service-role/CloudWatchSyntheticsRole-commercial_cmp_ca-1e1-618bc0f1ef73
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - CloudWatchSyntheticsRole
+          - Arn
       Name: commercial_cmp_ca
       RunConfig: 
         TimeoutInSeconds: 120
@@ -44,9 +47,11 @@ Resources:
       DatapointsToAlarm: 3
       Dimensions:
           - Name: CanaryName
-            Value: commercial_cmp_ca
+            Value:
+              Fn::GetAtt:
+                - SyntheticsCanary
+                - name
       EvaluationPeriods: 3
-      InsufficientDataActions: []
       MetricName: SuccessPercent
       Namespace: CloudWatchSynthetics
       OKActions:
@@ -55,29 +60,3 @@ Resources:
       Statistic: Average
       Threshold: 80
       TreatMissingData: missing
-
-
-  Type: AWS::CloudWatch::Alarm
-  Properties:
-    AlarmName: CA CMP Failed
-    AlarmDescription: Either on a Front or an Article CMP has failed
-    ActionsEnabled: true
-    OKActions:
-        - arn:aws:sns:ca-central-1:642631414762:Commercial_CMP_CA_CloudWatch_Alarms_Topic
-    AlarmActions:
-        - arn:aws:sns:ca-central-1:642631414762:Commercial_CMP_CA_CloudWatch_Alarms_Topic
-    InsufficientDataActions: []
-    MetricName: SuccessPercent
-    Namespace: CloudWatchSynthetics
-    Statistic: Average
-    Dimensions:
-        - Name: CanaryName
-          Value: commercial_cmp_ca
-    Period: 120
-    EvaluationPeriods: 3
-    DatapointsToAlarm: 3
-    Threshold: 80
-    ComparisonOperator: LessThanOrEqualToThreshold
-    TreatMissingData: missing
-
-
