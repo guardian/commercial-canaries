@@ -5,15 +5,21 @@ const log = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
+let startTime = new Date().getTime();
+const getTimeSinceStart = () => new Date().getTime() - startTime;
+
 /**
  * We use custom log messages so that we can easily differentiate
  * between logs from this file and other logs in Cloudwatch.
  */
+const outputMessage = (message) =>
+	`GuCanaryRun ${getTimeSinceStart() / 1000}s. Message: ${message}`;
+
 const logInfoMessage = (message) => {
-	log.info(`GuCanaryRun. Message: ${message}`);
+	log.info(outputMessage(message));
 };
 const logErrorMessage = (message) => {
-	log.error(`GuCanaryRun. Message: ${message}`);
+	log.error(outputMessage(message));
 };
 
 const initialiseOptions = async () => {
@@ -207,6 +213,8 @@ const pageLoadBlueprint = async function () {
 		logRequest: LOG_EVERY_REQUEST,
 		logResponse: LOG_EVERY_RESPONSE,
 	});
+
+	startTime = new Date().getTime();
 
 	let browser = null;
 	try {
