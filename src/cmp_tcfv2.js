@@ -4,15 +4,21 @@ const log = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
+
+const startTime = new Date().getTime();
+function getTimeSinceStart() {
+	return (new Date().getTime() - startTime);
+}
+
 /**
  * We use custom log messages so that we can easily differentiate 
  * between logs from this file and other logs in Cloudwatch.
  */
 const logInfoMessage = (message) => {
-	log.info(`GUCanaryRun. Message: ${message}`);
+	log.info(`GUCanaryRun. ${getTimeSinceStart()}: Message: ${message}`);
 }
 const logErrorMessage = (message) => {
-	log.error(`GUCanaryRun. Message: ${message}`);
+	log.error(`GUCanaryRun. ${getTimeSinceStart()}: Message: ${message}`);
 }
 
 const clearCookies = async (client) => {
@@ -196,6 +202,8 @@ const checkPages = async (url, nextUrl) => {
 
 const pageLoadBlueprint = async function () {
 	const synConfig = synthetics.getConfiguration();
+	
+	startTime = new Date().getTime();
 
 	/**
 	 * Setting these to true will log all requests/responses in the Cloudwatch logs. 
