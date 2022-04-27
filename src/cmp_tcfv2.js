@@ -4,21 +4,18 @@ const log = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
-
-const startTime = new Date().getTime();
-function getTimeSinceStart() {
-	return (new Date().getTime() - startTime);
-}
+let startTime = new Date().getTime();
+const getTimeSinceStart = () => new Date().getTime() - startTime
 
 /**
  * We use custom log messages so that we can easily differentiate 
  * between logs from this file and other logs in Cloudwatch.
  */
 const logInfoMessage = (message) => {
-	log.info(`GUCanaryRun. ${getTimeSinceStart()}: Message: ${message}`);
+	log.info(`GUCanaryRun ${getTimeSinceStart() / 1000}s. Message: ${message}`);
 }
 const logErrorMessage = (message) => {
-	log.error(`GUCanaryRun. ${getTimeSinceStart()}: Message: ${message}`);
+	log.error(`GUCanaryRun ${getTimeSinceStart() / 1000}s. Message: ${message}`);
 }
 
 const clearCookies = async (client) => {
@@ -202,8 +199,6 @@ const checkPages = async (url, nextUrl) => {
 
 const pageLoadBlueprint = async function () {
 	const synConfig = synthetics.getConfiguration();
-	
-	startTime = new Date().getTime();
 
 	/**
 	 * Setting these to true will log all requests/responses in the Cloudwatch logs. 
@@ -214,6 +209,8 @@ const pageLoadBlueprint = async function () {
 		logRequest: LOG_EVERY_REQUEST, 
 		logResponse: LOG_EVERY_RESPONSE
 	});
+	
+	startTime = new Date().getTime();
 
 	/**
 	 * Check front as first navigation. Then check that ads load when viewing an article.
