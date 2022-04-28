@@ -44,14 +44,14 @@ Resources:
       AlarmDescription: Either a Front or an Article CMP has failed
       AlarmName: AUS CMP Failed
       ComparisonOperator: LessThanOrEqualToThreshold
-      DatapointsToAlarm: 3
+      DatapointsToAlarm: 5
       Dimensions:
           - Name: CanaryName
             Value:
               Fn::GetAtt:
                 - SyntheticsCanary
                 - name
-      EvaluationPeriods: 3
+      EvaluationPeriods: 5
       MetricName: SuccessPercent
       Namespace: CloudWatchSynthetics
       OKActions:
