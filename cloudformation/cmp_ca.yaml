@@ -6,15 +6,15 @@ Parameters:
     AllowedValues:
       - comm_cmp_ca_test
       - commercial_cmp_ca
+  Environment:
+    Type: String
+    Default: CODE
+    AllowedValues:
+      - CODE
+      - PROD
   S3Bucket:
     Type: String
     Default: cw-syn-canary-642631414762-ca-central-1
-  Environment:
-    Type: String
-    Default: TEST
-    AllowedValues:
-      - TEST
-      - PROD
 Conditions:
   IsProd: !Equals 
     - !Ref Environment
@@ -64,8 +64,8 @@ Resources:
             Resource:
               - "*"
           - Effect: Allow
-            Resource: "*"
             Action: cloudwatch:PutMetricData
+            Resource: "*"
             Condition:
               StringEquals:
                 cloudwatch:namespace: CloudWatchSynthetics
@@ -76,7 +76,7 @@ Resources:
       Code:
         Handler: pageLoadBlueprint.handler
         S3Bucket: !Sub ${S3Bucket}
-        S3Key: !Sub scripts/${Environment}/nodejs.zip
+        S3Key: !Sub ${Environment}/nodejs.zip
       ExecutionRoleArn:
         Fn::GetAtt:
           - CloudWatchSyntheticsRole

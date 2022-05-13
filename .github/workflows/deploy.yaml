@@ -1,0 +1,64 @@
+name: AWS Commercial Canary
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+    permissions:
+      # required by aws-actions/configure-aws-credentials
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14' # chosen arbitrarily
+      - name: Run script to create zip files
+        run: |
+          chmod +x ./.github/scripts/create-artifacts.sh
+          ./.github/scripts/create-artifacts.sh
+        shell: bash
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ca-central-1
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: guardian/actions-riff-raff@v0.1.0
+        with:
+          app: commercial-canaries
+          stack: frontend
+          deployments: |
+            upload:
+              type: aws-s3
+              sources: builds/tcfv2/nodejs.zip
+              regions:
+                - ca-central-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-ca-central-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
+            commercial-canary:
+              type: cloud-formation
+              sources: cloudformation/cmp_ca.yaml
+              regions:
+                - ca-central-1
+              parameters:
+                templatePath: cmp_ca.yaml
+                templateStageParameters: {
+                    "CODE": { 
+                      "CanaryName": "comm_cmp_ca_test",
+                      "Environment": "CODE", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
+                    },
+                    "PROD":  { 
+                      "CanaryName": "commercial_cmp_ca",
+                      "Environment": "PROD", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
+                    },
+                }
