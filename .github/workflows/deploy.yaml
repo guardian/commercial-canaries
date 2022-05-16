@@ -23,6 +23,7 @@ jobs:
           chmod +x ./.github/scripts/create-artifacts.sh
           ./.github/scripts/create-artifacts.sh
         shell: bash
+      
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ca-central-1
@@ -39,39 +40,6 @@ jobs:
                 - ca-central-1
               parameters:
                 bucket: cw-syn-canary-642631414762-ca-central-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            upload-uk:
-              type: aws-s3
-              sources: builds/tcfv2/nodejs.zip
-              regions:
-                - eu-west-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-eu-west-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            upload-us:
-              type: aws-s3
-              sources: builds/ccpa/nodejs.zip
-              regions:
-                - us-west-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-us-west-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            upload-aus:
-              type: aws-s3
-              sources: builds/aus/nodejs.zip
-              regions:
-                - ap-southeast-2
-              parameters:
-                bucket: cw-syn-canary-642631414762-ap-southeast-2
                 cacheControl: private
                 publicReadAcl: false
                 prefixStack: false
@@ -95,6 +63,27 @@ jobs:
                       "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
                     },
                 }
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: eu-west-1
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: guardian/actions-riff-raff@v0.1.0
+        with:
+          app: commercial-canaries
+          stack: frontend
+          deployments: |
+            upload-uk:
+              type: aws-s3
+              sources: builds/tcfv2/nodejs.zip
+              regions:
+                - eu-west-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-eu-west-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
             commercial-canary-uk:
               type: cloud-formation
               sources: cloudformation/cmp_uk.yaml
@@ -114,6 +103,27 @@ jobs:
                       "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
                     },
                 }
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-west-1
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: guardian/actions-riff-raff@v0.1.0
+        with:
+          app: commercial-canaries
+          stack: frontend
+          deployments: |
+            upload-us:
+              type: aws-s3
+              sources: builds/ccpa/nodejs.zip
+              regions:
+                - us-west-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-us-west-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
             commercial-canary-us:
               type: cloud-formation
               sources: cloudformation/cmp_us.yaml
@@ -133,6 +143,27 @@ jobs:
                       "S3Bucket": "cw-syn-canary-642631414762-us-west-1", 
                     },
                 }
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ap-southeast-2
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: guardian/actions-riff-raff@v0.1.0
+        with:
+          app: commercial-canaries
+          stack: frontend
+          deployments: |
+            upload-aus:
+              type: aws-s3
+              sources: builds/aus/nodejs.zip
+              regions:
+                - ap-southeast-2
+              parameters:
+                bucket: cw-syn-canary-642631414762-ap-southeast-2
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
             commercial-canary-aus:
               type: cloud-formation
               sources: cloudformation/cmp_aus.yaml
