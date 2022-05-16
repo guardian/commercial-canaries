@@ -87,7 +87,7 @@ Resources:
       RuntimeVersion: syn-nodejs-puppeteer-3.5
       Schedule: 
         Expression: rate(2 minutes)
-      StartCanaryAfterCreation: true
+      StartCanaryAfterCreation: !If [IsProd, true, false]
       Tags:
         - Key: blueprint
           Value: heartbeat

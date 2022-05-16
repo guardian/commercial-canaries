@@ -53,7 +53,6 @@ jobs:
               parameters:
                 templatePath: cmp_uk.yaml
                 cloudFormationStackByTags: false
-                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
                 templateStageParameters: {
@@ -98,7 +97,6 @@ jobs:
               parameters:
                 templatePath: cmp_ca.yaml
                 cloudFormationStackByTags: false
-                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
                 templateStageParameters: {
@@ -143,7 +141,6 @@ jobs:
               parameters:
                 templatePath: cmp_us.yaml
                 cloudFormationStackByTags: false
-                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
                 templateStageParameters: {
@@ -188,7 +185,6 @@ jobs:
               parameters:
                 templatePath: cmp_aus.yaml
                 cloudFormationStackByTags: false
-                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
                 templateStageParameters: {
