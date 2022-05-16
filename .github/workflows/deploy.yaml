@@ -52,7 +52,10 @@ jobs:
                 - eu-west-1
               parameters:
                 templatePath: cmp_uk.yaml
+                cloudFormationStackByTags: false
+                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
+                cloudFormationStackName: commercial-canary
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_uk_test",
@@ -94,7 +97,10 @@ jobs:
                 - ca-central-1
               parameters:
                 templatePath: cmp_ca.yaml
+                cloudFormationStackByTags: false
+                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
+                cloudFormationStackName: commercial-canary
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_ca_test",
@@ -136,7 +142,10 @@ jobs:
                 - us-west-1
               parameters:
                 templatePath: cmp_us.yaml
+                cloudFormationStackByTags: false
+                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
+                cloudFormationStackName: commercial-canary
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_us_test",
@@ -178,7 +187,10 @@ jobs:
                 - ap-southeast-2
               parameters:
                 templatePath: cmp_aus.yaml
+                cloudFormationStackByTags: false
+                appendStageToCloudFormationStackName: true
                 prependStackToCloudFormationStackName: false
+                cloudFormationStackName: commercial-canary
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_aus_test",
