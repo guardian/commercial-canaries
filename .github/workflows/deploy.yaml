@@ -51,6 +51,7 @@ jobs:
                 - ca-central-1
               parameters:
                 templatePath: cmp_ca.yaml
+                prependStackToCloudFormationStackName: false
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_ca_test",
@@ -91,6 +92,7 @@ jobs:
                 - eu-west-1
               parameters:
                 templatePath: cmp_uk.yaml
+                prependStackToCloudFormationStackName: false
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_uk_test",
@@ -131,6 +133,7 @@ jobs:
                 - us-west-1
               parameters:
                 templatePath: cmp_us.yaml
+                prependStackToCloudFormationStackName: false
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_us_test",
@@ -171,6 +174,7 @@ jobs:
                 - ap-southeast-2
               parameters:
                 templatePath: cmp_aus.yaml
+                prependStackToCloudFormationStackName: false
                 templateStageParameters: {
                     "CODE": { 
                       "CanaryName": "comm_cmp_aus_test",
