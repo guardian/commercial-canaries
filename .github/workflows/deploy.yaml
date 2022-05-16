@@ -32,7 +32,7 @@ jobs:
           app: commercial-canaries
           stack: frontend
           deployments: |
-            upload:
+            upload-ca:
               type: aws-s3
               sources: builds/tcfv2/nodejs.zip
               regions:
@@ -43,7 +43,40 @@ jobs:
                 publicReadAcl: false
                 prefixStack: false
                 prefixPackage: false
-            commercial-canary:
+            upload-uk:
+              type: aws-s3
+              sources: builds/tcfv2/nodejs.zip
+              regions:
+                - eu-west-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-eu-west-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
+            upload-us:
+              type: aws-s3
+              sources: builds/ccpa/nodejs.zip
+              regions:
+                - us-west-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-us-west-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
+            upload-aus:
+              type: aws-s3
+              sources: builds/aus/nodejs.zip
+              regions:
+                - ap-southeast-2
+              parameters:
+                bucket: cw-syn-canary-642631414762-ap-southeast-2
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
+            commercial-canary-ca:
               type: cloud-formation
               sources: cloudformation/cmp_ca.yaml
               regions:
@@ -60,5 +93,62 @@ jobs:
                       "CanaryName": "commercial_cmp_ca",
                       "Environment": "PROD", 
                       "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
+                    },
+                }
+            commercial-canary-uk:
+              type: cloud-formation
+              sources: cloudformation/cmp_uk.yaml
+              regions:
+                - eu-west-1
+              parameters:
+                templatePath: cmp_uk.yaml
+                templateStageParameters: {
+                    "CODE": { 
+                      "CanaryName": "comm_cmp_uk_test",
+                      "Environment": "CODE", 
+                      "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
+                    },
+                    "PROD":  { 
+                      "CanaryName": "commercial_cmp_uk",
+                      "Environment": "PROD", 
+                      "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
+                    },
+                }
+            commercial-canary-us:
+              type: cloud-formation
+              sources: cloudformation/cmp_us.yaml
+              regions:
+                - us-west-1
+              parameters:
+                templatePath: cmp_us.yaml
+                templateStageParameters: {
+                    "CODE": { 
+                      "CanaryName": "comm_cmp_us_test",
+                      "Environment": "CODE", 
+                      "S3Bucket": "cw-syn-canary-642631414762-us-west-1", 
+                    },
+                    "PROD":  { 
+                      "CanaryName": "commercial_cmp_us",
+                      "Environment": "PROD", 
+                      "S3Bucket": "cw-syn-canary-642631414762-us-west-1", 
+                    },
+                }
+            commercial-canary-aus:
+              type: cloud-formation
+              sources: cloudformation/cmp_aus.yaml
+              regions:
+                - ap-southeast-2
+              parameters:
+                templatePath: cmp_aus.yaml
+                templateStageParameters: {
+                    "CODE": { 
+                      "CanaryName": "comm_cmp_aus_test",
+                      "Environment": "CODE", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ap-southeast-2", 
+                    },
+                    "PROD":  { 
+                      "CanaryName": "commercial_cmp_aus",
+                      "Environment": "PROD", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ap-southeast-2", 
                     },
                 }
