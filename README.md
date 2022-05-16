@@ -19,7 +19,9 @@ The Ireland and Canada canaries use the same source file as they both operate un
 
 The US and Australia canaries have very similar source files, since the relationship between the ads and the CMP is the same for both regions. The difference is that each region has different cookie banners, with different button text.
 
-In Ireland and Canada we must not load ads before the CMP is interacted with and consent is given, whereas in the US and Australia we can load ads on page load. Within the canary code we test the following:
+In Ireland and Canada we must not load ads before the CMP is interacted with and consent is given, whereas in the US and Australia we can load ads on page load.
+
+Within the canary code we test the following:
 
 | Region    | On page load | Accept cookies | Clear cookies & refresh |
 | --------- |:------------:|:--------------:|:-----------------------:|
@@ -30,7 +32,7 @@ In Ireland and Canada we must not load ads before the CMP is interacted with and
 
 ## Monitoring and notifications
 
-You can find the status of each canary by logging into the frontend AWS console and navigating to CloudWatch > (sidebar) Synthetics Canaries. You'll need to switch regions at the top of the screen to see each one. A [combined dashboard of the status checks](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=Commercial-Canaries) is also available.
+You can find the status of each canary by logging into the frontend AWS console and navigating to CloudWatch > Synthetics Canaries. You'll need to switch regions at the top of the screen to see each one. A [combined dashboard](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=Commercial-Canaries) of the status checks is also available.
 
 If ads are not loading in a region, the team is informed via email by a CloudWatch Alarm which is sent to commercial.canaries@guardian.co.uk. Five consecutive failures are required to send an alarm. Another notification is sent on the first pass following five consecutive failures.
 
@@ -43,8 +45,8 @@ When you are logged into the AWS account for frontend via [Janus](https://janus.
 
 Login to AWS frontend via Janus. To find the canary in AWS: 
 - Ensure you are in the correct AWS region (`us-west-1`, `ap-southeast-2`, `eu-west-1` or `ca-central-1`)
-- Go to CloudWatch > (sidebar) Synthetics Canaries
-- Search for and select your canary. The canary is of the form: `commercial_cmp_{region}`
+- Go to CloudWatch > Synthetics Canaries
+- Search for and select your canary. The canary looks like `commercial_cmp_us`
 
 From here, you can see all the details relating to the canary and the recent runs. To see detailed logs, select Log groups from the sidebar and select your canary. At the current moment, we are experiencing infrequent and inconsistent failures; this does not indicate a serious problem with loading ads, but an inherent problem with testing ads via a headless browser.
 
@@ -55,7 +57,7 @@ From here, you can see all the details relating to the canary and the recent run
 
 ## Development
 
-Canaries are located in the src folder and are separated by region, with the exception that there is only one canary for both Ireland and Canada, since the source code is identical. Create a new branch, make your changes to the code, then push your branch. A test canary of the form: `comm_cmp_{region}_test` will be updated with your code by a Github Action and Riffraff. To check the progress of the update in Riffraff, go to History and search for the project `frontend::commercial-canary-{region}`. The canary will be created in a stopped state, so you will need to click Actions -> Start to start a run.
+Canaries are located in the src folder. Create a new branch, make your changes to the code, then push your branch. A test canary that looks like `comm_cmp_us_test` will be updated with your code by a Github Action and Riffraff. To check the progress of the update in Riffraff, go to History and search for the project `frontend::commercial-canary-(us|uk|au|ca)`. The canary will be created in a stopped state, so you will need to click Actions -> Start to start a run.
 
 Alternatively, you can locate the test canary in the AWS console, edit the canary, paste your code over the existing code and click Save.
 
@@ -66,5 +68,7 @@ Continuous deployment is set up using a combination of Github Actions and Riffra
 ### Process
 
 A push to the main branch will trigger the Github Action `deploy.yaml`, which runs the script `create-artifacts.sh` to zip up the lambda functions. These need to be zipped because AWS expects to find a zip file containing a template when creating a canary. Each zip file and CloudFormation template is uploaded to Riffraff. Continuous deployment is set up in Riffraff for each AWS region. Riffraff will then upload the files to S3 and execute the CloudFormation script to update the necessary resources, including the canary code.
+
+### Further information
 
 Diagram [here](https://docs.google.com/presentation/d/1l8QFoq7siUWdJMRq_qc8vLcNf1iFhXH5aKx3Ok5xEu4/edit#slide=id.gb8f2b491c7_0_44) - ask commercial if you need access to it.
