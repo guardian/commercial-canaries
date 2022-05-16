@@ -1,3 +1,24 @@
+Parameters:
+  CanaryName:
+    Type: String
+    MaxLength: 21
+    Default: comm_cmp_us_test
+    AllowedValues:
+      - comm_cmp_us_test
+      - commercial_cmp_us
+  Environment:
+    Type: String
+    Default: CODE
+    AllowedValues:
+      - CODE
+      - PROD
+  S3Bucket:
+    Type: String
+    Default: cw-syn-canary-642631414762-us-west-1
+Conditions:
+  IsProd: !Equals 
+    - !Ref Environment
+    - PROD
 Resources:
   CloudWatchSyntheticsRole:
     Type: AWS::IAM::Role
@@ -12,20 +33,55 @@ Resources:
       Description: CloudWatch Synthetics lambda execution role for running canaries
       ManagedPolicyArns: 
         - arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess
-      RoleName: CloudWatchSyntheticsRole-commercial_cmp_ccpa-us-west-1
+      RoleName: !Sub CloudWatchSyntheticsRole-${CanaryName}-${AWS::Region}
+  RolePermissions:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - Ref: CloudWatchSyntheticsRole
+      PolicyName: !Sub CloudWatchSyntheticsPolicy-${CanaryName}-${AWS::Region}
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+              - s3:GetObject
+              - s3:GetBucketLocation
+            Resource:
+            - !Sub arn:aws:s3:::${S3Bucket}/*
+          - Effect: Allow
+            Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+              - logs:CreateLogGroup
+            Resource:
+              - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/cwsyn-${CanaryName}-*
+          - Effect: Allow
+            Action:
+              - s3:ListAllMyBuckets
+              - xray:PutTraceSegments
+            Resource:
+              - "*"
+          - Effect: Allow
+            Action: cloudwatch:PutMetricData
+            Resource: "*"
+            Condition:
+              StringEquals:
+                cloudwatch:namespace: CloudWatchSynthetics
   SyntheticsCanary:
     Type: AWS::Synthetics::Canary
     Properties:
-      ArtifactS3Location: s3://cw-syn-results-642631414762-us-west-1/canary/commercial_cmp_ccpa-36a-1942e1bb8e94
+      ArtifactS3Location: !Sub s3://${S3Bucket}/canary/${AWS::Region}/${CanaryName}
       Code:
         Handler: pageLoadBlueprint.handler
-        S3Bucket: aws-commercial-canaries
-        S3Key: nodejs.zip
+        S3Bucket: !Sub ${S3Bucket}
+        S3Key: !Sub ${Environment}/nodejs.zip
       ExecutionRoleArn:
         Fn::GetAtt:
           - CloudWatchSyntheticsRole
           - Arn
-      Name: commercial_cmp_ccpa
+      Name: !Sub ${CanaryName}
       RunConfig: 
         TimeoutInSeconds: 120
       RuntimeVersion: syn-nodejs-puppeteer-3.5
@@ -37,27 +93,24 @@ Resources:
           Value: heartbeat
   CloudWatchAlarm:
     Type: AWS::CloudWatch::Alarm
+    Condition: IsProd
     Properties:
       ActionsEnabled: true
       AlarmActions:
-          - arn:aws:sns:us-west-1:642631414762:USCommercialCanaries
+          - !Sub arn:aws:sns:${AWS::Region}:${AWS::AccountId}:USCommercialCanaries
       AlarmDescription: Either a Front or an Article CMP has failed
-      AlarmName: US CMP failed
+      AlarmName: US CMP Failed
       ComparisonOperator: LessThanOrEqualToThreshold
       DatapointsToAlarm: 5
       Dimensions:
           - Name: CanaryName
-            Value:
-              Fn::GetAtt:
-                - SyntheticsCanary
-                - name
+            Value: !Sub ${CanaryName}
       EvaluationPeriods: 5
       MetricName: SuccessPercent
       Namespace: CloudWatchSynthetics
       OKActions:
-          - arn:aws:sns:us-west-1:642631414762:USCommercialCanaries
+          - !Sub arn:aws:sns:${AWS::Region}:${AWS::AccountId}:USCommercialCanaries
       Period: 120
       Statistic: Average
       Threshold: 80
       TreatMissingData: missing
-
