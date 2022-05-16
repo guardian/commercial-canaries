@@ -24,55 +24,15 @@ jobs:
           ./.github/scripts/create-artifacts.sh
         shell: bash
       
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ca-central-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v0.1.0
-        with:
-          app: commercial-canaries
-          stack: frontend
-          deployments: |
-            upload-ca:
-              type: aws-s3
-              sources: builds/tcfv2/nodejs.zip
-              regions:
-                - ca-central-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-ca-central-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            commercial-canary-ca:
-              type: cloud-formation
-              sources: cloudformation/cmp_ca.yaml
-              regions:
-                - ca-central-1
-              parameters:
-                templatePath: cmp_ca.yaml
-                prependStackToCloudFormationStackName: false
-                templateStageParameters: {
-                    "CODE": { 
-                      "CanaryName": "comm_cmp_ca_test",
-                      "Environment": "CODE", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
-                    },
-                    "PROD":  { 
-                      "CanaryName": "commercial_cmp_ca",
-                      "Environment": "PROD", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
-                    },
-                }
-
+      # UK TCFV2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-west-1
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
       - uses: guardian/actions-riff-raff@v0.1.0
         with:
-          app: commercial-canaries
           stack: frontend
+          app: commercial-canary-uk
           deployments: |
             upload-uk:
               type: aws-s3
@@ -105,15 +65,58 @@ jobs:
                       "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
                     },
                 }
-
+      
+      # Canada TCFV2
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ca-central-1
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+      - uses: guardian/actions-riff-raff@v0.1.0
+        with:
+          stack: frontend
+          app: commercial-canary-ca
+          deployments: |
+            upload-ca:
+              type: aws-s3
+              sources: builds/tcfv2/nodejs.zip
+              regions:
+                - ca-central-1
+              parameters:
+                bucket: cw-syn-canary-642631414762-ca-central-1
+                cacheControl: private
+                publicReadAcl: false
+                prefixStack: false
+                prefixPackage: false
+            commercial-canary-ca:
+              type: cloud-formation
+              sources: cloudformation/cmp_ca.yaml
+              regions:
+                - ca-central-1
+              parameters:
+                templatePath: cmp_ca.yaml
+                prependStackToCloudFormationStackName: false
+                templateStageParameters: {
+                    "CODE": { 
+                      "CanaryName": "comm_cmp_ca_test",
+                      "Environment": "CODE", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
+                    },
+                    "PROD":  { 
+                      "CanaryName": "commercial_cmp_ca",
+                      "Environment": "PROD", 
+                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
+                    },
+                }
+      
+      # US CCPA
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-west-1
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
       - uses: guardian/actions-riff-raff@v0.1.0
         with:
-          app: commercial-canaries
           stack: frontend
+          app: commercial-canary-us
           deployments: |
             upload-us:
               type: aws-s3
@@ -147,14 +150,15 @@ jobs:
                     },
                 }
 
+      # AUS
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ap-southeast-2
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
       - uses: guardian/actions-riff-raff@v0.1.0
         with:
-          app: commercial-canaries
           stack: frontend
+          app: commercial-canary-au
           deployments: |
             upload-aus:
               type: aws-s3
