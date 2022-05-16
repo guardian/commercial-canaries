@@ -3,7 +3,7 @@ rm -rf builds
 mkdir "builds"
 cd builds
 
-echo "Creating TCFV2 artfact..."
+echo "Creating TCFV2 artifact..."
 mkdir -p tcfv2/nodejs/node_modules
 cd tcfv2
 cp ../../src/cmp_tcfv2.js nodejs/node_modules/pageLoadBlueprint.js
