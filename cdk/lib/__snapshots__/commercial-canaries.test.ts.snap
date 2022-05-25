@@ -13,7 +13,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ap-southeast-2/CommercialCanary",
+              "-ca-central-1/canary/ap-southeast-2/commercial_canary",
             ],
           ],
         },
@@ -39,7 +39,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -130,7 +130,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -146,7 +146,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -157,7 +159,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-ap-southeast-2",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-ap-southeast-2",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -201,7 +203,7 @@ Object {
         "Dimensions": Array [
           Object {
             "Name": "CanaryName",
-            "Value": "CommercialCanary",
+            "Value": "commercial_canary",
           },
         ],
         "EvaluationPeriods": 5,
@@ -229,7 +231,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ap-southeast-2/CommercialCanary",
+              "-ca-central-1/canary/ap-southeast-2/commercial_canary",
             ],
           ],
         },
@@ -255,7 +257,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -346,7 +348,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -362,7 +364,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -373,7 +377,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-ap-southeast-2",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-ap-southeast-2",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -446,7 +450,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ca-central-1/CommercialCanary",
+              "-ca-central-1/canary/ca-central-1/commercial_canary",
             ],
           ],
         },
@@ -472,7 +476,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -563,7 +567,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -579,7 +583,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -590,7 +596,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-ca-central-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-ca-central-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -634,7 +640,7 @@ Object {
         "Dimensions": Array [
           Object {
             "Name": "CanaryName",
-            "Value": "CommercialCanary",
+            "Value": "commercial_canary",
           },
         ],
         "EvaluationPeriods": 5,
@@ -662,7 +668,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ca-central-1/CommercialCanary",
+              "-ca-central-1/canary/ca-central-1/commercial_canary",
             ],
           ],
         },
@@ -688,7 +694,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -779,7 +785,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -795,7 +801,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -806,7 +814,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-ca-central-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-ca-central-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -879,7 +887,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/eu-west-1/CommercialCanary",
+              "-ca-central-1/canary/eu-west-1/commercial_canary",
             ],
           ],
         },
@@ -905,7 +913,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -996,7 +1004,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -1012,7 +1020,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -1023,7 +1033,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-eu-west-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-eu-west-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -1067,7 +1077,7 @@ Object {
         "Dimensions": Array [
           Object {
             "Name": "CanaryName",
-            "Value": "CommercialCanary",
+            "Value": "commercial_canary",
           },
         ],
         "EvaluationPeriods": 5,
@@ -1095,7 +1105,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/eu-west-1/CommercialCanary",
+              "-ca-central-1/canary/eu-west-1/commercial_canary",
             ],
           ],
         },
@@ -1121,7 +1131,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -1212,7 +1222,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -1228,7 +1238,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -1239,7 +1251,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-eu-west-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-eu-west-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -1312,7 +1324,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/us-west-1/CommercialCanary",
+              "-ca-central-1/canary/us-west-1/commercial_canary",
             ],
           ],
         },
@@ -1338,7 +1350,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -1429,7 +1441,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -1445,7 +1457,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -1456,7 +1470,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-us-west-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-us-west-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",
@@ -1500,7 +1514,7 @@ Object {
         "Dimensions": Array [
           Object {
             "Name": "CanaryName",
-            "Value": "CommercialCanary",
+            "Value": "commercial_canary",
           },
         ],
         "EvaluationPeriods": 5,
@@ -1528,7 +1542,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/us-west-1/CommercialCanary",
+              "-ca-central-1/canary/us-west-1/commercial_canary",
             ],
           ],
         },
@@ -1554,7 +1568,7 @@ Object {
             "Arn",
           ],
         },
-        "Name": "CommercialCanary",
+        "Name": "commercial_canary",
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
@@ -1645,7 +1659,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-CommercialCanary-*",
+                        ":log-group:/aws/lambda/cwsyn-commercial_canary-*",
                       ],
                     ],
                   },
@@ -1661,7 +1675,9 @@ Object {
                 Object {
                   "Action": "cloudwatch:PutMetricData",
                   "Condition": Object {
-                    "cloudwatch:namespace": "CloudWatchSynthetics",
+                    "StringEquals": Object {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
                   },
                   "Effect": "Allow",
                   "Resource": "*",
@@ -1672,7 +1688,7 @@ Object {
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-CommercialCanary-us-west-1",
+        "RoleName": "CloudWatchSyntheticsRole-commercial_canary-us-west-1",
         "Tags": Array [
           Object {
             "Key": "gu:cdk:version",

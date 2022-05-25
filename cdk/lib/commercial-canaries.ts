@@ -24,7 +24,7 @@ export class CommercialCanaries extends GuStack {
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
-		const canaryName = 'CommercialCanary';
+		const canaryName = 'commercial_canary';
 		const S3Bucket = `cw-syn-canary-${accountId}-ca-central-1`;
 
 		const policyDocument = new iam.PolicyDocument({
@@ -55,7 +55,9 @@ export class CommercialCanaries extends GuStack {
 					actions: ['cloudwatch:PutMetricData'],
 					effect: iam.Effect.ALLOW,
 					conditions: {
-						'cloudwatch:namespace': 'CloudWatchSynthetics',
+						StringEquals: {
+							'cloudwatch:namespace': 'CloudWatchSynthetics',
+						},
 					},
 				}),
 			],
