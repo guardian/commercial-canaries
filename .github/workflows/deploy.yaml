@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "*"
+      - '*'
 
 jobs:
   upload:
@@ -15,15 +15,37 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
+
       - name: Run script to create zip files
         run: |
           chmod +x ./.github/scripts/create-artifacts.sh
           ./.github/scripts/create-artifacts.sh
         shell: bash
-      
+
+      - name: Install CDK dependencies
+        working-directory: './cdk'
+        run: yarn
+
+      - name: CDK Test
+        working-directory: './cdk'
+        run: yarn test
+
+      - name: CDK Lint
+        working-directory: './cdk'
+        run: yarn lint
+
+      - name: CDK Build
+        working-directory: './cdk'
+        run: yarn build
+
+      - name: CDK Synth
+        working-directory: './cdk'
+        run: yarn synth
+
       # UK TCFv2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -47,27 +69,17 @@ jobs:
                 prefixPackage: false
             commercial-canary-uk:
               type: cloud-formation
-              sources: cloudformation/cmp_uk.yaml
+              sources: cdk/cdk.out/CommercialCanaries-UK-CODE.template.json,CommercialCanaries-UK-PROD.template.json
               regions:
                 - eu-west-1
               parameters:
-                templatePath: cmp_uk.yaml
+                templateStagePaths:
+                  CODE: CommercialCanaries-UK-CODE.template.json
+                  PROD: CommercialCanaries-UK-PROD.template.json
                 cloudFormationStackByTags: false
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
-                templateStageParameters: {
-                    "CODE": { 
-                      "CanaryName": "comm_cmp_uk_test",
-                      "Environment": "CODE", 
-                      "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
-                    },
-                    "PROD":  { 
-                      "CanaryName": "commercial_cmp_uk",
-                      "Environment": "PROD", 
-                      "S3Bucket": "cw-syn-canary-642631414762-eu-west-1", 
-                    },
-                }
-      
+
       # Canada TCFv2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -91,27 +103,17 @@ jobs:
                 prefixPackage: false
             commercial-canary-ca:
               type: cloud-formation
-              sources: cloudformation/cmp_ca.yaml
+              sources: cdk/cdk.out/CommercialCanaries-CA-CODE.template.json,CommercialCanaries-CA-PROD.template.json
               regions:
                 - ca-central-1
               parameters:
-                templatePath: cmp_ca.yaml
+                templateStagePaths:
+                  CODE: CommercialCanaries-CA-CODE.template.json
+                  PROD: CommercialCanaries-CA-PROD.template.json
                 cloudFormationStackByTags: false
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
-                templateStageParameters: {
-                    "CODE": { 
-                      "CanaryName": "comm_cmp_ca_test",
-                      "Environment": "CODE", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
-                    },
-                    "PROD":  { 
-                      "CanaryName": "commercial_cmp_ca",
-                      "Environment": "PROD", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ca-central-1", 
-                    },
-                }
-      
+
       # US CCPA
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -135,26 +137,16 @@ jobs:
                 prefixPackage: false
             commercial-canary-us:
               type: cloud-formation
-              sources: cloudformation/cmp_us.yaml
+              sources: cdk/cdk.out/CommercialCanaries-US-CODE.template.json,CommercialCanaries-US-PROD.template.json
               regions:
                 - us-west-1
               parameters:
-                templatePath: cmp_us.yaml
+                templateStagePaths:
+                  CODE: CommercialCanaries-US-CODE.template.json
+                  PROD: CommercialCanaries-US-PROD.template.json
                 cloudFormationStackByTags: false
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
-                templateStageParameters: {
-                    "CODE": { 
-                      "CanaryName": "comm_cmp_us_test",
-                      "Environment": "CODE", 
-                      "S3Bucket": "cw-syn-canary-642631414762-us-west-1", 
-                    },
-                    "PROD":  { 
-                      "CanaryName": "commercial_cmp_us",
-                      "Environment": "PROD", 
-                      "S3Bucket": "cw-syn-canary-642631414762-us-west-1", 
-                    },
-                }
 
       # AUS
       - uses: aws-actions/configure-aws-credentials@v1
@@ -179,23 +171,13 @@ jobs:
                 prefixPackage: false
             commercial-canary-aus:
               type: cloud-formation
-              sources: cloudformation/cmp_aus.yaml
+              sources: cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json,CommercialCanaries-AUS-PROD.template.json
               regions:
                 - ap-southeast-2
               parameters:
-                templatePath: cmp_aus.yaml
+                templateStagePaths:
+                  CODE: CommercialCanaries-AUS-CODE.template.json
+                  PROD: CommercialCanaries-AUS-PROD.template.json
                 cloudFormationStackByTags: false
                 prependStackToCloudFormationStackName: false
                 cloudFormationStackName: commercial-canary
-                templateStageParameters: {
-                    "CODE": { 
-                      "CanaryName": "comm_cmp_aus_test",
-                      "Environment": "CODE", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ap-southeast-2", 
-                    },
-                    "PROD":  { 
-                      "CanaryName": "commercial_cmp_aus",
-                      "Environment": "PROD", 
-                      "S3Bucket": "cw-syn-canary-642631414762-ap-southeast-2", 
-                    },
-                }
