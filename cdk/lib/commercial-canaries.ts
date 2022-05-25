@@ -24,7 +24,7 @@ export class CommercialCanaries extends GuStack {
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
-		const canaryName = `comm_cmp_canary_${stage}`;
+		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
 		const S3Bucket = `cw-syn-canary-${accountId}-ca-central-1`;
 
 		const policyDocument = new iam.PolicyDocument({
