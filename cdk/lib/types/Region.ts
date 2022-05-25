@@ -1,5 +1,5 @@
 export type Region = {
-	name: string;
-	shortName: string;
+	location: string;
+	locationAbbr: string;
 	awsRegion: string;
 };

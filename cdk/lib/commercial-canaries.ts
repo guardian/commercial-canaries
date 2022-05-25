@@ -13,14 +13,15 @@ import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
 interface StackProps extends GuStackProps {
-	region: string;
+	awsRegion: string;
+	location: string;
 }
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: StackProps) {
 		super(scope, id, props);
 
-		const { region, stage } = props;
+		const { location, awsRegion, stage } = props;
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
@@ -38,7 +39,7 @@ export class CommercialCanaries extends GuStack {
 				}),
 				new iam.PolicyStatement({
 					resources: [
-						`arn:aws:logs:${region}:${accountId}:log-group:/aws/lambda/cwsyn-${canaryName}-*`,
+						`arn:aws:logs:${awsRegion}:${accountId}:log-group:/aws/lambda/cwsyn-${canaryName}-*`,
 					],
 					actions: [
 						'logs:CreateLogStream',
@@ -67,7 +68,7 @@ export class CommercialCanaries extends GuStack {
 
 		const role = new iam.Role(this, 'Role', {
 			assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
-			roleName: `CloudWatchSyntheticsRole-${canaryName}-${region}`,
+			roleName: `CloudWatchSyntheticsRole-${canaryName}-${awsRegion}`,
 			description:
 				'CloudWatch Synthetics lambda execution role for running canaries',
 			managedPolicies: [
@@ -82,7 +83,7 @@ export class CommercialCanaries extends GuStack {
 		});
 
 		new synthetics.CfnCanary(this, 'Canary', {
-			artifactS3Location: `s3://${S3Bucket}/canary/${region}/${canaryName}`,
+			artifactS3Location: `s3://${S3Bucket}/canary/${awsRegion}/${canaryName}`,
 			code: {
 				handler: 'pageLoadBlueprint.handler',
 				s3Bucket: S3Bucket,
@@ -108,14 +109,14 @@ export class CommercialCanaries extends GuStack {
 
 		if (stage === 'PROD') {
 			const topic = new Topic(this, 'Topic', {
-				topicName: 'Commercial Canary Topic',
+				topicName: `Commercial Canary Topic ${location}`,
 			});
 			topic.addSubscription(new EmailSubscription(email));
 
 			const alarm = new Alarm(this, `Alarm`, {
 				actionsEnabled: true,
 				alarmDescription: 'Either a Front or an Article CMP has failed',
-				alarmName: `Commercial canary in ${region} Alarm`,
+				alarmName: `Commercial canary in ${awsRegion} Alarm`,
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,

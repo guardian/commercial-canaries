@@ -8,10 +8,11 @@ const app = new App();
 const stages = ['CODE', 'PROD'];
 
 stages.forEach((stage) => {
-	regions.forEach(({ shortName: region, awsRegion }) => {
-		new CommercialCanaries(app, `CommercialCanaries-${region}-${stage}`, {
+	regions.forEach(({ locationAbbr, location, awsRegion }) => {
+		new CommercialCanaries(app, `CommercialCanaries-${locationAbbr}-${stage}`, {
 			stack: 'frontend',
-			region: awsRegion,
+			location,
+			awsRegion,
 			stage,
 		});
 	});

@@ -2,23 +2,23 @@ import type { Region } from './types/Region';
 
 export const regions: Region[] = [
 	{
-		name: 'UK',
+		location: 'UK',
+		locationAbbr: 'UK',
 		awsRegion: 'eu-west-1',
-		shortName: 'UK',
 	},
 	{
-		name: 'Canada',
+		location: 'Canada',
+		locationAbbr: 'CA',
 		awsRegion: 'ca-central-1',
-		shortName: 'CA',
 	},
 	{
-		name: 'US',
+		location: 'US',
+		locationAbbr: 'US',
 		awsRegion: 'us-west-1',
-		shortName: 'US',
 	},
 	{
-		name: 'Australia',
+		location: 'Australia',
+		locationAbbr: 'AUS',
 		awsRegion: 'ap-southeast-2',
-		shortName: 'AUS',
 	},
 ];
