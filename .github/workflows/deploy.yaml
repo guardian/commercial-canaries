@@ -69,7 +69,7 @@ jobs:
                 prefixPackage: false
             commercial-canary-uk:
               type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-UK-CODE.template.json,CommercialCanaries-UK-PROD.template.json
+              sources: cdk/cdk.out/CommercialCanaries-UK-CODE.template.json,cdk/cdk.out/CommercialCanaries-UK-PROD.template.json
               regions:
                 - eu-west-1
               parameters:
@@ -103,7 +103,7 @@ jobs:
                 prefixPackage: false
             commercial-canary-ca:
               type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-CA-CODE.template.json,CommercialCanaries-CA-PROD.template.json
+              sources: cdk/cdk.out/CommercialCanaries-CA-CODE.template.json,cdk/cdk.out/CommercialCanaries-CA-PROD.template.json
               regions:
                 - ca-central-1
               parameters:
@@ -137,7 +137,7 @@ jobs:
                 prefixPackage: false
             commercial-canary-us:
               type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-US-CODE.template.json,CommercialCanaries-US-PROD.template.json
+              sources: cdk/cdk.out/CommercialCanaries-US-CODE.template.json,cdk/cdk.out/CommercialCanaries-US-PROD.template.json
               regions:
                 - us-west-1
               parameters:
@@ -171,7 +171,7 @@ jobs:
                 prefixPackage: false
             commercial-canary-aus:
               type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json,CommercialCanaries-AUS-PROD.template.json
+              sources: cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json,cdk/cdk.out/CommercialCanaries-AUS-PROD.template.json
               regions:
                 - ap-southeast-2
               parameters:
