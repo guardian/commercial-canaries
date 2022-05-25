@@ -102,7 +102,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -307,7 +318,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -513,7 +535,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -718,7 +751,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -924,7 +968,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -1129,7 +1184,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -1335,7 +1401,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [
@@ -1540,7 +1617,18 @@ Object {
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": "arn:aws:s3:::\${S3Bucket}/*",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
                 },
                 Object {
                   "Action": Array [

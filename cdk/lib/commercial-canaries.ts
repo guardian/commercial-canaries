@@ -30,7 +30,7 @@ export class CommercialCanaries extends GuStack {
 		const policyDocument = new iam.PolicyDocument({
 			statements: [
 				new iam.PolicyStatement({
-					resources: ['arn:aws:s3:::${S3Bucket}/*'],
+					resources: [`arn:aws:s3:::${S3Bucket}/*`],
 					actions: ['s3:PutObject', 's3:GetObject', 's3:GetBucketLocation'],
 					effect: iam.Effect.ALLOW,
 				}),
