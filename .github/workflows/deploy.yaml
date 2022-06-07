@@ -51,133 +51,161 @@ jobs:
         with:
           aws-region: eu-west-1
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v0.1.0
+      - uses: guardian/actions-riff-raff@v1
         with:
-          stack: frontend
           app: commercial-canary-uk
-          deployments: |
-            upload-uk:
-              type: aws-s3
-              sources: builds/tcfv2/nodejs.zip
-              regions:
-                - eu-west-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-eu-west-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            commercial-canary-uk:
-              type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-UK-CODE.template.json,cdk/cdk.out/CommercialCanaries-UK-PROD.template.json
-              regions:
-                - eu-west-1
-              parameters:
-                templateStagePaths:
-                  CODE: CommercialCanaries-UK-CODE.template.json
-                  PROD: CommercialCanaries-UK-PROD.template.json
-                cloudFormationStackByTags: false
-                prependStackToCloudFormationStackName: false
-                cloudFormationStackName: commercial-canary
+          config: |
+            stacks:
+             - frontend
+            regions:
+              - eu-west-1
+            allowedStages:
+              - CODE
+              - PROD
+            deployments: |
+              upload-uk:
+                type: aws-s3
+                sources: builds/tcfv2/nodejs.zip
+                regions:
+                  - eu-west-1
+                parameters:
+                  bucket: cw-syn-canary-642631414762-eu-west-1
+                  cacheControl: private
+                  publicReadAcl: false
+                  prefixStack: false
+                  prefixPackage: false
+              commercial-canary-uk:
+                type: cloud-formation
+                sources: cdk/cdk.out/CommercialCanaries-UK-CODE.template.json,cdk/cdk.out/CommercialCanaries-UK-PROD.template.json
+                regions:
+                  - eu-west-1
+                parameters:
+                  templateStagePaths:
+                    CODE: CommercialCanaries-UK-CODE.template.json
+                    PROD: CommercialCanaries-UK-PROD.template.json
+                  cloudFormationStackByTags: false
+                  prependStackToCloudFormationStackName: false
+                  cloudFormationStackName: commercial-canary
 
       # Canada TCFv2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ca-central-1
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v0.1.0
+      - uses: guardian/actions-riff-raff@v1
         with:
-          stack: frontend
           app: commercial-canary-ca
-          deployments: |
-            upload-ca:
-              type: aws-s3
-              sources: builds/tcfv2/nodejs.zip
-              regions:
-                - ca-central-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-ca-central-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            commercial-canary-ca:
-              type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-CA-CODE.template.json,cdk/cdk.out/CommercialCanaries-CA-PROD.template.json
-              regions:
-                - ca-central-1
-              parameters:
-                templateStagePaths:
-                  CODE: CommercialCanaries-CA-CODE.template.json
-                  PROD: CommercialCanaries-CA-PROD.template.json
-                cloudFormationStackByTags: false
-                prependStackToCloudFormationStackName: false
-                cloudFormationStackName: commercial-canary
+          config: |
+            stacks:
+             - frontend
+            regions:
+              - ca-central-1
+            allowedStages:
+              - CODE
+              - PROD
+            deployments: |
+              upload-ca:
+                type: aws-s3
+                sources: builds/tcfv2/nodejs.zip
+                regions:
+                  - ca-central-1
+                parameters:
+                  bucket: cw-syn-canary-642631414762-ca-central-1
+                  cacheControl: private
+                  publicReadAcl: false
+                  prefixStack: false
+                  prefixPackage: false
+              commercial-canary-ca:
+                type: cloud-formation
+                sources: cdk/cdk.out/CommercialCanaries-CA-CODE.template.json,cdk/cdk.out/CommercialCanaries-CA-PROD.template.json
+                regions:
+                  - ca-central-1
+                parameters:
+                  templateStagePaths:
+                    CODE: CommercialCanaries-CA-CODE.template.json
+                    PROD: CommercialCanaries-CA-PROD.template.json
+                  cloudFormationStackByTags: false
+                  prependStackToCloudFormationStackName: false
+                  cloudFormationStackName: commercial-canary
 
       # US CCPA
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-west-1
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v0.1.0
+      - uses: guardian/actions-riff-raff@v1
         with:
-          stack: frontend
           app: commercial-canary-us
-          deployments: |
-            upload-us:
-              type: aws-s3
-              sources: builds/ccpa/nodejs.zip
-              regions:
-                - us-west-1
-              parameters:
-                bucket: cw-syn-canary-642631414762-us-west-1
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            commercial-canary-us:
-              type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-US-CODE.template.json,cdk/cdk.out/CommercialCanaries-US-PROD.template.json
-              regions:
-                - us-west-1
-              parameters:
-                templateStagePaths:
-                  CODE: CommercialCanaries-US-CODE.template.json
-                  PROD: CommercialCanaries-US-PROD.template.json
-                cloudFormationStackByTags: false
-                prependStackToCloudFormationStackName: false
-                cloudFormationStackName: commercial-canary
+          config: |
+            stacks:
+             - frontend
+            regions:
+              - us-west-1
+            allowedStages:
+              - CODE
+              - PROD
+            deployments: |
+              upload-us:
+                type: aws-s3
+                sources: builds/ccpa/nodejs.zip
+                regions:
+                  - us-west-1
+                parameters:
+                  bucket: cw-syn-canary-642631414762-us-west-1
+                  cacheControl: private
+                  publicReadAcl: false
+                  prefixStack: false
+                  prefixPackage: false
+              commercial-canary-us:
+                type: cloud-formation
+                sources: cdk/cdk.out/CommercialCanaries-US-CODE.template.json,cdk/cdk.out/CommercialCanaries-US-PROD.template.json
+                regions:
+                  - us-west-1
+                parameters:
+                  templateStagePaths:
+                    CODE: CommercialCanaries-US-CODE.template.json
+                    PROD: CommercialCanaries-US-PROD.template.json
+                  cloudFormationStackByTags: false
+                  prependStackToCloudFormationStackName: false
+                  cloudFormationStackName: commercial-canary
 
       # AUS
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ap-southeast-2
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v0.1.0
+      - uses: guardian/actions-riff-raff@v1
         with:
-          stack: frontend
           app: commercial-canary-au
-          deployments: |
-            upload-aus:
-              type: aws-s3
-              sources: builds/aus/nodejs.zip
-              regions:
-                - ap-southeast-2
-              parameters:
-                bucket: cw-syn-canary-642631414762-ap-southeast-2
-                cacheControl: private
-                publicReadAcl: false
-                prefixStack: false
-                prefixPackage: false
-            commercial-canary-aus:
-              type: cloud-formation
-              sources: cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json,cdk/cdk.out/CommercialCanaries-AUS-PROD.template.json
-              regions:
-                - ap-southeast-2
-              parameters:
-                templateStagePaths:
-                  CODE: CommercialCanaries-AUS-CODE.template.json
-                  PROD: CommercialCanaries-AUS-PROD.template.json
-                cloudFormationStackByTags: false
-                prependStackToCloudFormationStackName: false
-                cloudFormationStackName: commercial-canary
+          config: |
+            stacks:
+             - frontend
+            regions:
+              - ap-southeast-2
+            allowedStages:
+              - CODE
+              - PROD
+            deployments: |
+              upload-aus:
+                type: aws-s3
+                sources: builds/aus/nodejs.zip
+                regions:
+                  - ap-southeast-2
+                parameters:
+                  bucket: cw-syn-canary-642631414762-ap-southeast-2
+                  cacheControl: private
+                  publicReadAcl: false
+                  prefixStack: false
+                  prefixPackage: false
+              commercial-canary-aus:
+                type: cloud-formation
+                sources: cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json,cdk/cdk.out/CommercialCanaries-AUS-PROD.template.json
+                regions:
+                  - ap-southeast-2
+                parameters:
+                  templateStagePaths:
+                    CODE: CommercialCanaries-AUS-CODE.template.json
+                    PROD: CommercialCanaries-AUS-PROD.template.json
+                  cloudFormationStackByTags: false
+                  prependStackToCloudFormationStackName: false
+                  cloudFormationStackName: commercial-canary
