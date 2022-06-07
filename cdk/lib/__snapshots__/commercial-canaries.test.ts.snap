@@ -197,7 +197,7 @@ Object {
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary in ap-southeast-2 Alarm",
+        "AlarmName": "Commercial canary in Australia (ap-southeast-2) Alarm",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -634,7 +634,7 @@ Object {
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary in ca-central-1 Alarm",
+        "AlarmName": "Commercial canary in Canada (ca-central-1) Alarm",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1071,7 +1071,7 @@ Object {
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary in eu-west-1 Alarm",
+        "AlarmName": "Commercial canary in UK (eu-west-1) Alarm",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1508,7 +1508,7 @@ Object {
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary in us-west-1 Alarm",
+        "AlarmName": "Commercial canary in US (us-west-1) Alarm",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [

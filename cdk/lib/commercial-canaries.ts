@@ -116,7 +116,7 @@ export class CommercialCanaries extends GuStack {
 			const alarm = new Alarm(this, `Alarm`, {
 				actionsEnabled: true,
 				alarmDescription: 'Either a Front or an Article CMP has failed',
-				alarmName: `Commercial canary in ${awsRegion} Alarm`,
+				alarmName: `Commercial canary in ${location} (${awsRegion}) Alarm`,
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,
