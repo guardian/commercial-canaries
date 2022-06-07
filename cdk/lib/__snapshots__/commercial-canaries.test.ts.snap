@@ -13,7 +13,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ap-southeast-2/comm_cmp_canary_code",
+              "-ap-southeast-2/canary/ap-southeast-2/comm_cmp_canary_code",
             ],
           ],
         },
@@ -27,7 +27,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ap-southeast-2",
               ],
             ],
           },
@@ -110,7 +110,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ap-southeast-2/*",
                       ],
                     ],
                   },
@@ -231,7 +231,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ap-southeast-2/comm_cmp_canary_prod",
+              "-ap-southeast-2/canary/ap-southeast-2/comm_cmp_canary_prod",
             ],
           ],
         },
@@ -245,7 +245,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ap-southeast-2",
               ],
             ],
           },
@@ -328,7 +328,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ap-southeast-2/*",
                       ],
                     ],
                   },
@@ -887,7 +887,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/eu-west-1/comm_cmp_canary_code",
+              "-eu-west-1/canary/eu-west-1/comm_cmp_canary_code",
             ],
           ],
         },
@@ -901,7 +901,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-eu-west-1",
               ],
             ],
           },
@@ -984,7 +984,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-eu-west-1/*",
                       ],
                     ],
                   },
@@ -1105,7 +1105,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/eu-west-1/comm_cmp_canary_prod",
+              "-eu-west-1/canary/eu-west-1/comm_cmp_canary_prod",
             ],
           ],
         },
@@ -1119,7 +1119,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-eu-west-1",
               ],
             ],
           },
@@ -1202,7 +1202,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-eu-west-1/*",
                       ],
                     ],
                   },
@@ -1324,7 +1324,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/us-west-1/comm_cmp_canary_code",
+              "-us-west-1/canary/us-west-1/comm_cmp_canary_code",
             ],
           ],
         },
@@ -1338,7 +1338,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-us-west-1",
               ],
             ],
           },
@@ -1421,7 +1421,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-us-west-1/*",
                       ],
                     ],
                   },
@@ -1542,7 +1542,7 @@ Object {
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/us-west-1/comm_cmp_canary_prod",
+              "-us-west-1/canary/us-west-1/comm_cmp_canary_prod",
             ],
           ],
         },
@@ -1556,7 +1556,7 @@ Object {
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-us-west-1",
               ],
             ],
           },
@@ -1639,7 +1639,7 @@ Object {
                         Object {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-us-west-1/*",
                       ],
                     ],
                   },
