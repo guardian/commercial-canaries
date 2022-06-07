@@ -62,7 +62,7 @@ jobs:
             allowedStages:
               - CODE
               - PROD
-            deployments: |
+            deployments:
               upload-uk:
                 type: aws-s3
                 sources: 
@@ -106,7 +106,7 @@ jobs:
             allowedStages:
               - CODE
               - PROD
-            deployments: |
+            deployments:
               upload-ca:
                 type: aws-s3
                 sources: 
@@ -150,7 +150,7 @@ jobs:
             allowedStages:
               - CODE
               - PROD
-            deployments: |
+            deployments:
               upload-us:
                 type: aws-s3
                 sources: 
@@ -194,7 +194,7 @@ jobs:
             allowedStages:
               - CODE
               - PROD
-            deployments: |
+            deployments:
               upload-aus:
                 type: aws-s3
                 sources: 
