@@ -53,12 +53,15 @@ jobs:
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
       - uses: guardian/actions-riff-raff@v1
         with:
-          app: commercial-canary-uk
+          app: commercial-canaries
           config: |
             stacks:
              - frontend
             regions:
               - eu-west-1
+              - ca-central-1
+              - us-west-1
+              - ap-southeast-2
             allowedStages:
               - CODE
               - PROD
@@ -89,24 +92,6 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
-
-      # Canada TCFv2
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ca-central-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v1
-        with:
-          app: commercial-canary-ca
-          config: |
-            stacks:
-             - frontend
-            regions:
-              - ca-central-1
-            allowedStages:
-              - CODE
-              - PROD
-            deployments:
               upload-ca:
                 type: aws-s3
                 sources: 
@@ -133,24 +118,6 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
-
-      # US CCPA
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-west-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v1
-        with:
-          app: commercial-canary-us
-          config: |
-            stacks:
-             - frontend
-            regions:
-              - us-west-1
-            allowedStages:
-              - CODE
-              - PROD
-            deployments:
               upload-us:
                 type: aws-s3
                 sources: 
@@ -177,24 +144,6 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
-
-      # AUS
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ap-southeast-2
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-      - uses: guardian/actions-riff-raff@v1
-        with:
-          app: commercial-canary-au
-          config: |
-            stacks:
-             - frontend
-            regions:
-              - ap-southeast-2
-            allowedStages:
-              - CODE
-              - PROD
-            deployments:
               upload-aus:
                 type: aws-s3
                 sources: 
