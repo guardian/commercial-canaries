@@ -108,9 +108,7 @@ export class CommercialCanaries extends GuStack {
 		});
 
 		if (stage === 'PROD') {
-			const topic = new Topic(this, 'Topic', {
-				topicName: `Commercial Canary Topic ${location}`,
-			});
+			const topic = new Topic(this, 'Topic');
 			topic.addSubscription(new EmailSubscription(email));
 
 			const alarm = new Alarm(this, `Alarm`, {
