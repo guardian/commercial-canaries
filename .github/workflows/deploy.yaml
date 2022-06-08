@@ -92,6 +92,7 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+                  manageStackPolicy: false
               upload-ca:
                 type: aws-s3
                 sources: 
@@ -118,6 +119,7 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+                  manageStackPolicy: false
               upload-us:
                 type: aws-s3
                 sources: 
@@ -144,6 +146,7 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+                  manageStackPolicy: false
               upload-aus:
                 type: aws-s3
                 sources: 
@@ -170,3 +173,4 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+                  manageStackPolicy: false
