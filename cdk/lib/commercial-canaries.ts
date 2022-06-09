@@ -1,7 +1,11 @@
 import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import type { App } from 'aws-cdk-lib';
-import { aws_iam as iam, aws_synthetics as synthetics } from 'aws-cdk-lib';
+import {
+	Duration,
+	aws_iam as iam,
+	aws_synthetics as synthetics,
+} from 'aws-cdk-lib';
 import {
 	Alarm,
 	ComparisonOperator,
@@ -14,14 +18,13 @@ import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
 interface StackProps extends GuStackProps {
 	awsRegion: string;
-	location: string;
 }
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: StackProps) {
 		super(scope, id, props);
 
-		const { location, awsRegion, stage } = props;
+		const { awsRegion, stage } = props;
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
@@ -114,13 +117,15 @@ export class CommercialCanaries extends GuStack {
 			const alarm = new Alarm(this, `Alarm`, {
 				actionsEnabled: true,
 				alarmDescription: 'Either a Front or an Article CMP has failed',
-				alarmName: `Commercial canary in ${location} (${awsRegion}) Alarm`,
+				alarmName: `Commercial canary`,
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,
 				metric: new Metric({
 					namespace: 'CloudWatchSynthetics',
 					metricName: 'SuccessPercent',
+					statistic: 'avg',
+					period: Duration.minutes(2),
 					dimensionsMap: {
 						CanaryName: canaryName,
 					},

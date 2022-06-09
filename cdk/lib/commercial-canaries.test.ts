@@ -9,7 +9,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'CODE',
 			awsRegion: 'eu-west-1',
-			location: 'UK',
 		});
 
 		const template = Template.fromStack(stack);
@@ -22,7 +21,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'PROD',
 			awsRegion: 'eu-west-1',
-			location: 'UK',
 		});
 
 		const template = Template.fromStack(stack);
@@ -35,7 +33,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'CODE',
 			awsRegion: 'ca-central-1',
-			location: 'Canada',
 		});
 
 		const template = Template.fromStack(stack);
@@ -48,7 +45,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'PROD',
 			awsRegion: 'ca-central-1',
-			location: 'Canada',
 		});
 
 		const template = Template.fromStack(stack);
@@ -61,7 +57,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'CODE',
 			awsRegion: 'us-west-1',
-			location: 'US',
 		});
 
 		const template = Template.fromStack(stack);
@@ -74,7 +69,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'PROD',
 			awsRegion: 'us-west-1',
-			location: 'US',
 		});
 
 		const template = Template.fromStack(stack);
@@ -87,7 +81,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'CODE',
 			awsRegion: 'ap-southeast-2',
-			location: 'Australia',
 		});
 
 		const template = Template.fromStack(stack);
@@ -100,7 +93,6 @@ describe('The CommercialCanaries stack', () => {
 			stack: 'frontend',
 			stage: 'PROD',
 			awsRegion: 'ap-southeast-2',
-			location: 'Australia',
 		});
 
 		const template = Template.fromStack(stack);
