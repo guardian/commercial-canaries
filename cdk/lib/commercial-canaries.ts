@@ -94,7 +94,7 @@ export class CommercialCanaries extends GuStack {
 			},
 			executionRoleArn: role.roleArn,
 			name: canaryName,
-			runtimeVersion: 'syn-nodejs-puppeteer-3.5',
+			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
 			schedule: {
 				expression: 'rate(2 minutes)',
 			},

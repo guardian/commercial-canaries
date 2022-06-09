@@ -43,7 +43,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -261,7 +261,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -479,7 +479,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -697,7 +697,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -915,7 +915,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1133,7 +1133,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1351,7 +1351,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1569,7 +1569,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
