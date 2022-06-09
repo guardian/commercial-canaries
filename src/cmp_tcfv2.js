@@ -4,10 +4,7 @@ const log = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
-/**
- * We use custom log messages so that we can easily differentiate 
- * between logs from this file and other logs in Cloudwatch.
- */
+// So we can differentiate between logs from this file and other logs in Cloudwatch.
 const logInfoMessage = (message) => {
 	log.info(`GUCanaryRun. Message: ${message}`);
 }
@@ -208,7 +205,7 @@ const pageLoadBlueprint = async function () {
 	});
 
 	/**
-	 * Check front as first navigation. Then check that ads load when viewing an article.
+	 * Check front as first navigation. Then, check that ads load when viewing an article.
 	 */
 	await checkPages(
 		// The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
