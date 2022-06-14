@@ -28,7 +28,8 @@ export class CommercialCanaries extends GuStack {
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
-		const S3Bucket = `cw-syn-canary-${accountId}-${awsRegion}`;
+		const S3BucketCanary = `cw-syn-canary-${accountId}-${awsRegion}`;
+		const S3BucketResults = `cw-syn-results-${accountId}-${awsRegion}`;
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
@@ -36,7 +37,12 @@ export class CommercialCanaries extends GuStack {
 		const policyDocument = new iam.PolicyDocument({
 			statements: [
 				new iam.PolicyStatement({
-					resources: [`arn:aws:s3:::${S3Bucket}/*`],
+					resources: [`arn:aws:s3:::${S3BucketCanary}/*`],
+					actions: ['s3:PutObject', 's3:GetObject', 's3:GetBucketLocation'],
+					effect: iam.Effect.ALLOW,
+				}),
+				new iam.PolicyStatement({
+					resources: [`arn:aws:s3:::${S3BucketResults}/*`],
 					actions: ['s3:PutObject', 's3:GetObject', 's3:GetBucketLocation'],
 					effect: iam.Effect.ALLOW,
 				}),
@@ -86,15 +92,15 @@ export class CommercialCanaries extends GuStack {
 		});
 
 		new synthetics.CfnCanary(this, 'Canary', {
-			artifactS3Location: `s3://${S3Bucket}/canary/${awsRegion}/${canaryName}`,
+			artifactS3Location: `s3://${S3BucketResults}/${stage.toUpperCase()}`,
 			code: {
 				handler: 'pageLoadBlueprint.handler',
-				s3Bucket: S3Bucket,
+				s3Bucket: S3BucketCanary,
 				s3Key: `${stage}/nodejs.zip`,
 			},
 			executionRoleArn: role.roleArn,
 			name: canaryName,
-			runtimeVersion: 'syn-nodejs-puppeteer-3.5',
+			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
 			schedule: {
 				expression: 'rate(2 minutes)',
 			},

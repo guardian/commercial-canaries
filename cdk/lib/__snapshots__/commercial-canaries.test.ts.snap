@@ -9,11 +9,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/canary/ap-southeast-2/comm_cmp_canary_code",
+              "-ap-southeast-2/CODE",
             ],
           ],
         },
@@ -43,7 +43,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -107,6 +107,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -227,11 +247,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/canary/ap-southeast-2/comm_cmp_canary_prod",
+              "-ap-southeast-2/PROD",
             ],
           ],
         },
@@ -261,7 +281,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -325,6 +345,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -445,11 +485,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ca-central-1/comm_cmp_canary_code",
+              "-ca-central-1/CODE",
             ],
           ],
         },
@@ -479,7 +519,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -543,6 +583,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -663,11 +723,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/canary/ca-central-1/comm_cmp_canary_prod",
+              "-ca-central-1/PROD",
             ],
           ],
         },
@@ -697,7 +757,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -761,6 +821,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -881,11 +961,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/canary/eu-west-1/comm_cmp_canary_code",
+              "-eu-west-1/CODE",
             ],
           ],
         },
@@ -915,7 +995,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -979,6 +1059,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -1099,11 +1199,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/canary/eu-west-1/comm_cmp_canary_prod",
+              "-eu-west-1/PROD",
             ],
           ],
         },
@@ -1133,7 +1233,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1197,6 +1297,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -1317,11 +1437,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/canary/us-west-1/comm_cmp_canary_code",
+              "-us-west-1/CODE",
             ],
           ],
         },
@@ -1351,7 +1471,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1415,6 +1535,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
@@ -1535,11 +1675,11 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-canary-",
+              "s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/canary/us-west-1/comm_cmp_canary_prod",
+              "-us-west-1/PROD",
             ],
           ],
         },
@@ -1569,7 +1709,7 @@ Object {
         "RunConfig": Object {
           "TimeoutInSeconds": 120,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.5",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
           "Expression": "rate(2 minutes)",
         },
@@ -1633,6 +1773,26 @@ Object {
                       "",
                       Array [
                         "arn:aws:s3:::cw-syn-canary-",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/*",
+                      ],
+                    ],
+                  },
+                },
+                Object {
+                  "Action": Array [
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:GetBucketLocation",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:s3:::cw-syn-results-",
                         Object {
                           "Ref": "AWS::AccountId",
                         },
