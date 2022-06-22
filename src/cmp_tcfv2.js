@@ -12,6 +12,11 @@ const logErrorMessage = (message) => {
 	log.error(`GUCanaryRun. Message: ${message}`);
 }
 
+const clearLocalStorage = async (page) => {
+	await page.evaluate(() => localStorage.clear());
+	logInfoMessage(`Cleared local storage`);
+}
+
 const clearCookies = async (client) => {
 	await client.send('Network.clearBrowserCookies');
 	logInfoMessage(`Cleared Cookies`);
@@ -144,6 +149,7 @@ const checkSubsequentPage = async (url) => {
 
 	const client = await page.target().createCDPSession();
 	await clearCookies(client);
+	await clearLocalStorage(page);
 
 	await reloadPage(page);
 
@@ -167,6 +173,7 @@ const checkPages = async (url, nextUrl) => {
 	// Clear cookies before starting testing, to ensure the CMP is displayed.
 	const client = await page.target().createCDPSession();
 	await clearCookies(client);
+	await clearLocalStorage(page);
 
 	await loadPage(page, url);
 	
