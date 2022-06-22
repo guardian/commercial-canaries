@@ -3,7 +3,7 @@
 exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -241,7 +241,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -479,7 +479,7 @@ Object {
 exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -717,7 +717,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -955,7 +955,7 @@ Object {
 exports[`The CommercialCanaries stack matches the UK CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1193,7 +1193,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1431,7 +1431,7 @@ Object {
 exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1669,7 +1669,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "FooCanary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [

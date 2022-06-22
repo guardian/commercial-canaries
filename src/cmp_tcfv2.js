@@ -173,10 +173,11 @@ const checkPages = async (url, nextUrl) => {
 	// Clear cookies before starting testing, to ensure the CMP is displayed.
 	const client = await page.target().createCDPSession();
 	await clearCookies(client);
-	await clearLocalStorage(page);
 
 	await loadPage(page, url);
-	
+
+	await clearLocalStorage(page);
+
 	await checkCMPIsOnPage(page);
 
 	await checkTopAdDidNotLoad(page);

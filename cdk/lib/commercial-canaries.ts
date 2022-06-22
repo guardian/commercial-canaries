@@ -91,7 +91,7 @@ export class CommercialCanaries extends GuStack {
 			},
 		});
 
-		new synthetics.CfnCanary(this, 'Canary', {
+		new synthetics.CfnCanary(this, 'FooCanary', {
 			artifactS3Location: `s3://${S3BucketResults}/${stage.toUpperCase()}`,
 			code: {
 				handler: 'pageLoadBlueprint.handler',
