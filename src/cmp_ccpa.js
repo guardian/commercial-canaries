@@ -38,7 +38,7 @@ const interactWithCMP = async (page) => {
 	logInfoMessage(`Clicking on "Do not sell my personal information" on CMP`);
 	const frame = page
 		.frames()
-		.find((f) => f.url().startsWith('https://ccpa-notice.sp-prod.net'));
+		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Do not sell my personal information"]');
 }
 
