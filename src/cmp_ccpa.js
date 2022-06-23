@@ -16,14 +16,14 @@ const logErrorMessage = (message) => {
 	log.error(`GUCanaryRun. Message: ${message}`);
 };
 
-const initialiseOptions = async (isDebugMode) => {
+const initialiseOptions = async () => {
 	return {
-		headless: !isDebugMode,
-		args: isDebugMode ? ['--window-size=1920,1080'] : Chromium.args,
+		headless: true,
+		args: Chromium.args,
 		defaultViewport: Chromium.defaultViewport,
 		executablePath: await Chromium.executablePath,
 		ignoreHTTPSErrors: true,
-		devtools: isDebugMode,
+		devtools: false,
 		timeout: 0,
 	};
 };

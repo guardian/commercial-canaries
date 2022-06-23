@@ -118,7 +118,7 @@ export class CommercialCanaries extends GuStack {
 				},
 				{
 					key: 'version',
-					value: '9',
+					value: '10',
 				},
 			],
 		});
