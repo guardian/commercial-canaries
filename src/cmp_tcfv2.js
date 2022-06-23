@@ -165,13 +165,14 @@ const checkPage = async (url) => {
 	const browser = await makeNewBrowser();
 	const page = await browser.newPage();
 
-	// Clear cookies before starting testing, to ensure the CMP is displayed.
+	// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
 	const client = await page.target().createCDPSession();
 	await clearCookies(client);
 
+	// We can't clear local storage before the page is loaded
 	await loadPage(page, url);
-
 	await clearLocalStorage(page);
+	await reloadPage(page);
 
 	await checkCMPIsOnPage(page);
 
