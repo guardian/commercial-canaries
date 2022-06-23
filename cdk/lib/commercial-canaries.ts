@@ -101,13 +101,14 @@ export class CommercialCanaries extends GuStack {
 			executionRoleArn: role.roleArn,
 			name: canaryName,
 			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
-			schedule: {
-				expression: 'rate(2 minutes)',
-			},
-			startCanaryAfterCreation: stage === 'PROD',
 			runConfig: {
 				timeoutInSeconds: 120,
 			},
+			schedule: {
+				expression: 'rate(2 minutes)',
+				durationInSeconds: stage === 'PROD' ? '0' : '60 * 30', // Don't run non-prod canaries indefinitely
+			},
+			startCanaryAfterCreation: true,
 			tags: [
 				{
 					key: 'blueprint',

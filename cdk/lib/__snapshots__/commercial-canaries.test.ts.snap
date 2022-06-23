@@ -45,9 +45,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "60 * 30",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -287,6 +288,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -529,9 +531,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "60 * 30",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -771,6 +774,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1013,9 +1017,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "60 * 30",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -1255,6 +1260,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1497,9 +1503,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "60 * 30",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -1739,6 +1746,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
