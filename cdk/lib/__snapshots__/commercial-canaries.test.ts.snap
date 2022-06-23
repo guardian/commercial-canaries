@@ -45,7 +45,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
-          "DurationInSeconds": "60 * 30",
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -531,7 +531,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
-          "DurationInSeconds": "60 * 30",
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1017,7 +1017,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
-          "DurationInSeconds": "60 * 30",
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1503,7 +1503,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
-          "DurationInSeconds": "60 * 30",
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,

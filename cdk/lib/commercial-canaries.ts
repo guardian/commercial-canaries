@@ -16,6 +16,8 @@ import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
 import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
+const THIRTY_MINUTES_IN_SECONDS = '1800';
+
 interface StackProps extends GuStackProps {
 	awsRegion: string;
 }
@@ -106,7 +108,7 @@ export class CommercialCanaries extends GuStack {
 			},
 			schedule: {
 				expression: 'rate(2 minutes)',
-				durationInSeconds: stage === 'PROD' ? '0' : '60 * 30', // Don't run non-prod canaries indefinitely
+				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
 			},
 			startCanaryAfterCreation: true,
 			tags: [
