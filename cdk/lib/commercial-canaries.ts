@@ -93,7 +93,7 @@ export class CommercialCanaries extends GuStack {
 			},
 		});
 
-		new synthetics.CfnCanary(this, 'FooCanary', {
+		new synthetics.CfnCanary(this, 'Canary', {
 			artifactS3Location: `s3://${S3BucketResults}/${stage.toUpperCase()}`,
 			code: {
 				handler: 'pageLoadBlueprint.handler',
@@ -118,7 +118,7 @@ export class CommercialCanaries extends GuStack {
 				},
 				{
 					key: 'version',
-					value: '1',
+					value: '6',
 				},
 			],
 		});

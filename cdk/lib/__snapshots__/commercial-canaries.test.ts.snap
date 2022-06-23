@@ -3,7 +3,7 @@
 exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -72,7 +72,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -246,7 +246,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -315,7 +315,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -489,7 +489,7 @@ Object {
 exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -558,7 +558,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -732,7 +732,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -801,7 +801,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -975,7 +975,7 @@ Object {
 exports[`The CommercialCanaries stack matches the UK CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1044,7 +1044,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -1218,7 +1218,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1287,7 +1287,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -1461,7 +1461,7 @@ Object {
 exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
 Object {
   "Resources": Object {
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1530,7 +1530,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },
@@ -1704,7 +1704,7 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "FooCanary": Object {
+    "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
@@ -1773,7 +1773,7 @@ Object {
           },
           Object {
             "Key": "version",
-            "Value": "1",
+            "Value": "6",
           },
         ],
       },

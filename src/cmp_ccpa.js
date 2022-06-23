@@ -1,3 +1,4 @@
+const Chromium = require('chrome-aws-lambda');
 const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
@@ -13,6 +14,28 @@ const logInfoMessage = (message) => {
 };
 const logErrorMessage = (message) => {
 	log.error(`GUCanaryRun. Message: ${message}`);
+};
+
+const initialiseOptions = async (isDebugMode) => {
+	return {
+		headless: !isDebugMode,
+		args: isDebugMode ? ['--window-size=1920,1080'] : Chromium.args,
+		defaultViewport: Chromium.defaultViewport,
+		executablePath: await Chromium.executablePath,
+		ignoreHTTPSErrors: true,
+		devtools: isDebugMode,
+		timeout: 0,
+	};
+};
+
+const launchBrowser = async (ops) => {
+	return await Chromium.puppeteer.launch(ops);
+};
+
+const makeNewBrowser = async () => {
+	const ops = await initialiseOptions(false);
+	const browser = await launchBrowser(ops);
+	return browser;
 };
 
 const clearCookies = async (client) => {
@@ -103,27 +126,14 @@ const loadPage = async (page, url) => {
 };
 
 /**
- * Checks that ads load correctly for the second page a user goes to
- * when visiting the site, with respect to and interaction with the CMP.
- */
-const checkSubsequentPage = async (url) => {
-	let page = await synthetics.getPage();
-	logInfoMessage(`Start checking subsequent Page URL: ${url}`);
-
-	await loadPage(page, url);
-
-	await checkCMPIsNotVisible(page);
-
-	await checkTopAdHasLoaded(page);
-};
-
-/**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
  */
-const checkPages = async (url, nextUrl) => {
-	let page = await synthetics.getPage();
+const checkPage = async (url) => {
 	logInfoMessage(`Start checking Page URL: ${url}`);
+
+	const browser = await makeNewBrowser();
+	const page = await browser.newPage();
 
 	// Clear cookies before starting testing, to ensure the CMP is displayed.
 	const client = await page.target().createCDPSession();
@@ -143,9 +153,7 @@ const checkPages = async (url, nextUrl) => {
 
 	await checkTopAdHasLoaded(page);
 
-	if (nextUrl) {
-		await checkSubsequentPage(nextUrl);
-	}
+	await browser.close();
 };
 
 const pageLoadBlueprint = async function () {
@@ -163,17 +171,14 @@ const pageLoadBlueprint = async function () {
 
 	/**
 	 * Check front as first navigation. Then, check that ads load when viewing an article.
+	 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
 	 */
-	await checkPages(
-		// The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
-		'https://www.theguardian.com/us?adtest=fixed-puppies',
-		'https://www.theguardian.com/us-news/2021/jul/05/gray-wolves-wisconsin-hunting-population?adtest=fixed-puppies',
-	);
+	await checkPage('https://www.theguardian.com/us?adtest=fixed-puppies');
 
 	/**
 	 * Check Article as first navigation.
 	 */
-	await checkPages(
+	await checkPage(
 		'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies',
 	);
 };
