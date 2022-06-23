@@ -69,6 +69,10 @@ Object {
             "Key": "Stage",
             "Value": "CODE",
           },
+          Object {
+            "Key": "version",
+            "Value": "1",
+          },
         ],
       },
       "Type": "AWS::Synthetics::Canary",
@@ -306,6 +310,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "1",
           },
         ],
       },
@@ -545,6 +553,10 @@ Object {
             "Key": "Stage",
             "Value": "CODE",
           },
+          Object {
+            "Key": "version",
+            "Value": "1",
+          },
         ],
       },
       "Type": "AWS::Synthetics::Canary",
@@ -782,6 +794,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "1",
           },
         ],
       },
@@ -1021,6 +1037,10 @@ Object {
             "Key": "Stage",
             "Value": "CODE",
           },
+          Object {
+            "Key": "version",
+            "Value": "1",
+          },
         ],
       },
       "Type": "AWS::Synthetics::Canary",
@@ -1258,6 +1278,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "1",
           },
         ],
       },
@@ -1497,6 +1521,10 @@ Object {
             "Key": "Stage",
             "Value": "CODE",
           },
+          Object {
+            "Key": "version",
+            "Value": "1",
+          },
         ],
       },
       "Type": "AWS::Synthetics::Canary",
@@ -1734,6 +1762,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "1",
           },
         ],
       },
