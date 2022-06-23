@@ -113,6 +113,10 @@ export class CommercialCanaries extends GuStack {
 					key: 'blueprint',
 					value: 'heartbeat',
 				},
+				{
+					key: 'version',
+					value: '1',
+				},
 			],
 		});
 
