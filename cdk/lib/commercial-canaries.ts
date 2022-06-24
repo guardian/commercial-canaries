@@ -16,6 +16,8 @@ import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
 import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
+const THIRTY_MINUTES_IN_SECONDS = '1800';
+
 interface StackProps extends GuStackProps {
 	awsRegion: string;
 }
@@ -101,17 +103,22 @@ export class CommercialCanaries extends GuStack {
 			executionRoleArn: role.roleArn,
 			name: canaryName,
 			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
-			schedule: {
-				expression: 'rate(2 minutes)',
-			},
-			startCanaryAfterCreation: stage === 'PROD',
 			runConfig: {
 				timeoutInSeconds: 120,
 			},
+			schedule: {
+				expression: 'rate(2 minutes)',
+				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
+			},
+			startCanaryAfterCreation: true,
 			tags: [
 				{
 					key: 'blueprint',
 					value: 'heartbeat',
+				},
+				{
+					key: 'version',
+					value: '3',
 				},
 			],
 		});

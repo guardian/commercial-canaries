@@ -45,9 +45,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -68,6 +69,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "CODE",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -283,6 +288,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -306,6 +312,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -521,9 +531,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -544,6 +555,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "CODE",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -759,6 +774,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -782,6 +798,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -997,9 +1017,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -1020,6 +1041,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "CODE",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -1235,6 +1260,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1258,6 +1284,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -1473,9 +1503,10 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "1800",
           "Expression": "rate(2 minutes)",
         },
-        "StartCanaryAfterCreation": false,
+        "StartCanaryAfterCreation": true,
         "Tags": Array [
           Object {
             "Key": "blueprint",
@@ -1496,6 +1527,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "CODE",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
@@ -1711,6 +1746,7 @@ Object {
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
         "Schedule": Object {
+          "DurationInSeconds": "0",
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
@@ -1734,6 +1770,10 @@ Object {
           Object {
             "Key": "Stage",
             "Value": "PROD",
+          },
+          Object {
+            "Key": "version",
+            "Value": "3",
           },
         ],
       },
