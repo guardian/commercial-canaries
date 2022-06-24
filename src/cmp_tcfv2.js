@@ -162,35 +162,42 @@ const loadPage = async (page, url) => {
 const checkPage = async (url) => {
 	logInfoMessage(`Start checking Page URL: ${url}`);
 
-	const browser = await makeNewBrowser();
-	const page = await browser.newPage();
+	let browser = null;
+	try {
+		browser = await makeNewBrowser();
+		const page = await browser.newPage();
 
-	// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
-	const client = await page.target().createCDPSession();
-	await clearCookies(client);
+		// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
+		const client = await page.target().createCDPSession();
+		await clearCookies(client);
 
-	// We can't clear local storage before the page is loaded
-	await loadPage(page, url);
-	await clearLocalStorage(page);
-	await reloadPage(page);
+		// We can't clear local storage before the page is loaded
+		await loadPage(page, url);
+		await clearLocalStorage(page);
+		await reloadPage(page);
 
-	await checkCMPIsOnPage(page);
+		await checkCMPIsOnPage(page);
 
-	await checkTopAdDidNotLoad(page);
+		await checkTopAdDidNotLoad(page);
 
-	await interactWithCMP(page);
+		await interactWithCMP(page);
 
-	await checkCMPIsNotVisible(page);
+		await checkCMPIsNotVisible(page);
 
-	await checkTopAdHasLoaded(page);
+		await checkTopAdHasLoaded(page);
 
-	await reloadPage(page);
+		await reloadPage(page);
 
-	await checkTopAdHasLoaded(page);
+		await checkTopAdHasLoaded(page);
 
-	await checkCMPDidNotLoad(page);
-
-	await browser.close();
+		await checkCMPDidNotLoad(page);
+	} catch (error) {
+		logErrorMessage(error);
+	} finally {
+		if (browser !== null) {
+			await browser.close();
+		}
+	}
 };
 
 const pageLoadBlueprint = async function () {
