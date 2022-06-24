@@ -132,28 +132,35 @@ const loadPage = async (page, url) => {
 const checkPage = async (url) => {
 	logInfoMessage(`Start checking Page URL: ${url}`);
 
-	const browser = await makeNewBrowser();
-	const page = await browser.newPage();
+	let browser = null;
+	try {
+		const browser = await makeNewBrowser();
+		const page = await browser.newPage();
 
-	// Clear cookies before starting testing, to ensure the CMP is displayed.
-	const client = await page.target().createCDPSession();
-	await clearCookies(client);
+		// Clear cookies before starting testing, to ensure the CMP is displayed.
+		const client = await page.target().createCDPSession();
+		await clearCookies(client);
 
-	await loadPage(page, url);
+		await loadPage(page, url);
 
-	await checkTopAdHasLoaded(page);
+		await checkTopAdHasLoaded(page);
 
-	await checkCMPIsOnPage(page);
+		await checkCMPIsOnPage(page);
 
-	await interactWithCMP(page);
+		await interactWithCMP(page);
 
-	await checkCMPIsNotVisible(page);
+		await checkCMPIsNotVisible(page);
 
-	await reloadPage(page);
+		await reloadPage(page);
 
-	await checkTopAdHasLoaded(page);
-
-	await browser.close();
+		await checkTopAdHasLoaded(page);
+	} catch (error) {
+		logErrorMessage(error);
+	} finally {
+		if (browser !== null) {
+			await browser.close();
+		}
+	}
 };
 
 const pageLoadBlueprint = async function () {
