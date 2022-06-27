@@ -105,6 +105,7 @@ export class CommercialCanaries extends GuStack {
 			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
 			runConfig: {
 				timeoutInSeconds: 120,
+				memoryInMb: 2048,
 			},
 			schedule: {
 				expression: 'rate(2 minutes)',

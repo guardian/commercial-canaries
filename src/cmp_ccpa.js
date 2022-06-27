@@ -154,6 +154,9 @@ const checkPage = async (url) => {
 		await reloadPage(page);
 
 		await checkTopAdHasLoaded(page);
+	} catch (error) {
+		logErrorMessage(`The canary failed for the following reason: ${error}`);
+		throw error;
 	} finally {
 		if (browser !== null) {
 			await browser.close();
