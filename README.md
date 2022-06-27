@@ -56,7 +56,9 @@ From here, you can see all the details relating to the canary and the recent run
 
 ## Development
 
-Canaries are located in the src folder. Create a new branch, make your changes to the code, then push your branch. A test canary is called `comm_cmp_canary_code` will be updated with your code by a Github Action and Riffraff. To check the progress of the update in Riffraff, go to History and search for the project `frontend::commercial-canaries`. The canary will be created in a stopped state, so you will need to click Actions -> Start to start a run.
+Canaries are located in the src folder. Create a new branch, make your changes to the code, then push your branch. A test canary `comm_cmp_canary_code` will be updated/created with your code by a Github Action and Riffraff. Check on the progress of the Github Action (here)[https://github.com/guardian/aws-canaries/actions/workflows/deploy.yaml]. If a run does not start automatically, then you can start in manually, as the workflow has a workflow_dispatch event trigger.
+
+To check the progress of the update in Riffraff, go to the History tab and search for the project `frontend::commercial-canaries`.
 
 Alternatively, you can locate the test canary in the AWS console, edit the canary, paste your code over the existing code and save.
 
