@@ -41,7 +41,7 @@ Object {
         },
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
-          "MemoryInMB": 2048,
+          "MemoryInMB": 3008,
           "TimeoutInSeconds": 120,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
@@ -285,7 +285,7 @@ Object {
         },
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
-          "MemoryInMB": 2048,
+          "MemoryInMB": 3008,
           "TimeoutInSeconds": 120,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
@@ -1505,7 +1505,7 @@ Object {
         },
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
-          "MemoryInMB": 2048,
+          "MemoryInMB": 3008,
           "TimeoutInSeconds": 120,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
@@ -1749,7 +1749,7 @@ Object {
         },
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
-          "MemoryInMB": 2048,
+          "MemoryInMB": 3008,
           "TimeoutInSeconds": 120,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
