@@ -43,6 +43,11 @@ const clearCookies = async (client) => {
 	logInfoMessage(`Cleared Cookies`);
 };
 
+const clearLocalStorage = async (page) => {
+	await page.evaluate(() => localStorage.clear());
+	logInfoMessage(`Cleared local storage`);
+};
+
 const checkTopAdHasLoaded = async (page) => {
 	logInfoMessage(`Waiting for ads to load: Start`);
 	await page.waitForSelector(
@@ -138,7 +143,10 @@ const checkPage = async (browser, url) => {
 	const client = await page.target().createCDPSession();
 	await clearCookies(client);
 
+	// We can't clear local storage before the page is loaded
 	await loadPage(page, url);
+	await clearLocalStorage(page);
+	await reloadPage(page);
 
 	await checkTopAdHasLoaded(page);
 
@@ -151,6 +159,8 @@ const checkPage = async (browser, url) => {
 	await reloadPage(page);
 
 	await checkTopAdHasLoaded(page);
+
+	await page.close();
 };
 
 const pageLoadBlueprint = async function () {

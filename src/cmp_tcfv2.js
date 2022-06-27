@@ -35,14 +35,14 @@ const makeNewBrowser = async () => {
 	return browser;
 };
 
-const clearLocalStorage = async (page) => {
-	await page.evaluate(() => localStorage.clear());
-	logInfoMessage(`Cleared local storage`);
-};
-
 const clearCookies = async (client) => {
 	await client.send('Network.clearBrowserCookies');
 	logInfoMessage(`Cleared Cookies`);
+};
+
+const clearLocalStorage = async (page) => {
+	await page.evaluate(() => localStorage.clear());
+	logInfoMessage(`Cleared local storage`);
 };
 
 const checkTopAdHasLoaded = async (page) => {
@@ -188,6 +188,8 @@ const checkPage = async (browser, url) => {
 	await checkTopAdHasLoaded(page);
 
 	await checkCMPDidNotLoad(page);
+
+	await page.close();
 };
 
 const pageLoadBlueprint = async function () {
