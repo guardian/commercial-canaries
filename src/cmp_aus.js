@@ -154,8 +154,6 @@ const checkPage = async (url) => {
 		await reloadPage(page);
 
 		await checkTopAdHasLoaded(page);
-	} catch (error) {
-		logErrorMessage(error);
 	} finally {
 		if (browser !== null) {
 			await browser.close();

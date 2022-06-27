@@ -191,8 +191,6 @@ const checkPage = async (url) => {
 		await checkTopAdHasLoaded(page);
 
 		await checkCMPDidNotLoad(page);
-	} catch (error) {
-		logErrorMessage(error);
 	} finally {
 		if (browser !== null) {
 			await browser.close();
