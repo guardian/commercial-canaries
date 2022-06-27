@@ -129,39 +129,28 @@ const loadPage = async (page, url) => {
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
  */
-const checkPage = async (url) => {
+const checkPage = async (url, browser) => {
 	logInfoMessage(`Start checking Page URL: ${url}`);
 
-	let browser = null;
-	try {
-		const browser = await makeNewBrowser();
-		const page = await browser.newPage();
+	const page = await browser.newPage();
 
-		// Clear cookies before starting testing, to ensure the CMP is displayed.
-		const client = await page.target().createCDPSession();
-		await clearCookies(client);
+	// Clear cookies before starting testing, to ensure the CMP is displayed.
+	const client = await page.target().createCDPSession();
+	await clearCookies(client);
 
-		await loadPage(page, url);
+	await loadPage(page, url);
 
-		await checkTopAdHasLoaded(page);
+	await checkTopAdHasLoaded(page);
 
-		await checkCMPIsOnPage(page);
+	await checkCMPIsOnPage(page);
 
-		await interactWithCMP(page);
+	await interactWithCMP(page);
 
-		await checkCMPIsNotVisible(page);
+	await checkCMPIsNotVisible(page);
 
-		await reloadPage(page);
+	await reloadPage(page);
 
-		await checkTopAdHasLoaded(page);
-	} catch (error) {
-		logErrorMessage(`The canary failed for the following reason: ${error}`);
-		throw error;
-	} finally {
-		if (browser !== null) {
-			await browser.close();
-		}
-	}
+	await checkTopAdHasLoaded(page);
 };
 
 const pageLoadBlueprint = async function () {
@@ -177,18 +166,34 @@ const pageLoadBlueprint = async function () {
 		logResponse: LOG_EVERY_RESPONSE,
 	});
 
-	/**
-	 * Check front as first navigation. Then, check that ads load when viewing an article.
-	 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
-	 */
-	await checkPage('https://www.theguardian.com/us?adtest=fixed-puppies');
+	let browser = null;
+	try {
+		browser = await makeNewBrowser();
 
-	/**
-	 * Check Article as first navigation.
-	 */
-	await checkPage(
-		'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies',
-	);
+		/**
+		 * Check front as first navigation. Then, check that ads load when viewing an article.
+		 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
+		 */
+		await checkPage(
+			browser,
+			'https://www.theguardian.com/us?adtest=fixed-puppies',
+		);
+
+		/**
+		 * Check Article as first navigation.
+		 */
+		await checkPage(
+			browser,
+			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies',
+		);
+	} catch (error) {
+		logErrorMessage(`The canary failed for the following reason: ${error}`);
+		throw error;
+	} finally {
+		if (browser !== null) {
+			await browser.close();
+		}
+	}
 };
 
 exports.handler = async () => {
