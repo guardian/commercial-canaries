@@ -32,6 +32,7 @@ export class CommercialCanaries extends GuStack {
 		const accountId = this.account;
 		const S3BucketCanary = `cw-syn-canary-${accountId}-${awsRegion}`;
 		const S3BucketResults = `cw-syn-results-${accountId}-${awsRegion}`;
+		const isTcf = awsRegion === 'eu-west-1' || awsRegion === 'ca-central-1';
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
@@ -105,6 +106,7 @@ export class CommercialCanaries extends GuStack {
 			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
 			runConfig: {
 				timeoutInSeconds: 120,
+				memoryInMb: isTcf ? 2048 : 3008,
 			},
 			schedule: {
 				expression: 'rate(2 minutes)',
@@ -118,7 +120,7 @@ export class CommercialCanaries extends GuStack {
 				},
 				{
 					key: 'version',
-					value: '4',
+					value: '6',
 				},
 			],
 		});

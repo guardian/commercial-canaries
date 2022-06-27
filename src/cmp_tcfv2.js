@@ -35,14 +35,14 @@ const makeNewBrowser = async () => {
 	return browser;
 };
 
-const clearLocalStorage = async (page) => {
-	await page.evaluate(() => localStorage.clear());
-	logInfoMessage(`Cleared local storage`);
-};
-
 const clearCookies = async (client) => {
 	await client.send('Network.clearBrowserCookies');
 	logInfoMessage(`Cleared Cookies`);
+};
+
+const clearLocalStorage = async (page) => {
+	await page.evaluate(() => localStorage.clear());
+	logInfoMessage(`Cleared local storage`);
 };
 
 const checkTopAdHasLoaded = async (page) => {
@@ -159,45 +159,37 @@ const loadPage = async (page, url) => {
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
  */
-const checkPage = async (url) => {
+const checkPage = async (browser, url) => {
 	logInfoMessage(`Start checking Page URL: ${url}`);
 
-	let browser = null;
-	try {
-		browser = await makeNewBrowser();
-		const page = await browser.newPage();
+	const page = await browser.newPage();
 
-		// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
-		const client = await page.target().createCDPSession();
-		await clearCookies(client);
+	// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
+	const client = await page.target().createCDPSession();
+	await clearCookies(client);
 
-		// We can't clear local storage before the page is loaded
-		await loadPage(page, url);
-		await clearLocalStorage(page);
-		await reloadPage(page);
+	// We can't clear local storage before the page is loaded
+	await loadPage(page, url);
+	await clearLocalStorage(page);
+	await reloadPage(page);
 
-		await checkCMPIsOnPage(page);
+	await checkCMPIsOnPage(page);
 
-		await checkTopAdDidNotLoad(page);
+	await checkTopAdDidNotLoad(page);
 
-		await interactWithCMP(page);
+	await interactWithCMP(page);
 
-		await checkCMPIsNotVisible(page);
+	await checkCMPIsNotVisible(page);
 
-		await checkTopAdHasLoaded(page);
+	await checkTopAdHasLoaded(page);
 
-		await reloadPage(page);
+	await reloadPage(page);
 
-		await checkTopAdHasLoaded(page);
+	await checkTopAdHasLoaded(page);
 
-		await checkCMPDidNotLoad(page);
-	} catch (error) {
-		logErrorMessage(error);
-	} finally {
-		if (browser !== null) {
-			await browser.close();
-		}
-	}
+	await checkCMPDidNotLoad(page);
+
+	await page.close();
 };
 
 const pageLoadBlueprint = async function () {
@@ -213,18 +205,34 @@ const pageLoadBlueprint = async function () {
 		logResponse: LOG_EVERY_RESPONSE,
 	});
 
-	/**
-	 * Check front as first navigation. Then, check that ads load when viewing an article.
-	 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
-	 */
-	await checkPage('https://www.theguardian.com?adtest=fixed-puppies');
+	let browser = null;
+	try {
+		browser = await makeNewBrowser();
 
-	/**
-	 * Check Article as first navigation.
-	 */
-	await checkPage(
-		'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
-	);
+		/**
+		 * Check front as first navigation. Then, check that ads load when viewing an article.
+		 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
+		 */
+		await checkPage(
+			browser,
+			'https://www.theguardian.com?adtest=fixed-puppies',
+		);
+
+		/**
+		 * Check Article as first navigation.
+		 */
+		await checkPage(
+			browser,
+			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
+		);
+	} catch (error) {
+		logErrorMessage(`The canary failed for the following reason: ${error}`);
+		throw error;
+	} finally {
+		if (browser !== null) {
+			await browser.close();
+		}
+	}
 };
 
 exports.handler = async () => {
