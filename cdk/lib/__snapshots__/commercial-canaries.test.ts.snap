@@ -2,6 +2,12 @@
 
 exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Canary": Object {
       "Properties": Object {
@@ -63,16 +69,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "CODE",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -212,6 +220,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -306,16 +320,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "PROD",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -488,6 +504,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Canary": Object {
       "Properties": Object {
@@ -549,16 +571,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "CODE",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -698,6 +722,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -792,16 +822,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "PROD",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -974,6 +1006,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the UK CODE snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Canary": Object {
       "Properties": Object {
@@ -1035,16 +1073,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "CODE",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -1184,6 +1224,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the UK PROD snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -1278,16 +1324,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "PROD",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -1460,6 +1508,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Canary": Object {
       "Properties": Object {
@@ -1521,16 +1575,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "CODE",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
@@ -1670,6 +1726,12 @@ Object {
 
 exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
 Object {
+  "Parameters": Object {
+    "lambdaCodeSha": Object {
+      "Description": "The SHA of the lambda code files.",
+      "Type": "String",
+    },
+  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -1764,16 +1826,18 @@ Object {
             "Value": "guardian/aws-canaries",
           },
           Object {
+            "Key": "Lambda code SHA",
+            "Value": Object {
+              "Ref": "lambdaCodeSha",
+            },
+          },
+          Object {
             "Key": "Stack",
             "Value": "frontend",
           },
           Object {
             "Key": "Stage",
             "Value": "PROD",
-          },
-          Object {
-            "Key": "version",
-            "Value": "6",
           },
         ],
       },
