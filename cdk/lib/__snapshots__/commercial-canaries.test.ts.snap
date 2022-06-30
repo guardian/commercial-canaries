@@ -33,12 +33,14 @@ Object {
           },
           "S3Key": "CODE/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
           "MemoryInMB": 3008,
@@ -50,11 +52,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -277,12 +276,14 @@ Object {
           },
           "S3Key": "PROD/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
           "MemoryInMB": 3008,
@@ -294,11 +295,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -521,12 +519,14 @@ Object {
           },
           "S3Key": "CODE/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
           "MemoryInMB": 2048,
@@ -538,11 +538,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -765,12 +762,14 @@ Object {
           },
           "S3Key": "PROD/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
           "MemoryInMB": 2048,
@@ -782,11 +781,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1009,12 +1005,14 @@ Object {
           },
           "S3Key": "CODE/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
           "MemoryInMB": 2048,
@@ -1026,11 +1024,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1253,12 +1248,14 @@ Object {
           },
           "S3Key": "PROD/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
           "MemoryInMB": 2048,
@@ -1270,11 +1267,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1497,12 +1491,14 @@ Object {
           },
           "S3Key": "CODE/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_code",
         "RunConfig": Object {
           "MemoryInMB": 3008,
@@ -1514,11 +1510,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1741,12 +1734,14 @@ Object {
           },
           "S3Key": "PROD/nodejs.zip",
         },
+        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
+        "FailureRetentionPeriod": 30,
         "Name": "comm_cmp_canary_prod",
         "RunConfig": Object {
           "MemoryInMB": 3008,
@@ -1758,11 +1753,8 @@ Object {
           "Expression": "rate(2 minutes)",
         },
         "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "blueprint",
-            "Value": "heartbeat",
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",

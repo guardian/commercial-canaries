@@ -112,12 +112,11 @@ export class CommercialCanaries extends GuStack {
 				expression: 'rate(2 minutes)',
 				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
 			},
+			deleteLambdaResourcesOnCanaryDeletion: true,
+			successRetentionPeriod: 7,
+			failureRetentionPeriod: 30,
 			startCanaryAfterCreation: true,
 			tags: [
-				{
-					key: 'blueprint',
-					value: 'heartbeat',
-				},
 				{
 					key: 'version',
 					value: '6',

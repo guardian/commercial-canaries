@@ -2,17 +2,16 @@ name: AWS Commercial Canaries
 on:
   workflow_dispatch:
   push:
-    branches:
-      - '*'
+
+# See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+permissions:
+  # required by aws-actions/configure-aws-credentials
+  id-token: write
+  contents: read
 
 jobs:
   upload:
     runs-on: ubuntu-latest
-    # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
-    permissions:
-      # required by aws-actions/configure-aws-credentials
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v3
 
@@ -52,6 +51,8 @@ jobs:
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
 
       - uses: guardian/actions-riff-raff@v1
+        env:
+          AWS_ACCOUNT: ${{ secrets.AWS_FRONTEND_ACC }}
         with:
           app: commercial-canaries
           config: |
@@ -73,7 +74,7 @@ jobs:
                 regions:
                   - eu-west-1
                 parameters:
-                  bucket: cw-syn-canary-642631414762-eu-west-1
+                  bucket: cw-syn-canary-${AWS_ACCOUNT}-eu-west-1
                   cacheControl: private
                   publicReadAcl: false
                   prefixStack: false
@@ -100,7 +101,7 @@ jobs:
                 regions:
                   - ca-central-1
                 parameters:
-                  bucket: cw-syn-canary-642631414762-ca-central-1
+                  bucket: cw-syn-canary-${AWS_ACCOUNT}-ca-central-1
                   cacheControl: private
                   publicReadAcl: false
                   prefixStack: false
@@ -127,7 +128,7 @@ jobs:
                 regions:
                   - us-west-1
                 parameters:
-                  bucket: cw-syn-canary-642631414762-us-west-1
+                  bucket: cw-syn-canary-${AWS_ACCOUNT}-us-west-1
                   cacheControl: private
                   publicReadAcl: false
                   prefixStack: false
@@ -154,7 +155,7 @@ jobs:
                 regions:
                   - ap-southeast-2
                 parameters:
-                  bucket: cw-syn-canary-642631414762-ap-southeast-2
+                  bucket: cw-syn-canary-${AWS_ACCOUNT}-ap-southeast-2
                   cacheControl: private
                   publicReadAcl: false
                   prefixStack: false
