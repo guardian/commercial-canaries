@@ -1,19 +1,25 @@
 const Chromium = require('chrome-aws-lambda');
 const synthetics = require('Synthetics');
-const log = require('SyntheticsLogger');
+const logger = require('SyntheticsLogger');
 
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
+
+let startTime = new Date().getTime();
+const getTimeSinceStart = () => new Date().getTime() - startTime;
 
 /**
  * We use custom log messages so that we can easily differentiate
  * between logs from this file and other logs in Cloudwatch.
  */
-const logInfoMessage = (message) => {
-	log.info(`GuCanaryRun. Message: ${message}`);
+const formatMessage = (message) =>
+	`GuCanaryRun. Time: ${getTimeSinceStart() / 1000}s. Message: ${message}`;
+
+const log = (message) => {
+	logger.info(formatMessage(message));
 };
-const logErrorMessage = (message) => {
-	log.error(`GuCanaryRun. Message: ${message}`);
+const logError = (message) => {
+	logger.error(formatMessage(message));
 };
 
 const initialiseOptions = async () => {
@@ -40,36 +46,36 @@ const makeNewBrowser = async () => {
 
 const clearCookies = async (client) => {
 	await client.send('Network.clearBrowserCookies');
-	logInfoMessage(`Cleared Cookies`);
+	log(`Cleared Cookies`);
 };
 
 const clearLocalStorage = async (page) => {
 	await page.evaluate(() => localStorage.clear());
-	logInfoMessage(`Cleared local storage`);
+	log(`Cleared local storage`);
 };
 
 const checkTopAdHasLoaded = async (page) => {
-	logInfoMessage(`Waiting for ads to load: Start`);
+	log(`Waiting for ads to load: Start`);
 	await page.waitForSelector(
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
 		{ timeout: 30000 },
 	);
-	logInfoMessage(`Waiting for ads to load: Complete`);
+	log(`Waiting for ads to load: Complete`);
 };
 
 const checkTopAdDidNotLoad = async (page) => {
-	logInfoMessage(`Checking ads do not load: Start`);
+	log(`Checking ads do not load: Start`);
 
 	const frame = await page.$(
 		'.ad-slot--top-above-nav .ad-slot__content iframe',
 	);
 
 	if (frame !== null) {
-		logErrorMessage(`Checking ads do not load: Failed`);
+		logError(`Checking ads do not load: Failed`);
 		throw Error('Top above nav frame present on page');
 	}
 
-	logInfoMessage(`Checking ads do not load: Complete`);
+	log(`Checking ads do not load: Complete`);
 };
 
 const interactWithCMP = async (page) => {
@@ -78,7 +84,7 @@ const interactWithCMP = async (page) => {
 
 	// When AWS Synthetics use a more up-to-date version of Puppeteer,
 	// we can make use of waitForFrame(), and remove the timeout above.
-	logInfoMessage(`Clicking on "Yes I'm Happy" on CMP`);
+	log(`Clicking on "Yes I'm Happy" on CMP`);
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
@@ -86,13 +92,13 @@ const interactWithCMP = async (page) => {
 };
 
 const checkCMPIsOnPage = async (page) => {
-	logInfoMessage(`Waiting for CMP: Start`);
+	log(`Waiting for CMP: Start`);
 	await page.waitForSelector('[id*="sp_message_container"]');
-	logInfoMessage(`Waiting for CMP: Finish`);
+	log(`Waiting for CMP: Finish`);
 };
 
 const checkCMPIsNotVisible = async (page) => {
-	logInfoMessage(`Checking CMP is Hidden: Start`);
+	log(`Checking CMP is Hidden: Start`);
 
 	const getSpMessageDisplayProperty = function () {
 		const element = document.querySelector('[id*="sp_message_container"]');
@@ -109,53 +115,53 @@ const checkCMPIsNotVisible = async (page) => {
 		throw Error('CMP still present on page');
 	}
 
-	logInfoMessage('CMP hidden or removed from page');
+	log('CMP hidden or removed from page');
 };
 
 const checkCMPDidNotLoad = async (page) => {
-	logInfoMessage(`Checking CMP does not load: Start`);
+	log(`Checking CMP does not load: Start`);
 
 	const spMessageContainer = await page.$('[id*="sp_message_container"]');
 
 	if (spMessageContainer !== null) {
-		logErrorMessage(`Checking CMP does not load: Failed`);
+		logError(`Checking CMP does not load: Failed`);
 		throw Error('CMP present on page');
 	}
 
-	logInfoMessage(`Checking CMP does not load: Complete`);
+	log(`Checking CMP does not load: Complete`);
 };
 
 const reloadPage = async (page) => {
-	logInfoMessage(`Reloading page: Start`);
+	log(`Reloading page: Start`);
 	const reloadResponse = await page.reload({
 		waitUntil: ['networkidle0', 'domcontentloaded'],
 		timeout: 30000,
 	});
 	if (!reloadResponse) {
-		logErrorMessage(`Reloading page: Failed`);
+		logError(`Reloading page: Failed`);
 		throw 'Failed to refresh page!';
 	}
-	logInfoMessage(`Reloading page: Complete`);
+	log(`Reloading page: Complete`);
 };
 
 const loadPage = async (page, url) => {
-	logInfoMessage(`Loading page: Start`);
+	log(`Loading page: Start`);
 	const response = await page.goto(url, {
 		waitUntil: 'domcontentloaded',
 		timeout: 30000,
 	});
 	if (!response) {
-		logErrorMessage('Loading URL: Failed');
+		logError('Loading URL: Failed');
 		throw 'Failed to load page!';
 	}
 
 	// If the response status code is not a 2xx success code
 	if (response.status() < 200 || response.status() > 299) {
-		logErrorMessage(`Loading URL: Error: Status ${response.status()}`);
+		logError(`Loading URL: Error: Status ${response.status()}`);
 		throw 'Failed to load page!';
 	}
 
-	logInfoMessage(`Loading page: Complete`);
+	log(`Loading page: Complete`);
 };
 
 /**
@@ -163,7 +169,7 @@ const loadPage = async (page, url) => {
  * the site, with respect to and interaction with the CMP.
  */
 const checkPage = async (browser, url) => {
-	logInfoMessage(`Start checking Page URL: ${url}`);
+	log(`Start checking Page URL: ${url}`);
 
 	const page = await browser.newPage();
 
@@ -208,6 +214,8 @@ const pageLoadBlueprint = async function () {
 		logResponse: LOG_EVERY_RESPONSE,
 	});
 
+	startTime = new Date().getTime();
+
 	let browser = null;
 	try {
 		browser = await makeNewBrowser();
@@ -229,7 +237,7 @@ const pageLoadBlueprint = async function () {
 			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
 		);
 	} catch (error) {
-		logErrorMessage(`The canary failed for the following reason: ${error}`);
+		logError(`The canary failed for the following reason: ${error}`);
 		throw error;
 	} finally {
 		if (browser !== null) {
