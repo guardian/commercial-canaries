@@ -10,10 +10,10 @@ const LOG_EVERY_RESPONSE = false;
  * between logs from this file and other logs in Cloudwatch.
  */
 const logInfoMessage = (message) => {
-	log.info(`GUCanaryRun. Message: ${message}`);
+	log.info(`GuCanaryRun. Message: ${message}`);
 };
 const logErrorMessage = (message) => {
-	log.error(`GUCanaryRun. Message: ${message}`);
+	log.error(`GuCanaryRun. Message: ${message}`);
 };
 
 const initialiseOptions = async () => {

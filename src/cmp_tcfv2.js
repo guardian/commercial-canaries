@@ -5,12 +5,15 @@ const log = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
-// So we can differentiate between logs from this file and other logs in Cloudwatch.
+/**
+ * We use custom log messages so that we can easily differentiate
+ * between logs from this file and other logs in Cloudwatch.
+ */
 const logInfoMessage = (message) => {
-	log.info(`GUCanaryRun. Message: ${message}`);
+	log.info(`GuCanaryRun. Message: ${message}`);
 };
 const logErrorMessage = (message) => {
-	log.error(`GUCanaryRun. Message: ${message}`);
+	log.error(`GuCanaryRun. Message: ${message}`);
 };
 
 const initialiseOptions = async () => {

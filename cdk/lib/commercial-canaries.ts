@@ -2,6 +2,7 @@ import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import type { App } from 'aws-cdk-lib';
 import {
+	CfnParameter,
 	Duration,
 	aws_iam as iam,
 	aws_synthetics as synthetics,
@@ -36,6 +37,23 @@ export class CommercialCanaries extends GuStack {
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
+
+		/**
+		 *  This is used to detect changes in the lambda code.
+		 *
+		 *  PROBLEM:
+		 *  - We make a change to the lambda code and push our change. This does not
+		 *    change the CloudFormation template, so the canary is not updated.
+		 *
+		 *  SOLUTION:
+		 *  - When there is a change to the file contents or filename, the generated SHA
+		 *    will be different, which will trigger the CloudFormation stack to update the
+		 *    lambda code used by the canary.
+		 */
+		const lambdaCodeSha = new CfnParameter(this, 'lambdaCodeSha', {
+			type: 'String',
+			description: 'The SHA of the lambda code files.',
+		});
 
 		const policyDocument = new iam.PolicyDocument({
 			statements: [
@@ -112,15 +130,14 @@ export class CommercialCanaries extends GuStack {
 				expression: 'rate(2 minutes)',
 				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
 			},
+			deleteLambdaResourcesOnCanaryDeletion: true,
+			successRetentionPeriod: 7,
+			failureRetentionPeriod: 30,
 			startCanaryAfterCreation: true,
 			tags: [
 				{
-					key: 'blueprint',
-					value: 'heartbeat',
-				},
-				{
-					key: 'version',
-					value: '6',
+					key: 'Lambda code SHA',
+					value: lambdaCodeSha.valueAsString,
 				},
 			],
 		});
