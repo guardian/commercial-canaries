@@ -1,9 +1,9 @@
 {
-  "name": "aws-canaries",
+  "name": "commercial-canaries",
   "version": "0.0.1",
   "description": "repo to keep guardian's aws canaries",
   "main": "index.js",
-  "repository": "git@github.com:guardian/aws-canaries.git",
+  "repository": "git@github.com:guardian/commercial-canaries.git",
   "license": "Apache-2.0",
   "scripts": {
     "build": "bash ./build.sh"
