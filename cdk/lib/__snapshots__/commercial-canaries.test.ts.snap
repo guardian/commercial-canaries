@@ -66,7 +66,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -200,7 +200,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -256,7 +256,7 @@ Object {
         "Period": 120,
         "Statistic": "Average",
         "Threshold": 80,
-        "TreatMissingData": "missing",
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -317,7 +317,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -451,7 +451,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -474,7 +474,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -568,7 +568,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -702,7 +702,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -758,7 +758,7 @@ Object {
         "Period": 120,
         "Statistic": "Average",
         "Threshold": 80,
-        "TreatMissingData": "missing",
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -819,7 +819,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -953,7 +953,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -976,7 +976,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1070,7 +1070,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -1204,7 +1204,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1260,7 +1260,7 @@ Object {
         "Period": 120,
         "Statistic": "Average",
         "Threshold": 80,
-        "TreatMissingData": "missing",
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -1321,7 +1321,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -1455,7 +1455,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1478,7 +1478,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1572,7 +1572,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -1706,7 +1706,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1762,7 +1762,7 @@ Object {
         "Period": 120,
         "Statistic": "Average",
         "Threshold": 80,
-        "TreatMissingData": "missing",
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -1823,7 +1823,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Lambda code SHA",
@@ -1957,7 +1957,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
@@ -1980,7 +1980,7 @@ Object {
           },
           Object {
             "Key": "gu:repo",
-            "Value": "guardian/aws-canaries",
+            "Value": "guardian/commercial-canaries",
           },
           Object {
             "Key": "Stack",
