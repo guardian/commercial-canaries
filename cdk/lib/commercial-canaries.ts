@@ -163,7 +163,7 @@ export class CommercialCanaries extends GuStack {
 					},
 				}),
 				threshold: 80,
-				treatMissingData: TreatMissingData.MISSING,
+				treatMissingData: TreatMissingData.BREACHING,
 			});
 
 			alarm.addAlarmAction(new SnsAction(topic));
