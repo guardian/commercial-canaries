@@ -123,11 +123,11 @@ export class CommercialCanaries extends GuStack {
 			name: canaryName,
 			runtimeVersion: 'syn-nodejs-puppeteer-3.6',
 			runConfig: {
-				timeoutInSeconds: 120,
+				timeoutInSeconds: 60,
 				memoryInMb: isTcf ? 2048 : 3008,
 			},
 			schedule: {
-				expression: 'rate(2 minutes)',
+				expression: 'rate(1 minute)',
 				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
 			},
 			deleteLambdaResourcesOnCanaryDeletion: true,
@@ -157,7 +157,7 @@ export class CommercialCanaries extends GuStack {
 					namespace: 'CloudWatchSynthetics',
 					metricName: 'SuccessPercent',
 					statistic: 'avg',
-					period: Duration.minutes(2),
+					period: Duration.minutes(1),
 					dimensionsMap: {
 						CanaryName: canaryName,
 					},
