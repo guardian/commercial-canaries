@@ -1,4 +1,3 @@
-const Chromium = require('chrome-aws-lambda');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -22,30 +21,9 @@ const logError = (message) => {
 	logger.error(formatMessage(message));
 };
 
-const initialiseOptions = async () => {
-	return {
-		headless: true,
-		args: Chromium.args,
-		defaultViewport: Chromium.defaultViewport,
-		executablePath: await Chromium.executablePath,
-		ignoreHTTPSErrors: true,
-		devtools: false,
-		timeout: 0,
-	};
-};
-
-const launchBrowser = async (ops) => {
-	return await Chromium.puppeteer.launch(ops);
-};
-
-const makeNewBrowser = async () => {
-	const ops = await initialiseOptions(false);
-	const browser = await launchBrowser(ops);
-	return browser;
-};
-
-const clearCookies = async (client) => {
-	await client.send('Network.clearBrowserCookies');
+const clearCookies = async (page) => {
+	const allCookies = await page.cookies();
+	await page.deleteCookie(...allCookies);
 	log(`Cleared Cookies`);
 };
 
@@ -79,11 +57,7 @@ const checkTopAdDidNotLoad = async (page) => {
 };
 
 const interactWithCMP = async (page) => {
-	// Ensure that Sourcepoint has enough time to load the CMP
-	await page.waitForTimeout(5000);
-
-	// When AWS Synthetics use a more up-to-date version of Puppeteer,
-	// we can make use of waitForFrame(), and remove the timeout above.
+	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Yes I'm Happy" on CMP`);
 	const frame = page
 		.frames()
@@ -118,29 +92,20 @@ const checkCMPIsNotVisible = async (page) => {
 	log('CMP hidden or removed from page');
 };
 
-const checkCMPDidNotLoad = async (page) => {
-	log(`Checking CMP does not load: Start`);
-
-	const spMessageContainer = await page.$('[id*="sp_message_container"]');
-
-	if (spMessageContainer !== null) {
-		logError(`Checking CMP does not load: Failed`);
-		throw Error('CMP present on page');
-	}
-
-	log(`Checking CMP does not load: Complete`);
-};
-
 const reloadPage = async (page) => {
 	log(`Reloading page: Start`);
 	const reloadResponse = await page.reload({
-		waitUntil: ['networkidle0', 'domcontentloaded'],
+		waitUntil: 'domcontentloaded',
 		timeout: 30000,
 	});
 	if (!reloadResponse) {
 		logError(`Reloading page: Failed`);
 		throw 'Failed to refresh page!';
 	}
+
+	// We see some run failures if we do not include a wait time after a page load
+	await page.waitForTimeout(3000);
+
 	log(`Reloading page: Complete`);
 };
 
@@ -151,15 +116,18 @@ const loadPage = async (page, url) => {
 		timeout: 30000,
 	});
 	if (!response) {
-		logError('Loading URL: Failed');
+		logError('Loading page: Failed');
 		throw 'Failed to load page!';
 	}
 
 	// If the response status code is not a 2xx success code
 	if (response.status() < 200 || response.status() > 299) {
-		logError(`Loading URL: Error: Status ${response.status()}`);
+		logError(`Loading page: Failed. Status code: ${response.status()}`);
 		throw 'Failed to load page!';
 	}
+
+	// We see some run failures if we do not include a wait time after a page reload
+	await page.waitForTimeout(3000);
 
 	log(`Loading page: Complete`);
 };
@@ -168,82 +136,87 @@ const loadPage = async (page, url) => {
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
  */
-const checkPage = async (browser, url) => {
-	log(`Start checking Page URL: ${url}`);
+const checkPage = async (pageType, url) => {
+	log(`Start checking page: ${url}`);
 
-	const page = await browser.newPage();
+	let page = await synthetics.getPage();
 
-	// Clear cookies & local storage before starting testing, to ensure the CMP is displayed.
-	const client = await page.target().createCDPSession();
-	await clearCookies(client);
-
-	// We can't clear local storage before the page is loaded
+	// Reset the page state to a point where the we can start testing. Local storage can
+	// only be cleared once the page has loaded.
 	await loadPage(page, url);
 	await clearLocalStorage(page);
+	await clearCookies(page);
+
+	// Now we can run our tests.
+
+	// Test 1: Adverts load and that the CMP is NOT displayed on initial load
 	await reloadPage(page);
-
+	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
-
 	await checkTopAdDidNotLoad(page);
 
+	// Test 2: Adverts load and that the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
-
 	await checkCMPIsNotVisible(page);
-
 	await checkTopAdHasLoaded(page);
 
+	// Test 3: Adverts load and that the CMP is NOT displayed when the page is reloaded
 	await reloadPage(page);
-
+	await synthetics.takeScreenshot(
+		`${pageType}-page`,
+		'CMP clicked then page reloaded',
+	);
+	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
 
-	await checkCMPDidNotLoad(page);
-
-	await page.close();
+	// Test 4: After we clear local storage and cookies, the CMP banner is displayed once again
+	await clearLocalStorage(page);
+	await clearCookies(page);
+	await reloadPage(page);
+	await synthetics.takeScreenshot(
+		`${pageType}-page`,
+		'cookies and local storage cleared then page reloaded',
+	);
+	await checkCMPIsOnPage(page);
+	await checkTopAdDidNotLoad(page);
 };
 
 const pageLoadBlueprint = async function () {
 	const synConfig = synthetics.getConfiguration();
-
-	/**
-	 * Setting these to true will log all requests/responses in the Cloudwatch logs.
-	 * There are ~1000 of each, which makes it difficult to search through Cloudwatch
-	 * when set to true, yet may be helpful for extra debugging.
-	 */
 	synConfig.setConfig({
+		/**
+		 * Set harFile to true to see a detailed log of the HTTP requests that were made when the canary was run,
+		 * along with the responses and the amount of time that it took for the request to complete:
+		 */
+		harFile: false,
+		/**
+		 * Setting logRequest and logResponse to true will log all requests/responses in the Cloudwatch logs.
+		 * There are ~1000 of each, which makes it difficult to search through Cloudwatch
+		 * when set to true, yet may be helpful for extra debugging.
+		 */
 		logRequest: LOG_EVERY_REQUEST,
 		logResponse: LOG_EVERY_RESPONSE,
+		screenshotOnStepStart: false,
+		screenshotOnStepSuccess: false,
+		screenshotOnStepFailure: true,
 	});
 
 	startTime = new Date().getTime();
 
-	let browser = null;
-	try {
-		browser = await makeNewBrowser();
-
-		/**
-		 * Check front as first navigation. Then, check that ads load when viewing an article.
-		 * Note: The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
-		 */
+	// The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
+	await synthetics.executeStep('Test Front page', async function () {
 		await checkPage(
-			browser,
+			'front',
 			'https://www.theguardian.com?adtest=fixed-puppies',
 		);
+	});
 
-		/**
-		 * Check Article as first navigation.
-		 */
+	await synthetics.executeStep('Test Article page', async function () {
 		await checkPage(
-			browser,
+			'article',
 			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
 		);
-	} catch (error) {
-		logError(`The canary failed for the following reason: ${error}`);
-		throw error;
-	} finally {
-		if (browser !== null) {
-			await browser.close();
-		}
-	}
+	});
 };
 
 exports.handler = async () => {
