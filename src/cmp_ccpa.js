@@ -143,6 +143,10 @@ const checkPage = async (pageType, url) => {
 	// Test 2: Adverts load and that the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
+	
+	//Some delay seems to be required before SP will persist the user's choice.
+	await page.waitForTimeout(5000);
+	
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
