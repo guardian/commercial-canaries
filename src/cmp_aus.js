@@ -48,6 +48,10 @@ const interactWithCMP = async (page) => {
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Continue"]');
+	/*
+	 As of Sep 14, some delay seems to be required before SP will persist the user's choice.
+	 */
+	await page.waitForTimeout(1500);
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -143,8 +147,7 @@ const checkPage = async (pageType, url) => {
 	// Test 2: Adverts load and that the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
-	await page.waitForTimeout(5000);
-	
+
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
