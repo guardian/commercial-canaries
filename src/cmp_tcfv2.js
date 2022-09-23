@@ -63,7 +63,8 @@ const interactWithCMP = async (page) => {
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 
-	await frame.click('div.message-row > button.btn-primary.sp_choice_type_11');
+	// Accept cookies
+	await frame.click('div.message-component.message-row > button.btn-primary.sp_choice_type_11');
 };
 
 const checkCMPIsOnPage = async (page) => {
