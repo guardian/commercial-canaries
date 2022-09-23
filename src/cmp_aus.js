@@ -48,6 +48,7 @@ const interactWithCMP = async (page) => {
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Continue"]');
+
 	/*
 	 As of Sep 14, some delay seems to be required before SP will persist the user's choice.
 	 */

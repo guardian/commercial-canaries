@@ -62,7 +62,8 @@ const interactWithCMP = async (page) => {
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
-	await frame.click('button[title="Yes, I’m happy"]');
+
+	await frame.click('div.message-row > button.btn-primary');
 };
 
 const checkCMPIsOnPage = async (page) => {
