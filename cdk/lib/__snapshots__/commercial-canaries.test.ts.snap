@@ -52,7 +52,7 @@ Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -303,7 +303,7 @@ Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -554,7 +554,7 @@ Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -805,7 +805,7 @@ Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -1056,7 +1056,7 @@ Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -1307,7 +1307,7 @@ Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -1558,7 +1558,7 @@ Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -1809,7 +1809,7 @@ Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-3.6",
+        "RuntimeVersion": "syn-nodejs-puppeteer-3.7",
         "Schedule": Object {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
