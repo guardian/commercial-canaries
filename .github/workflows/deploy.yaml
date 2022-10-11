@@ -170,8 +170,6 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
-                  # riffraff includes AWS::DocDB::DBCluster in the policy which is not supported in US region, so this will fail if manageStackPolicy: true
-                  manageStackPolicy: false
               commercial-canary-aus:
                 type: cloud-formation
                 sources:
