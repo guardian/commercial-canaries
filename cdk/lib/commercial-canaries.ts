@@ -64,7 +64,12 @@ export class CommercialCanaries extends GuStack {
 				}),
 				new iam.PolicyStatement({
 					resources: [`arn:aws:s3:::${S3BucketResults}/*`],
-					actions: ['s3:PutObject', 's3:GetObject', 's3:GetBucketLocation'],
+					actions: [
+						's3:PutObject',
+						's3:GetObject',
+						's3:GetBucketLocation',
+						's3:DeleteObject',
+					],
 					effect: iam.Effect.ALLOW,
 				}),
 				new iam.PolicyStatement({
