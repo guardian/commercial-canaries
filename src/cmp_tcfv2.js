@@ -159,12 +159,12 @@ const checkPage = async (pageType, url) => {
 	await checkCMPIsOnPage(page);
 	await checkTopAdDidNotLoad(page);
 
-	// Test 2: Adverts load and that the CMP is NOT displayed following interaction with the CMP
+	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
 
-	// Test 3: Adverts load and that the CMP is NOT displayed when the page is reloaded
+	// Test 3: Adverts load and the CMP is NOT displayed when the page is reloaded
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
