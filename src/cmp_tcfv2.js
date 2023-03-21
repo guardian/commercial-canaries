@@ -64,7 +64,9 @@ const interactWithCMP = async (page) => {
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 
 	// Accept cookies
-	await frame.click('div.message-component.message-row > button.btn-primary.sp_choice_type_11');
+	await frame.click(
+		'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
+	);
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -151,7 +153,7 @@ const checkPage = async (pageType, url) => {
 
 	// Now we can run our tests.
 
-	// Test 1: Adverts load and that the CMP is NOT displayed on initial load
+	// Test 1: CMP loads and the ads are NOT displayed on initial load
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
