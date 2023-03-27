@@ -4,7 +4,7 @@ The commercial canaries are a set of [AWS Synthetics Canaries](https://docs.aws.
 
 ## Configuration
 
-Canaries are hosted in the following regions: Ireland, Canada, the US and Australia. A canary will initiate a run every two minutes. The canary is called `comm_cmp_canary_prod`.
+Canaries are hosted in the following regions: Ireland, Canada, the US and Australia. A canary will initiate a run every one minute. The canary is called `comm_cmp_canary_prod`.
 
 | Region             | AWS Region     | Banner button text                  |
 | ------------------ | -------------- | ----------------------------------- |
