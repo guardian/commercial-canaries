@@ -52,7 +52,7 @@ const interactWithCMP = async (page) => {
 	/*
 	 As of Sep 14, some delay seems to be required before SP will persist the user's choice.
 	 */
-	await page.waitForTimeout(1500);
+	await page.waitForTimeout(500);
 };
 
 const checkCMPIsOnPage = async (page) => {
