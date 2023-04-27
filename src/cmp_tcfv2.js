@@ -58,7 +58,7 @@ const checkTopAdDidNotLoad = async (page) => {
 
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Yes I'm Happy" on CMP`);
+	log(`Clicking on "Yes I'm Happy"`);
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
