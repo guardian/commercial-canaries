@@ -137,7 +137,7 @@ export class CommercialCanaries extends GuStack {
 			},
 			deleteLambdaResourcesOnCanaryDeletion: true,
 			successRetentionPeriod: 7,
-			failureRetentionPeriod: 30,
+			failureRetentionPeriod: 31,
 			startCanaryAfterCreation: true,
 			tags: [
 				{
