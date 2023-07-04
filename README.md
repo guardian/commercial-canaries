@@ -56,7 +56,6 @@ From here, you can see all the details relating to the canary and the recent run
 
 ## Requirements
 
--   [Node 14](https://nodejs.org/en/download/) ([nvm](https://github.com/nvm-sh/nvm))
 -   [Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
 ## Development
