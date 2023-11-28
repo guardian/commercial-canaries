@@ -126,7 +126,7 @@ export class CommercialCanaries extends GuStack {
 			},
 			executionRoleArn: role.roleArn,
 			name: canaryName,
-			runtimeVersion: 'syn-nodejs-puppeteer-4.0',
+			runtimeVersion: 'syn-nodejs-puppeteer-6.0',
 			runConfig: {
 				timeoutInSeconds: 60,
 				memoryInMb: isTcf ? 2048 : 3008,
