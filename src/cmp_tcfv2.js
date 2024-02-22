@@ -136,6 +136,17 @@ const loadPage = async (page, url) => {
 	log(`Loading page: Complete`);
 };
 
+const checkPrebid = (page, url) => {
+	const requestPromise = page.waitForRequest((request) => {
+		if (request.url().startsWith(url)) {
+			log(`Prebid request url matches, ${request.url()}`);
+			return true;
+		}
+		return false;
+	});
+	return requestPromise;
+};
+
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -154,6 +165,11 @@ const checkPage = async (pageType, url) => {
 	// Now we can run our tests.
 
 	// Test 1: CMP loads and the ads are NOT displayed on initial load
+	const prebidCriteo = checkPrebid(page, 'https://bidder.criteo.com/cdb');
+	const prebidOzone = checkPrebid(
+		page,
+		'https://elb.the-ozone-project.com/openrtb2/auction',
+	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
@@ -162,6 +178,8 @@ const checkPage = async (pageType, url) => {
 	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
+	await prebidCriteo;
+	await prebidOzone;
 	await checkTopAdHasLoaded(page);
 
 	// Test 3: Adverts load and the CMP is NOT displayed when the page is reloaded
@@ -171,6 +189,8 @@ const checkPage = async (pageType, url) => {
 		'CMP clicked then page reloaded',
 	);
 	await checkCMPIsNotVisible(page);
+	await prebidCriteo;
+	await prebidOzone;
 	await checkTopAdHasLoaded(page);
 
 	// Test 4: After we clear local storage and cookies, the CMP banner is displayed once again
