@@ -174,9 +174,10 @@ const checkPrebid = async (page) => {
 		return Promise.resolve();
 	}
 
-	await page.waitForRequest((req) =>
-		req.url().includes('https://elb.the-ozone-project.com/openrtb2/auction'),
-	);
+	const prebidURL =
+		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+
+	await page.waitForRequest((req) => req.url().includes(prebidURL));
 	log(`Prebid check: Complete`);
 };
 

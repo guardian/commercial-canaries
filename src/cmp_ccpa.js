@@ -103,9 +103,10 @@ const checkPrebid = async (page) => {
 		return Promise.resolve();
 	}
 
-	await page.waitForRequest((req) =>
-		req.url().includes('https://ib.adnxs.com/ut/v3/prebid'),
-	);
+	const prebidURL =
+		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+
+	await page.waitForRequest((req) => req.url().includes(prebidURL));
 	log(`Prebid check: Complete`);
 };
 
