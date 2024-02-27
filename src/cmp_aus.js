@@ -94,6 +94,33 @@ const reloadPage = async (page) => {
 	log(`Reloading page: Complete`);
 };
 
+const checkPrebid = async (page) => {
+	log(`Reloading page: Start`);
+	const reloadResponse = await page.reload({
+		waitUntil: 'domcontentloaded',
+		timeout: 30000,
+	});
+	if (!reloadResponse) {
+		logError(`Reloading page : Failed`);
+		throw 'Failed to refresh page!';
+	}
+	log(`Reloading page: Complete`);
+
+	const hasPageskin = await page.evaluate(
+		() => window.guardian.config.page.hasPageskin,
+	);
+
+	if (hasPageskin) {
+		log('Pageskin detected. Prebid will not run');
+		return Promise.resolve();
+	}
+
+	await page.waitForRequest((req) =>
+		req.url().includes('https://ib.adnxs.com/ut/v3/prebid'),
+	);
+	log(`Prebid check: Complete`);
+};
+
 const loadPage = async (page, url) => {
 	log(`Loading page: Start`);
 	const response = await page.goto(url, {
@@ -162,6 +189,9 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsOnPage(page);
 	await checkTopAdHasLoaded(page);
+
+	// Test 4: Prebid
+	await checkPrebid(page);
 };
 
 const pageLoadBlueprint = async function () {
