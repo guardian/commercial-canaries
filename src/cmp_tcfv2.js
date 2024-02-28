@@ -208,7 +208,6 @@ const checkPage = async (pageType, url) => {
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
-	await synthetics.takeScreenshot(`${pageType}-page`, 'ads loaded');
 
 	// Test 3: Adverts load and the CMP is NOT displayed when the page is reloaded
 	await reloadPage(page);
@@ -218,7 +217,6 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
-	await synthetics.takeScreenshot(`${pageType}-page`, 'ads loaded');
 
 	//Test 4: Prebid
 	await checkPrebid(page);
