@@ -106,8 +106,8 @@ const checkPrebid = async (page) => {
 	}
 	log(`Reloading page: Complete`);
 
-	const hasPageskin = await page.evaluate(
-		() => window.guardian.config.page.hasPageskin,
+	const hasPageskin = await page.evaluate(() =>
+		document.body.classList.contains('has-page-skin'),
 	);
 
 	if (hasPageskin) {
