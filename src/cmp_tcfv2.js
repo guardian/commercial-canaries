@@ -136,6 +136,51 @@ const loadPage = async (page, url) => {
 	log(`Loading page: Complete`);
 };
 
+const getCurrentLocation = async (page) => {
+	const currentLocation = () => {
+		return document.cookie
+			.split('; ')
+			.find((row) => row.startsWith('GU_geo_country='))
+			?.split('=')[1];
+	};
+
+	return await page.evaluate(currentLocation);
+};
+
+const checkPrebid = async (page) => {
+	log(`Reloading page: Start`);
+	const reloadResponse = await page.reload({
+		waitUntil: 'domcontentloaded',
+		timeout: 30000,
+	});
+	if (!reloadResponse) {
+		logError(`Reloading page : Failed`);
+		throw 'Failed to refresh page!';
+	}
+	log(`Reloading page: Complete`);
+
+	const currentLocation = await getCurrentLocation(page);
+	if (currentLocation === 'CA') {
+		log('In Canada we do not run Prebid');
+		return Promise.resolve();
+	}
+
+	const hasPageskin = await page.evaluate(() =>
+		document.body.classList.contains('has-page-skin'),
+	);
+
+	if (hasPageskin) {
+		log('Pageskin detected. Prebid will not run');
+		return Promise.resolve();
+	}
+
+	const prebidURL =
+		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+
+	await page.waitForRequest((req) => req.url().includes(prebidURL));
+	log(`Prebid check: Complete`);
+};
+
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -173,7 +218,10 @@ const checkPage = async (pageType, url) => {
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
 
-	// Test 4: After we clear local storage and cookies, the CMP banner is displayed once again
+	//Test 4: Prebid
+	await checkPrebid(page);
+
+	// Test 5: After we clear local storage and cookies, the CMP banner is displayed once again
 	await clearLocalStorage(page);
 	await clearCookies(page);
 	await reloadPage(page);

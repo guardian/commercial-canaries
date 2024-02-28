@@ -94,6 +94,34 @@ const reloadPage = async (page) => {
 	log(`Reloading page: Complete`);
 };
 
+const checkPrebid = async (page) => {
+	log(`Reloading page: Start`);
+	const reloadResponse = await page.reload({
+		waitUntil: 'domcontentloaded',
+		timeout: 30000,
+	});
+	if (!reloadResponse) {
+		logError(`Reloading page : Failed`);
+		throw 'Failed to refresh page!';
+	}
+	log(`Reloading page: Complete`);
+
+	const hasPageskin = await page.evaluate(() =>
+		document.body.classList.contains('has-page-skin'),
+	);
+
+	if (hasPageskin) {
+		log('Pageskin detected. Prebid will not run');
+		return Promise.resolve();
+	}
+
+	const prebidURL =
+		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+
+	await page.waitForRequest((req) => req.url().includes(prebidURL));
+	log(`Prebid check: Complete`);
+};
+
 const loadPage = async (page, url) => {
 	log(`Loading page: Start`);
 	const response = await page.goto(url, {
@@ -162,6 +190,9 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsOnPage(page);
 	await checkTopAdHasLoaded(page);
+
+	// Test 4: Prebid
+	await checkPrebid(page);
 };
 
 const pageLoadBlueprint = async function () {
