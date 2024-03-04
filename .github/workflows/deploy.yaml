@@ -73,8 +73,6 @@ jobs:
             deployments:
               upload-uk:
                 type: aws-s3
-                contentDirectories:
-                  - builds/tcfv2
                 regions:
                   - eu-west-1
                 parameters:
@@ -85,8 +83,6 @@ jobs:
                   prefixPackage: false
               upload-ca:
                 type: aws-s3
-                contentDirectories:
-                  - builds/tcfv2
                 regions:
                   - ca-central-1
                 parameters:
@@ -97,8 +93,6 @@ jobs:
                   prefixPackage: false
               upload-us:
                 type: aws-s3
-                contentDirectories:
-                  - builds/ccpa
                 regions:
                   - us-west-1
                 parameters:
@@ -109,8 +103,6 @@ jobs:
                   prefixPackage: false
               upload-aus:
                 type: aws-s3
-                contentDirectories:
-                  - builds/aus
                 regions:
                   - ap-southeast-2
                 parameters:
@@ -121,8 +113,6 @@ jobs:
                   prefixPackage: false
               commercial-canary-uk:
                 type: cloud-formation
-                contentDirectories:
-                  - cdk/cdk.out
                 regions:
                   - eu-west-1
                 parameters:
@@ -136,8 +126,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-ca:
                 type: cloud-formation
-                contentDirectories:
-                  - cdk/cdk.out
                 regions:
                   - ca-central-1
                 parameters:
@@ -151,8 +139,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-us:
                 type: cloud-formation
-                contentDirectories:
-                 - cdk/cdk.out
                 regions:
                   - us-west-1
                 parameters:
@@ -166,8 +152,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-aus:
                 type: cloud-formation
-                contentDirectories:
-                  - cdk/cdk.out
                 regions:
                   - ap-southeast-2
                 parameters:
@@ -179,3 +163,20 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+          contentDirectories: |
+            upload-uk:
+              - builds/tcfv2
+            upload-ca:
+              - builds/tcfv2
+            upload-us:
+              - builds/ccpa
+            upload-aus:
+              - builds/aus
+            commercial-canary-uk:
+              - cdk/cdk.out
+            commercial-canary-ca:
+              - cdk/cdk.out
+            commercial-canary-us:
+              - cdk/cdk.out
+            commercial-canary-aus:
+              - cdk/cdk.out
