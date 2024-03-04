@@ -54,14 +54,11 @@ jobs:
         working-directory: './cdk'
         run: yarn synth
 
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-
-      - uses: guardian/actions-riff-raff@v1
+      - uses: guardian/actions-riff-raff@v4
         with:
           app: commercial-canaries
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           config: |
             stacks:
              - frontend
@@ -76,8 +73,8 @@ jobs:
             deployments:
               upload-uk:
                 type: aws-s3
-                sources:
-                  - builds/tcfv2/nodejs.zip
+                contentDirectories:
+                  - builds/tcfv2
                 regions:
                   - eu-west-1
                 parameters:
@@ -88,8 +85,8 @@ jobs:
                   prefixPackage: false
               upload-ca:
                 type: aws-s3
-                sources:
-                  - builds/tcfv2/nodejs.zip
+                contentDirectories:
+                  - builds/tcfv2
                 regions:
                   - ca-central-1
                 parameters:
@@ -100,8 +97,8 @@ jobs:
                   prefixPackage: false
               upload-us:
                 type: aws-s3
-                sources:
-                  - builds/ccpa/nodejs.zip
+                contentDirectories:
+                  - builds/ccpa
                 regions:
                   - us-west-1
                 parameters:
@@ -112,8 +109,8 @@ jobs:
                   prefixPackage: false
               upload-aus:
                 type: aws-s3
-                sources:
-                  - builds/aus/nodejs.zip
+                contentDirectories:
+                  - builds/aus
                 regions:
                   - ap-southeast-2
                 parameters:
@@ -124,9 +121,8 @@ jobs:
                   prefixPackage: false
               commercial-canary-uk:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-UK-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-UK-PROD.template.json
+                contentDirectories:
+                  - cdk/cdk.out
                 regions:
                   - eu-west-1
                 parameters:
@@ -140,9 +136,8 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-ca:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-CA-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-CA-PROD.template.json
+                contentDirectories:
+                  - cdk/cdk.out
                 regions:
                   - ca-central-1
                 parameters:
@@ -156,9 +151,8 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-us:
                 type: cloud-formation
-                sources:
-                 - cdk/cdk.out/CommercialCanaries-US-CODE.template.json
-                 - cdk/cdk.out/CommercialCanaries-US-PROD.template.json
+                contentDirectories:
+                 - cdk/cdk.out
                 regions:
                   - us-west-1
                 parameters:
@@ -172,9 +166,8 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-aus:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-AUS-PROD.template.json
+                contentDirectories:
+                  - cdk/cdk.out
                 regions:
                   - ap-southeast-2
                 parameters:
