@@ -8,6 +8,7 @@ on:
 permissions:
   # required by aws-actions/configure-aws-credentials
   id-token: write
+  pull-requests: write
   contents: read
 
 jobs:
