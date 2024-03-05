@@ -21,14 +21,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get Lambda code SHA
-        id: getLambdaCodeSha
-        run: |
-          echo "::set-output name=SHA_ID::$(
-            sha1sum ./src/* | sha1sum
-          )"
-        shell: bash
-
       - name: Run script to create zip files
         run: |
           chmod +x ./.github/scripts/create-artifacts.sh
@@ -117,8 +109,6 @@ jobs:
                 regions:
                   - eu-west-1
                 parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
                   templateStagePaths:
                     CODE: CommercialCanaries-UK-CODE.template.json
                     PROD: CommercialCanaries-UK-PROD.template.json
@@ -130,8 +120,6 @@ jobs:
                 regions:
                   - ca-central-1
                 parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
                   templateStagePaths:
                     CODE: CommercialCanaries-CA-CODE.template.json
                     PROD: CommercialCanaries-CA-PROD.template.json
@@ -143,8 +131,6 @@ jobs:
                 regions:
                   - us-west-1
                 parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
                   templateStagePaths:
                     CODE: CommercialCanaries-US-CODE.template.json
                     PROD: CommercialCanaries-US-PROD.template.json
@@ -156,8 +142,6 @@ jobs:
                 regions:
                   - ap-southeast-2
                 parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
                   templateStagePaths:
                     CODE: CommercialCanaries-AUS-CODE.template.json
                     PROD: CommercialCanaries-AUS-PROD.template.json

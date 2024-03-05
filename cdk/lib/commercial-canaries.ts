@@ -52,7 +52,7 @@ export class CommercialCanaries extends GuStack {
 		 */
 		const buildId = new CfnParameter(this, 'BuildId', {
 			type: 'String',
-			description: 'The SHA of the lambda code files.',
+			description: 'The riff-raff BuildId.',
 		});
 
 		const policyDocument = new iam.PolicyDocument({

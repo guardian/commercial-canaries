@@ -8,7 +8,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -231,7 +231,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -520,7 +520,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -743,7 +743,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -1032,7 +1032,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -1255,7 +1255,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -1544,7 +1544,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
@@ -1767,7 +1767,7 @@ Object {
   },
   "Parameters": Object {
     "BuildId": Object {
-      "Description": "The SHA of the lambda code files.",
+      "Description": "The riff-raff BuildId.",
       "Type": "String",
     },
   },
