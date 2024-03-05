@@ -1,9 +1,10 @@
 import 'source-map-support/register';
-import { GuRoot } from '@guardian/cdk/lib/constructs/root';
+import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
+import { App } from 'aws-cdk-lib';
 import { CommercialCanaries } from '../lib/commercial-canaries';
 import { regions } from '../lib/regions';
 
-const app = new GuRoot();
+const app = new App();
 
 const stages = ['CODE', 'PROD'];
 
@@ -19,3 +20,27 @@ stages.forEach((stage) => {
 		});
 	});
 });
+
+const riffRaff = new RiffRaffYamlFile(app);
+const {
+	riffRaffYaml: { deployments },
+} = riffRaff;
+
+regions.forEach(({ locationAbbr, region, build }) => {
+	deployments.set(`upload-${locationAbbr}`, {
+		type: 'aws-s3',
+		app: 'commercial-canaries',
+		regions: new Set([region]),
+		stacks: new Set(['frontend']),
+		parameters: {
+			bucketSsmKey: `/account/services/commercial-canary.bucket`,
+			cacheControl: 'private',
+			publicReadAcl: false,
+			prefixStack: false,
+			prefixPackage: false,
+		},
+		contentDirectory: `builds/${build}`,
+	});
+});
+
+riffRaff.synth();
