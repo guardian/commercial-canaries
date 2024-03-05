@@ -50,7 +50,7 @@ export class CommercialCanaries extends GuStack {
 		 *    will be different, which will trigger the CloudFormation stack to update the
 		 *    lambda code used by the canary.
 		 */
-		const lambdaCodeSha = new CfnParameter(this, 'lambdaCodeSha', {
+		const buildId = new CfnParameter(this, 'BuildId', {
 			type: 'String',
 			description: 'The SHA of the lambda code files.',
 		});
@@ -141,8 +141,8 @@ export class CommercialCanaries extends GuStack {
 			startCanaryAfterCreation: true,
 			tags: [
 				{
-					key: 'Lambda code SHA',
-					value: lambdaCodeSha.valueAsString,
+					key: 'BuildId',
+					value: buildId.valueAsString,
 				},
 			],
 		});

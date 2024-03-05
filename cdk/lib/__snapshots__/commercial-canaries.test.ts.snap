@@ -7,7 +7,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -65,18 +65,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -230,7 +230,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -321,18 +321,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -519,7 +519,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -577,18 +577,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -742,7 +742,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -833,18 +833,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1031,7 +1031,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -1089,18 +1089,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1254,7 +1254,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -1345,18 +1345,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1543,7 +1543,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -1601,18 +1601,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1766,7 +1766,7 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
+    "BuildId": Object {
       "Description": "The SHA of the lambda code files.",
       "Type": "String",
     },
@@ -1857,18 +1857,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
