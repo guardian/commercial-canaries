@@ -6,8 +6,9 @@ on:
 
 # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions:
-  # required by aws-actions/configure-aws-credentials
+  # required by guardian/actions-riff-raff
   id-token: write
+  pull-requests: write
   contents: read
 
 jobs:
@@ -54,14 +55,11 @@ jobs:
         working-directory: './cdk'
         run: yarn synth
 
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-
-      - uses: guardian/actions-riff-raff@v1
+      - uses: guardian/actions-riff-raff@v4
         with:
           app: commercial-canaries
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           config: |
             stacks:
              - frontend
@@ -76,8 +74,6 @@ jobs:
             deployments:
               upload-uk:
                 type: aws-s3
-                sources:
-                  - builds/tcfv2/nodejs.zip
                 regions:
                   - eu-west-1
                 parameters:
@@ -88,8 +84,6 @@ jobs:
                   prefixPackage: false
               upload-ca:
                 type: aws-s3
-                sources:
-                  - builds/tcfv2/nodejs.zip
                 regions:
                   - ca-central-1
                 parameters:
@@ -100,8 +94,6 @@ jobs:
                   prefixPackage: false
               upload-us:
                 type: aws-s3
-                sources:
-                  - builds/ccpa/nodejs.zip
                 regions:
                   - us-west-1
                 parameters:
@@ -112,8 +104,6 @@ jobs:
                   prefixPackage: false
               upload-aus:
                 type: aws-s3
-                sources:
-                  - builds/aus/nodejs.zip
                 regions:
                   - ap-southeast-2
                 parameters:
@@ -124,9 +114,6 @@ jobs:
                   prefixPackage: false
               commercial-canary-uk:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-UK-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-UK-PROD.template.json
                 regions:
                   - eu-west-1
                 parameters:
@@ -140,9 +127,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-ca:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-CA-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-CA-PROD.template.json
                 regions:
                   - ca-central-1
                 parameters:
@@ -156,9 +140,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-us:
                 type: cloud-formation
-                sources:
-                 - cdk/cdk.out/CommercialCanaries-US-CODE.template.json
-                 - cdk/cdk.out/CommercialCanaries-US-PROD.template.json
                 regions:
                   - us-west-1
                 parameters:
@@ -172,9 +153,6 @@ jobs:
                   cloudFormationStackName: commercial-canary
               commercial-canary-aus:
                 type: cloud-formation
-                sources:
-                  - cdk/cdk.out/CommercialCanaries-AUS-CODE.template.json
-                  - cdk/cdk.out/CommercialCanaries-AUS-PROD.template.json
                 regions:
                   - ap-southeast-2
                 parameters:
@@ -186,3 +164,20 @@ jobs:
                   cloudFormationStackByTags: false
                   prependStackToCloudFormationStackName: false
                   cloudFormationStackName: commercial-canary
+          contentDirectories: |
+            upload-uk:
+              - builds/tcfv2
+            upload-ca:
+              - builds/tcfv2
+            upload-us:
+              - builds/ccpa
+            upload-aus:
+              - builds/aus
+            commercial-canary-uk:
+              - cdk/cdk.out
+            commercial-canary-ca:
+              - cdk/cdk.out
+            commercial-canary-us:
+              - cdk/cdk.out
+            commercial-canary-aus:
+              - cdk/cdk.out
