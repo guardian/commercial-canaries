@@ -6,7 +6,7 @@ on:
 
 # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions:
-  # required by aws-actions/configure-aws-credentials
+  # required by guardian/actions-riff-raff
   id-token: write
   pull-requests: write
   contents: read
