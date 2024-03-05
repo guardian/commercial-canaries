@@ -8,7 +8,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'CODE',
-			awsRegion: 'eu-west-1',
+			env: {
+				region: 'eu-west-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -20,7 +22,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'PROD',
-			awsRegion: 'eu-west-1',
+			env: {
+				region: 'eu-west-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -32,7 +36,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'CODE',
-			awsRegion: 'ca-central-1',
+			env: {
+				region: 'ca-central-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -44,7 +50,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'PROD',
-			awsRegion: 'ca-central-1',
+			env: {
+				region: 'ca-central-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -56,7 +64,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'CODE',
-			awsRegion: 'us-west-1',
+			env: {
+				region: 'us-west-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -68,7 +78,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'PROD',
-			awsRegion: 'us-west-1',
+			env: {
+				region: 'us-west-1',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -80,7 +92,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'CODE',
-			awsRegion: 'ap-southeast-2',
+			env: {
+				region: 'ap-southeast-2',
+			},
 		});
 
 		const template = Template.fromStack(stack);
@@ -92,7 +106,9 @@ describe('The CommercialCanaries stack', () => {
 		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 			stack: 'frontend',
 			stage: 'PROD',
-			awsRegion: 'ap-southeast-2',
+			env: {
+				region: 'ap-southeast-2',
+			},
 		});
 
 		const template = Template.fromStack(stack);
