@@ -19,21 +19,21 @@ import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
 const THIRTY_MINUTES_IN_SECONDS = '1800';
 
-interface StackProps extends GuStackProps {
-	awsRegion: string;
-}
-
 export class CommercialCanaries extends GuStack {
-	constructor(scope: App, id: string, props: StackProps) {
+	constructor(scope: App, id: string, props: GuStackProps) {
 		super(scope, id, props);
 
-		const { awsRegion, stage } = props;
+		const { env, stage } = props;
+
+		if (!env?.region) {
+			throw new Error('env.region is required');
+		}
 
 		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
-		const S3BucketCanary = `cw-syn-canary-${accountId}-${awsRegion}`;
-		const S3BucketResults = `cw-syn-results-${accountId}-${awsRegion}`;
-		const isTcf = awsRegion === 'eu-west-1' || awsRegion === 'ca-central-1';
+		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
+		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;
+		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
@@ -74,7 +74,7 @@ export class CommercialCanaries extends GuStack {
 				}),
 				new iam.PolicyStatement({
 					resources: [
-						`arn:aws:logs:${awsRegion}:${accountId}:log-group:/aws/lambda/cwsyn-${canaryName}-*`,
+						`arn:aws:logs:${env.region}:${accountId}:log-group:/aws/lambda/cwsyn-${canaryName}-*`,
 					],
 					actions: [
 						'logs:CreateLogStream',
@@ -103,7 +103,7 @@ export class CommercialCanaries extends GuStack {
 
 		const role = new iam.Role(this, 'Role', {
 			assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
-			roleName: `CloudWatchSyntheticsRole-${canaryName}-${awsRegion}`,
+			roleName: `CloudWatchSyntheticsRole-${canaryName}-${env.region}`,
 			description:
 				'CloudWatch Synthetics lambda execution role for running canaries',
 			managedPolicies: [
