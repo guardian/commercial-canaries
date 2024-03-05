@@ -52,7 +52,8 @@ export class CommercialCanaries extends GuStack {
 		 */
 		const buildId = new CfnParameter(this, 'BuildId', {
 			type: 'String',
-			description: 'The riff-raff BuildId.',
+			description:
+				'The riff-raff build id, automatically generated and provided by riff-raff',
 		});
 
 		const policyDocument = new iam.PolicyDocument({
