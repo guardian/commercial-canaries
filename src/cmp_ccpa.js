@@ -151,7 +151,7 @@ const loadPage = async (page, url) => {
 };
 
 // We need to wait for the page to finish reloading following a consent state change
-const waitForPageRefresh = async(page) => {
+const waitForPageReload = async(page) => {
 	page.waitForLoadState('domcontentloaded');
 
 	// We see some run failures if we do not include a wait time after a page load
@@ -183,7 +183,7 @@ const checkPage = async (pageType, url) => {
 
 	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
-	await waitForPageRefresh(page);
+	await waitForPageReload(page);
 	await checkCMPIsNotVisible(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
