@@ -26,6 +26,15 @@ const {
 	riffRaffYaml: { deployments },
 } = riffRaff;
 
+deployments.forEach((deployment) => {
+	// @ts-expect-error -- not supported by the type definitions
+	deployment.cloudFormationStackName = 'commercial-canary';
+	// @ts-expect-error -- not supported by the type definitions
+	deployment.prependStackToCloudFormationStackName = false;
+	// @ts-expect-error -- not supported by the type definitions
+	deployment.cloudFormationStackByTags = false;
+});
+
 regions.forEach(({ locationAbbr, region }) => {
 	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
 		type: 'aws-s3',
