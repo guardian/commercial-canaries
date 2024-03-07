@@ -26,8 +26,8 @@ const {
 	riffRaffYaml: { deployments },
 } = riffRaff;
 
-regions.forEach(({ locationAbbr, region, build }) => {
-	deployments.set(`upload-${locationAbbr}`, {
+regions.forEach(({ locationAbbr, region }) => {
+	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
 		type: 'aws-s3',
 		app: 'commercial-canaries',
 		regions: new Set([region]),
@@ -39,7 +39,7 @@ regions.forEach(({ locationAbbr, region, build }) => {
 			prefixStack: false,
 			prefixPackage: false,
 		},
-		contentDirectory: `builds/${build}`,
+		contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
 	});
 });
 

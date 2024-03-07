@@ -53,3 +53,14 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           configPath: cdk/cdk.out/riff-raff.yaml
+          contentDirectories: |
+            upload-uk:
+              - builds/tcfv2
+            upload-ca:
+              - builds/tcfv2
+            upload-us:
+              - builds/ccpa
+            upload-aus:
+              - builds/aus
+            cdk/cdk.out:
+              - cdk/cdk.out
