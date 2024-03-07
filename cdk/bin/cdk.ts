@@ -27,12 +27,9 @@ const {
 } = riffRaff;
 
 deployments.forEach((deployment) => {
-	// @ts-expect-error -- not supported by the type definitions
-	deployment.cloudFormationStackName = 'commercial-canary';
-	// @ts-expect-error -- not supported by the type definitions
-	deployment.prependStackToCloudFormationStackName = false;
-	// @ts-expect-error -- not supported by the type definitions
-	deployment.cloudFormationStackByTags = false;
+	deployment.parameters.cloudFormationStackName = 'commercial-canary';
+	deployment.parameters.prependStackToCloudFormationStackName = false;
+	deployment.parameters.cloudFormationStackByTags = false;
 });
 
 regions.forEach(({ locationAbbr, region }) => {
