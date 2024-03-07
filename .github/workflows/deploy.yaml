@@ -62,5 +62,5 @@ jobs:
               - builds/ccpa
             upload-aus:
               - builds/aus
-            cdk/cdk.out:
+            cdk.out:
               - cdk/cdk.out
