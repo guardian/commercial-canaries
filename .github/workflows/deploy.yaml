@@ -49,7 +49,7 @@ jobs:
 
       - uses: guardian/actions-riff-raff@v4
         with:
-          projectName: commercial-canaries
+          projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           configPath: cdk/cdk.out/riff-raff.yaml
