@@ -39,16 +39,7 @@ export class CommercialCanaries extends GuStack {
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
 
 		/**
-		 *  This is used to detect changes in the lambda code.
-		 *
-		 *  PROBLEM:
-		 *  - We make a change to the lambda code and push our change. This does not
-		 *    change the CloudFormation template, so the canary is not updated.
-		 *
-		 *  SOLUTION:
-		 *  - When there is a change to the file contents or filename, the generated SHA
-		 *    will be different, which will trigger the CloudFormation stack to update the
-		 *    lambda code used by the canary.
+		 *  This is used to ensure the canary is redeployed when the build id changes as it increments for each riff-raff build
 		 */
 		const buildId = new CfnParameter(this, 'BuildId', {
 			type: 'String',
