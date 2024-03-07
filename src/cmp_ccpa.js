@@ -150,6 +150,14 @@ const loadPage = async (page, url) => {
 	log(`Loading page: Complete`);
 };
 
+// We need to wait for the page to finish reloading following a consent state change
+const waitForPageRefresh = async(page) => {
+	page.waitForLoadState('domcontentloaded');
+
+	// We see some run failures if we do not include a wait time after a page load
+	await page.waitForTimeout(3000);
+}
+
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -175,14 +183,12 @@ const checkPage = async (pageType, url) => {
 
 	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
+	await waitForPageRefresh(page);
 	await checkCMPIsNotVisible(page);
-
-	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'CMP clicked then page reloaded',
 	);
-	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
 
 	// Test 3: After we clear local storage and cookies, the CMP banner is displayed once again
