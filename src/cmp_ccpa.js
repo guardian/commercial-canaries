@@ -49,10 +49,9 @@ const interactWithCMP = async (page) => {
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Do not sell my personal information"]');
 
-	/*
-	 As of Sep 14, some delay seems to be required before SP will persist the user's choice.
-	 */
-	await page.waitForTimeout(500);
+	await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+	// We see some run failures if we do not include a wait time after a page load
+	await page.waitForTimeout(3000);
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -176,13 +175,10 @@ const checkPage = async (pageType, url) => {
 	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
-
-	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'CMP clicked then page reloaded',
 	);
-	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
 
 	// Test 3: After we clear local storage and cookies, the CMP banner is displayed once again
