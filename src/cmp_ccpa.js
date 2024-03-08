@@ -48,6 +48,10 @@ const interactWithCMP = async (page) => {
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
 	await frame.click('button[title="Do not sell my personal information"]');
+
+	await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+	// We see some run failures if we do not include a wait time after a page load
+	await page.waitForTimeout(3000);
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -145,14 +149,6 @@ const loadPage = async (page, url) => {
 	log(`Loading page: Complete`);
 };
 
-// We need to wait for the page to finish reloading following a consent state change
-const waitForPageReload = async(page) => {
-	await page.waitForNavigation({waitUntil: 'domcontentloaded'});
-
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
-}
-
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -178,7 +174,6 @@ const checkPage = async (pageType, url) => {
 
 	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
 	await interactWithCMP(page);
-	await waitForPageReload(page);
 	await checkCMPIsNotVisible(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
