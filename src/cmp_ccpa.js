@@ -152,7 +152,7 @@ const loadPage = async (page, url) => {
 
 // We need to wait for the page to finish reloading following a consent state change
 const waitForPageReload = async(page) => {
-	page.waitForLoadState('domcontentloaded');
+	await page.waitForNavigation({waitUntil: 'domcontentloaded'});
 
 	// We see some run failures if we do not include a wait time after a page load
 	await page.waitForTimeout(3000);
