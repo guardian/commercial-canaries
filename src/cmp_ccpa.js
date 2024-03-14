@@ -10,6 +10,7 @@ const getTimeSinceStart = () => new Date().getTime() - startTime;
 /**
  * We use custom log messages so that we can easily differentiate
  * between logs from this file and other logs in Cloudwatch.
+ *
  */
 const formatMessage = (message) =>
 	`GuCanaryRun. Time: ${getTimeSinceStart() / 1000}s. Message: ${message}`;

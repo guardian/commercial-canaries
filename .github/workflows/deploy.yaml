@@ -21,14 +21,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get Lambda code SHA
-        id: getLambdaCodeSha
-        run: |
-          echo "::set-output name=SHA_ID::$(
-            sha1sum ./src/* | sha1sum
-          )"
-        shell: bash
-
       - name: Run script to create zip files
         run: |
           chmod +x ./.github/scripts/create-artifacts.sh
@@ -57,113 +49,10 @@ jobs:
 
       - uses: guardian/actions-riff-raff@v4
         with:
-          app: commercial-canaries
+          projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-          config: |
-            stacks:
-             - frontend
-            regions:
-              - eu-west-1
-              - ca-central-1
-              - us-west-1
-              - ap-southeast-2
-            allowedStages:
-              - CODE
-              - PROD
-            deployments:
-              upload-uk:
-                type: aws-s3
-                regions:
-                  - eu-west-1
-                parameters:
-                  bucket: cw-syn-canary-${{ secrets.AWS_FRONTEND_ACC }}-eu-west-1
-                  cacheControl: private
-                  publicReadAcl: false
-                  prefixStack: false
-                  prefixPackage: false
-              upload-ca:
-                type: aws-s3
-                regions:
-                  - ca-central-1
-                parameters:
-                  bucket: cw-syn-canary-${{ secrets.AWS_FRONTEND_ACC }}-ca-central-1
-                  cacheControl: private
-                  publicReadAcl: false
-                  prefixStack: false
-                  prefixPackage: false
-              upload-us:
-                type: aws-s3
-                regions:
-                  - us-west-1
-                parameters:
-                  bucket: cw-syn-canary-${{ secrets.AWS_FRONTEND_ACC }}-us-west-1
-                  cacheControl: private
-                  publicReadAcl: false
-                  prefixStack: false
-                  prefixPackage: false
-              upload-aus:
-                type: aws-s3
-                regions:
-                  - ap-southeast-2
-                parameters:
-                  bucket: cw-syn-canary-${{ secrets.AWS_FRONTEND_ACC }}-ap-southeast-2
-                  cacheControl: private
-                  publicReadAcl: false
-                  prefixStack: false
-                  prefixPackage: false
-              commercial-canary-uk:
-                type: cloud-formation
-                regions:
-                  - eu-west-1
-                parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
-                  templateStagePaths:
-                    CODE: CommercialCanaries-UK-CODE.template.json
-                    PROD: CommercialCanaries-UK-PROD.template.json
-                  cloudFormationStackByTags: false
-                  prependStackToCloudFormationStackName: false
-                  cloudFormationStackName: commercial-canary
-              commercial-canary-ca:
-                type: cloud-formation
-                regions:
-                  - ca-central-1
-                parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
-                  templateStagePaths:
-                    CODE: CommercialCanaries-CA-CODE.template.json
-                    PROD: CommercialCanaries-CA-PROD.template.json
-                  cloudFormationStackByTags: false
-                  prependStackToCloudFormationStackName: false
-                  cloudFormationStackName: commercial-canary
-              commercial-canary-us:
-                type: cloud-formation
-                regions:
-                  - us-west-1
-                parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
-                  templateStagePaths:
-                    CODE: CommercialCanaries-US-CODE.template.json
-                    PROD: CommercialCanaries-US-PROD.template.json
-                  cloudFormationStackByTags: false
-                  prependStackToCloudFormationStackName: false
-                  cloudFormationStackName: commercial-canary
-              commercial-canary-aus:
-                type: cloud-formation
-                regions:
-                  - ap-southeast-2
-                parameters:
-                  templateParameters:
-                    lambdaCodeSha: ${{ steps.getLambdaCodeSha.outputs.SHA_ID }}
-                  templateStagePaths:
-                    CODE: CommercialCanaries-AUS-CODE.template.json
-                    PROD: CommercialCanaries-AUS-PROD.template.json
-                  cloudFormationStackByTags: false
-                  prependStackToCloudFormationStackName: false
-                  cloudFormationStackName: commercial-canary
+          configPath: cdk/cdk.out/riff-raff.yaml
           contentDirectories: |
             upload-uk:
               - builds/tcfv2
@@ -173,11 +62,5 @@ jobs:
               - builds/ccpa
             upload-aus:
               - builds/aus
-            commercial-canary-uk:
-              - cdk/cdk.out
-            commercial-canary-ca:
-              - cdk/cdk.out
-            commercial-canary-us:
-              - cdk/cdk.out
-            commercial-canary-aus:
+            cdk.out:
               - cdk/cdk.out

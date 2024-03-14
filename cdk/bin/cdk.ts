@@ -1,9 +1,10 @@
 import 'source-map-support/register';
-import { GuRoot } from '@guardian/cdk/lib/constructs/root';
+import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
+import { App } from 'aws-cdk-lib';
 import { CommercialCanaries } from '../lib/commercial-canaries';
 import { regions } from '../lib/regions';
 
-const app = new GuRoot();
+const app = new App();
 
 const stages = ['CODE', 'PROD'];
 
@@ -19,3 +20,33 @@ stages.forEach((stage) => {
 		});
 	});
 });
+
+const riffRaff = new RiffRaffYamlFile(app);
+const {
+	riffRaffYaml: { deployments },
+} = riffRaff;
+
+deployments.forEach((deployment) => {
+	deployment.parameters.cloudFormationStackName = 'commercial-canary';
+	deployment.parameters.prependStackToCloudFormationStackName = false;
+	deployment.parameters.cloudFormationStackByTags = false;
+});
+
+regions.forEach(({ locationAbbr, region }) => {
+	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
+		type: 'aws-s3',
+		app: 'commercial-canaries',
+		regions: new Set([region]),
+		stacks: new Set(['frontend']),
+		parameters: {
+			bucketSsmKey: `/account/services/commercial-canary.bucket`,
+			cacheControl: 'private',
+			publicReadAcl: false,
+			prefixStack: false,
+			prefixPackage: false,
+		},
+		contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
+	});
+});
+
+riffRaff.synth();

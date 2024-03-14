@@ -7,8 +7,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -65,18 +65,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -230,8 +230,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -321,18 +321,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -519,8 +519,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -577,18 +577,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -742,8 +742,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -833,18 +833,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1031,8 +1031,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -1089,18 +1089,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1254,8 +1254,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -1345,18 +1345,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1543,8 +1543,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -1601,18 +1601,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
@@ -1766,8 +1766,8 @@ Object {
     "gu:cdk:version": "TEST",
   },
   "Parameters": Object {
-    "lambdaCodeSha": Object {
-      "Description": "The SHA of the lambda code files.",
+    "BuildId": Object {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
@@ -1857,18 +1857,18 @@ Object {
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
           Object {
+            "Key": "BuildId",
+            "Value": Object {
+              "Ref": "BuildId",
+            },
+          },
+          Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
           Object {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Lambda code SHA",
-            "Value": Object {
-              "Ref": "lambdaCodeSha",
-            },
           },
           Object {
             "Key": "Stack",
