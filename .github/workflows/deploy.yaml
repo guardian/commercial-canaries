@@ -24,7 +24,7 @@ jobs:
       - name: Get Lambda code SHA
         id: getLambdaCodeSha
         run: |
-          echo "::set-output name=SHA_ID::$(
+          echo "SHA_ID=$( >> "$GITHUB_OUTPUT"
             sha1sum ./src/* | sha1sum
           )"
         shell: bash
