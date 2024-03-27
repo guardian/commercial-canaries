@@ -190,26 +190,31 @@ const checkPage = async (pageType, url) => {
 
 	let page = await synthetics.getPage();
 
-	// Reset the page state to a point where the we can start testing. Local storage can
-	// only be cleared once the page has loaded.
+	// Reset the page state to a point where the we can start testing.
+	// Local storage can only be cleared once the page has loaded.
 	await loadPage(page, url);
 	await clearLocalStorage(page);
 	await clearCookies(page);
 
 	// Now we can run our tests.
-
-	// Test 1: CMP loads and the ads are NOT displayed on initial load
+	log(`Test 1 start: CMP loads and the ads are NOT displayed on initial load`);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
 	await checkTopAdDidNotLoad(page);
+	log(`Test 1 completed`);
 
-	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
+	log(
+		`Test 2 start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
+	);
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
+	log(`Test 2 completed`);
 
-	// Test 3: Adverts load and the CMP is NOT displayed when the page is reloaded
+	log(
+		`Test 3 start: Adverts load and the CMP is NOT displayed when the page is reloaded`,
+	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
@@ -217,11 +222,15 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
+	log(`Test 3 completed`);
 
-	//Test 4: Prebid
+	log(`Test 4 start: Prebid`);
 	await checkPrebid(page);
+	log(`Test 4 completed`);
 
-	// Test 5: After we clear local storage and cookies, the CMP banner is displayed once again
+	log(
+		`Test 5 start: After we clear local storage and cookies, the CMP banner is displayed once again`,
+	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
 	await reloadPage(page);
@@ -231,6 +240,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsOnPage(page);
 	await checkTopAdDidNotLoad(page);
+	log(`Test 5 completed`);
 };
 
 const pageLoadBlueprint = async function () {
