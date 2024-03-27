@@ -161,14 +161,16 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-
-	// Test 1: Adverts load and the CMP is displayed on initial load
+	log(`Start test 1: Adverts load and the CMP is displayed on initial load`);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
 	await checkTopAdHasLoaded(page);
+	log(`Test 1 completed`);
 
-	// Test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP
+	log(
+		`Start test 2: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
+	);
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
 
@@ -179,8 +181,11 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
+	log(`Test 2 completed`);
 
-	// Test 3: After we clear local storage and cookies, the CMP banner is displayed once again
+	log(
+		`Start test 3: After we clear local storage and cookies, the CMP banner is displayed once again`,
+	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
 	await reloadPage(page);
@@ -190,9 +195,11 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsOnPage(page);
 	await checkTopAdHasLoaded(page);
+	log(`Test 3 completed`);
 
-	// Test 4: Prebid
+	log(`Start test 4: Prebid`);
 	await checkPrebid(page);
+	log(`Test 4 completed`);
 };
 
 const pageLoadBlueprint = async function () {
