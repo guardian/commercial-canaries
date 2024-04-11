@@ -269,14 +269,14 @@ const pageLoadBlueprint = async function () {
 	await synthetics.executeStep('Test Front page', async function () {
 		await checkPage(
 			'front',
-			'https://www.theguardian.com?adtest=fixed-puppies',
+			'https://www.theguardian.com?adtest=fixed-puppies&_sp_env=stage',
 		);
 	});
 
 	await synthetics.executeStep('Test Article page', async function () {
 		await checkPage(
 			'article',
-			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
+			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies&_sp_env=stage',
 		);
 	});
 };
