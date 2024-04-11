@@ -269,7 +269,7 @@ const pageLoadBlueprint = async function () {
 	await synthetics.executeStep('Test Front page', async function () {
 		await checkPage(
 			'front',
-			'https://www.theguardian.com?adtest=fixed-puppies&_sp_env=stage',
+			'https://www.theguardian.com/uk?adtest=fixed-puppies&_sp_env=stage',
 		);
 	});
 
