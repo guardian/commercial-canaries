@@ -48,7 +48,10 @@ const interactWithCMP = async (page) => {
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
-	await frame.click('button[title="Do not sell my personal information"]');
+	await frame.click('button[title="Do not sell my personal information"]'); 
+
+	const privacySettingsFrame = page.frames().pop();
+	await privacySettingsFrame.click('button[title="Do Not Sell"]');
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
