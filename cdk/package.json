@@ -30,6 +30,7 @@
     "typescript": "~4.6.4"
   },
   "resolutions": {
-    "ws": "7.5.10"
+    "ws": "7.5.10",
+    "node-fetch": "2.6.7"
   }
 }
