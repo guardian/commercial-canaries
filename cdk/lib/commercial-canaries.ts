@@ -29,7 +29,7 @@ export class CommercialCanaries extends GuStack {
 			throw new Error('env.region is required');
 		}
 
-		const email = 'commercial.canaries@guardian.co.uk';
+		const email = 'commercial.dev@guardian.co.uk';
 		const accountId = this.account;
 		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
 		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;

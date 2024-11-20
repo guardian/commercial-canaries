@@ -500,7 +500,7 @@ Object {
     },
     "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
           "Ref": "TopicBFC7AF6E",
@@ -1012,7 +1012,7 @@ Object {
     },
     "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
           "Ref": "TopicBFC7AF6E",
@@ -1524,7 +1524,7 @@ Object {
     },
     "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
           "Ref": "TopicBFC7AF6E",
@@ -2036,7 +2036,7 @@ Object {
     },
     "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
           "Ref": "TopicBFC7AF6E",

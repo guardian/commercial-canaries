@@ -37,7 +37,7 @@ You can find the status of each canary by logging into the frontend AWS console 
 
 ### Email notifications
 
-If ads are not loading in a region, the team is informed via email by a CloudWatch Alarm which is sent to commercial.canaries@guardian.co.uk. Five consecutive failures are required to send an alarm. Another email is sent on the first pass following an alarm.
+If ads are not loading in a region, the team is informed via email by a CloudWatch Alarm which is sent to commercial.dev@guardian.co.uk. Five consecutive failures are required to send an alarm. Another email is sent on the first pass following an alarm.
 
 -   On **failure** the email subject is: `ALARM: "Commercial canary" in Asia Pacific (Sydney)`
 -   On **recovery** the email subject is: `OK: "Commercial canary" in Asia Pacific (Sydney)`
