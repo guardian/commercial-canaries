@@ -498,7 +498,7 @@ Object {
       },
       "Type": "AWS::SNS::Topic",
     },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
+    "TopiccommercialdevguardiancoukFF983015": Object {
       "Properties": Object {
         "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
@@ -1010,7 +1010,7 @@ Object {
       },
       "Type": "AWS::SNS::Topic",
     },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
+    "TopiccommercialdevguardiancoukFF983015": Object {
       "Properties": Object {
         "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
@@ -1522,7 +1522,7 @@ Object {
       },
       "Type": "AWS::SNS::Topic",
     },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
+    "TopiccommercialdevguardiancoukFF983015": Object {
       "Properties": Object {
         "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
@@ -2034,7 +2034,7 @@ Object {
       },
       "Type": "AWS::SNS::Topic",
     },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
+    "TopiccommercialdevguardiancoukFF983015": Object {
       "Properties": Object {
         "Endpoint": "commercial.dev@guardian.co.uk",
         "Protocol": "email",
