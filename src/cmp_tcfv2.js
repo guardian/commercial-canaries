@@ -179,6 +179,39 @@ const checkPrebid = async (page) => {
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL));
 	log(`Prebid check: Complete`);
+
+	try {
+		await page.waitForRequest((req) => req.url().includes('prebid')),
+			{ timeout: 15000 }; // Reduce timeout to 15s
+	} catch (e) {
+		logError('Prebid.js is not loaded > error:', e);
+		throw e;
+	}
+
+	try {
+		await page.waitForRequest(
+			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
+			{ timeout: 15000 }, // Reduce timeout to 15s
+		);
+		log('Prebid script loaded successfully');
+	} catch (e) {
+		logError('graun.Prebid.js.commercial.js is not loaded > error:', e);
+		throw e;
+	}
+
+	log(`Module: graun.Prebid.js.commercial.js check: Complete`);
+
+	const hasPrebid = await page.evaluate(() => window.pbjs !== undefined);
+	if (!hasPrebid) {
+		logError('Prebid.js is not loaded');
+		throw new Error('Prebid.js is missing');
+	}
+	log(`Prebid.js is present: ${hasPrebid}`);
+
+	const bidResponses = await page.evaluate(
+		() => pbjs.getBidResponses()['dfp-ad--top-above-nav'],
+	);
+	console.log(`Bid Response for top-above-nav complete: ${bidResponses}`);
 };
 
 /**
