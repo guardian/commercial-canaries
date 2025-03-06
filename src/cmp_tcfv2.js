@@ -174,44 +174,47 @@ const checkPrebid = async (page) => {
 		return Promise.resolve();
 	}
 
+	log(`Checking: graun.Prebid.js.commercial.js`);
+	await page.waitForRequest((req) =>
+		req.url().includes('graun.Prebid.js.commercial.js'),
+	);
+	log(`Module: graun.Prebid.js.commercial.js check: Complete`);
+
+	log(`Checking Pubmatic Prebid`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL));
-	log(`Prebid check: Complete`);
+	log(`Pubmatic Prebid check: Complete`);
 
-	try {
-		await page.waitForRequest((req) => req.url().includes('prebid')),
-			{ timeout: 15000 }; // Reduce timeout to 15s
-	} catch (e) {
-		logError('Prebid.js is not loaded > error:', e);
-		throw e;
-	}
-
-	try {
-		await page.waitForRequest(
-			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
-			{ timeout: 15000 }, // Reduce timeout to 15s
-		);
-		log('Prebid script loaded successfully');
-	} catch (e) {
-		logError('graun.Prebid.js.commercial.js is not loaded > error:', e);
-		throw e;
-	}
-
-	log(`Module: graun.Prebid.js.commercial.js check: Complete`);
-
+	log(`Prebid.js is present on the window: ${hasPrebid}`);
 	const hasPrebid = await page.evaluate(() => window.pbjs !== undefined);
 	if (!hasPrebid) {
 		logError('Prebid.js is not loaded');
 		throw new Error('Prebid.js is missing');
 	}
-	log(`Prebid.js is present: ${hasPrebid}`);
+	log(`Prebid.js is present on the window: ${hasPrebid}`);
 
-	const bidResponses = await page.evaluate(
-		() => pbjs.getBidResponses()['dfp-ad--top-above-nav'],
-	);
-	console.log(`Bid Response for top-above-nav complete: ${bidResponses}`);
+
+	log(`Checking Bid Response for top-above-nav`);
+	const bidResponses = await page.evaluate(() => {
+		if (window.pbjs) {
+			return pbjs.getBidResponses()['dfp-ad--top-above-nav'];
+		} else {
+			return null;
+		}
+	});
+
+	if (bidResponses) {
+		log(
+			`Bid Response for top-above-nav complete: ${JSON.stringify(
+				bidResponses,
+			)}`,
+		);
+	} else {
+		logError('Bid Response for top-above-nav is null or pbjs is not defined');
+	}
+	log(`Checking Bid Response for top-above-nav: Complete`);
 };
 
 /**
