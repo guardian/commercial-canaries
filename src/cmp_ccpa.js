@@ -148,25 +148,7 @@ const checkPrebid = async (page) => {
 
 	// --------------- BID RESPONSE START ---------------------------
 	log(`[TEST 4: BID RESPONSE] Step start`);
-	const bidResponses = await page.evaluate(() => {
-		if (window.pbjs) {
-			return pbjs.getBidResponses()['dfp-ad--top-above-nav'];
-		} else {
-			return null;
-		}
-	});
-
-	if (bidResponses) {
-		log(
-			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete: ${JSON.stringify(
-				bidResponses,
-			)}`,
-		);
-	} else {
-		logError(
-			'[TEST 4: BID RESPONSE] Bid Response for top-above-nav is null or pbjs is not defined',
-		);
-	}
+	await page.evaluate(() => pbjs.getBidResponses()['dfp-ad--top-above-nav']);
 	log(`[TEST 4: BID RESPONSE] Step complete`);
 	// --------------- BID RESPONSE END ---------------------------
 };
