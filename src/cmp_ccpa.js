@@ -104,16 +104,6 @@ const checkPrebid = async (page) => {
 	log(`[TEST 4: PREBID BUNDLE] Step start`);
 	// --------------- BUNDLE END ---------------------------
 
-	// --------------- CANADA START ---------------------------
-	log(`[TEST 4: CANADA] Step start`);
-	const currentLocation = await getCurrentLocation(page);
-	if (currentLocation === 'CA') {
-		log('[TEST 4: CANADA] In Canada we do not run Prebid');
-		return Promise.resolve();
-	}
-	log(`[TEST 4: CANADA] Step complete`);
-	// --------------- CANADA END ---------------------------
-
 	// --------------- PAGESKIN START ---------------------------
 	log(`[TEST 4: PAGESKIN] Step start`);
 	const hasPageskin = await page.evaluate(() =>
