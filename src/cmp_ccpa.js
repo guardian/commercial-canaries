@@ -128,7 +128,7 @@ const checkPrebid = async (page) => {
 
 	// --------------- PBJS START ---------------------------
 	log(`[TEST 4: PBJS] Step start`);
-	const hasPrebid = await page.evaluate(() => window.pbjs !== undefined);
+	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
 	if (!hasPrebid) {
 		logError('[TEST 4: PBJS] Prebid.js is not loaded');
 		throw new Error('Prebid.js is missing');
@@ -138,7 +138,7 @@ const checkPrebid = async (page) => {
 
 	// --------------- BID RESPONSE START ---------------------------
 	log(`[TEST 4: BID RESPONSE] Step start`);
-	const bidResponses = await page.evaluate(() => {
+	const bidResponses = await page.waitForFunction(() => {
 		if (window.pbjs) {
 			return pbjs.getBidResponses()['dfp-ad--top-above-nav'];
 		} else {
