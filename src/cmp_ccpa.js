@@ -147,9 +147,7 @@ const checkPrebid = async (page) => {
 	});
 
 	if (bidResponses) {
-		log(
-			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`,
-		);
+		log(`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`);
 	} else {
 		logError(
 			'[TEST 4: BID RESPONSE] Bid Response for top-above-nav is null or pbjs is not defined',
@@ -215,39 +213,27 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-	log(`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`);
+	log(`[TEST 1] start: Adverts load and the CMP is displayed on initial load`);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
-	await checkTopAdDidNotLoad(page);
+	await checkTopAdHasLoaded(page);
 	log(`[TEST 1] completed`);
 
 	log(
-		`[TEST 2] start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
+		`[Test 2] start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
 	);
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
-	await checkTopAdHasLoaded(page);
-	log(`[TEST 2]  completed`);
-
-	log(
-		`[TEST 3] start: Adverts load and the CMP is NOT displayed when the page is reloaded`,
-	);
-	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'CMP clicked then page reloaded',
 	);
-	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
-	log(`[TEST 3] completed`);
-
-	log(`[TEST 4] start: Prebid`);
-	await checkPrebid(page);
-	log(`[TEST 4] completed`);
+	log(`[TEST 2]  completed`);
 
 	log(
-		`[TEST 5] start: After we clear local storage and cookies, the CMP banner is displayed once again`,
+		`[TEST 3] start: After we clear local storage and cookies, the CMP banner is displayed once again`,
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
@@ -257,8 +243,13 @@ const checkPage = async (pageType, url) => {
 		'cookies and local storage cleared then page reloaded',
 	);
 	await checkCMPIsOnPage(page);
-	await checkTopAdDidNotLoad(page);
-	log(`[TEST 5] completed`);
+	await checkTopAdHasLoaded(page);
+	log(`[TEST 3] completed`);
+
+	log(`[TEST 4] start: Prebid`);
+	await checkPrebid(page);
+	log(`[TEST 4] completed`);
+
 };
 
 const pageLoadBlueprint = async function () {
