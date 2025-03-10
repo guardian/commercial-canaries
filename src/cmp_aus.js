@@ -170,9 +170,7 @@ const checkPrebid = async (page) => {
 
 	if (bidResponses) {
 		log(
-			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete: ${JSON.stringify(
-				bidResponses,
-			)}`,
+			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`,
 		);
 	} else {
 		logError(
@@ -222,7 +220,9 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-	log(`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`);
+	log(
+		`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`,
+	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);

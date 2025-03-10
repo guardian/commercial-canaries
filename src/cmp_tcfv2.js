@@ -223,9 +223,7 @@ const checkPrebid = async (page) => {
 
 	if (bidResponses) {
 		log(
-			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete: ${JSON.stringify(
-				bidResponses,
-			)}`,
+			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`,
 		);
 	} else {
 		logError(
