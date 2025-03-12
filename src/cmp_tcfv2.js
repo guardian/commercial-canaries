@@ -213,22 +213,75 @@ const checkPrebid = async (page) => {
 
 	// --------------- BID RESPONSE START ---------------------------
 	log(`[TEST 4: BID RESPONSE] Step start`);
-	const bidResponses = await page.waitForFunction(() => {
-		if (window.pbjs) {
-			return pbjs.getBidResponses()['dfp-ad--top-above-nav'];
-		} else {
-			return null;
-		}
+
+	await page.waitForFunction(
+		() => {
+			const events = window.pbjs?.getEvents() ?? [];
+			return events.find(
+				(event) =>
+					event.eventType === 'auctionInit' &&
+					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+			);
+		},
+		{ timeout: 10000 },
+	);
+
+	const topAboveNavBidderRequests = await page.evaluate(() => {
+		const auctionInitEvent = window.pbjs
+			?.getEvents()
+			.find(
+				(event) =>
+					event.eventType === 'auctionInit' &&
+					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+			);
+
+		return auctionInitEvent?.args.bidderRequests || [];
 	});
 
-	if (bidResponses) {
+	const expectedBidders = [
+		'oxd',
+		'and',
+		'pubmatic',
+		'ix',
+		'adyoulike',
+		'ozone',
+		'criteo',
+		'ttd',
+		'rubicon',
+	];
+
+	if (currentLocation === 'UK') {
+		expectedBidders.push('xhb');
+	}
+
+	if (topAboveNavBidderRequests.length === 0) {
 		log(
-			`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`,
-		);
-	} else {
-		logError(
 			'[TEST 4: BID RESPONSE] Bid Response for top-above-nav is null or pbjs is not defined',
 		);
+	}
+	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
+		log(
+			`[TEST 4: BID RESPONSE] Expected ${expectedBidders.length} bidders, got ${topAboveNavBidderRequests.length}`,
+		);
+	}
+
+	const theActualBidders = topAboveNavBidderRequests.map(
+		(bidder) => bidder.bidderCode,
+	);
+	log(`Actual Bidders ${JSON.stringify(theActualBidders)}`);
+
+	let allMatched = true;
+
+	expectedBidders.forEach((bidder) => {
+		if (!theActualBidders.includes(bidder)) {
+			allMatched = false;
+			log(`[TEST 4: BID RESPONSE] Missing bidder: ${bidder}`);
+		}
+	});
+	if (allMatched) {
+		log(`[TEST 4: BID RESPONSE] All bidders matched`);
+	} else {
+		log(`[TEST 4: BID RESPONSE] Not all bidders matched`);
 	}
 	log(`[TEST 4: BID RESPONSE] Step complete`);
 	// --------------- BID RESPONSE END ---------------------------
@@ -249,7 +302,9 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-	log(`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`);
+	log(
+		`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`,
+	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
@@ -294,7 +349,6 @@ const checkPage = async (pageType, url) => {
 	await checkTopAdDidNotLoad(page);
 	log(`[TEST 5] completed`);
 };
-
 
 const pageLoadBlueprint = async function () {
 	const synConfig = synthetics.getConfiguration();
