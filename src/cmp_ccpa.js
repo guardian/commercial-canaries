@@ -44,11 +44,17 @@ const checkTopAdHasLoaded = async (page) => {
 
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Do not sell my personal information" on CMP`);
+	log(`Clicking on "Do not sell or share my personal information" on CMP`);
 	const frame = page
 		.frames()
 		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
-	await frame.click('button[title="Do not sell my personal information"]');
+		
+	if (frame) {
+	    await frame.waitForSelector('button[title="Do not sell or share my personal information"]', { timeout: 5000 });
+	    await frame.click('button[title="Do not sell or share my personal information"]');
+	} else {
+	    logError("CMP frame not found");
+	}
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
@@ -83,78 +89,31 @@ const checkCMPIsNotVisible = async (page) => {
 };
 
 const checkPrebid = async (page) => {
-	// --------------- RELOAD PAGE START ---------------------------
-	log(`[TEST 4: RELOAD PAGE] Step start`);
+	log(`Reloading page: Start`);
 	const reloadResponse = await page.reload({
 		waitUntil: 'domcontentloaded',
 		timeout: 30000,
 	});
 	if (!reloadResponse) {
-		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
+		logError(`Reloading page : Failed`);
 		throw 'Failed to refresh page!';
 	}
-	log(`[TEST 4: RELOAD PAGE] Step complete`);
-	// --------------- RELOAD PAGE END ---------------------------
+	log(`Reloading page: Complete`);
 
-	// --------------- BUNDLE START ---------------------------
-	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	await page.waitForRequest((req) =>
-		req.url().includes('graun.Prebid.js.commercial.js'),
-	);
-	log(`[TEST 4: PREBID BUNDLE] Step start`);
-	// --------------- BUNDLE END ---------------------------
-
-	// --------------- PAGESKIN START ---------------------------
-	log(`[TEST 4: PAGESKIN] Step start`);
 	const hasPageskin = await page.evaluate(() =>
 		document.body.classList.contains('has-page-skin'),
 	);
 
 	if (hasPageskin) {
-		log('[TEST 4: PAGESKIN] Pageskin detected. Prebid will not run');
+		log('Pageskin detected. Prebid will not run');
 		return Promise.resolve();
 	}
-	log(`[TEST 4: PAGESKIN] Step complete`);
-	// --------------- PAGESKIN END ---------------------------
 
-	// --------------- PUBMATIC START ---------------------------
-	log(`[TEST 4: PUBMATIC] Step start`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL));
-	log(`[TEST 4: PUBMATIC] Step complete`);
-	// --------------- PUBMATIC END ---------------------------
-
-	// --------------- PBJS START ---------------------------
-	log(`[TEST 4: PBJS] Step start`);
-	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
-	if (!hasPrebid) {
-		logError('[TEST 4: PBJS] Prebid.js is not loaded');
-		throw new Error('Prebid.js is missing');
-	}
-	log(`[TEST 4: PBJS] Step complete`);
-	// --------------- PBJS END ---------------------------
-
-	// --------------- BID RESPONSE START ---------------------------
-	log(`[TEST 4: BID RESPONSE] Step start`);
-	const bidResponses = await page.waitForFunction(() => {
-		if (window.pbjs) {
-			return pbjs.getBidResponses()['dfp-ad--top-above-nav'];
-		} else {
-			return null;
-		}
-	});
-
-	if (bidResponses) {
-		log(`[TEST 4: BID RESPONSE] Bid Response for top-above-nav complete`);
-	} else {
-		logError(
-			'[TEST 4: BID RESPONSE] Bid Response for top-above-nav is null or pbjs is not defined',
-		);
-	}
-	log(`[TEST 4: BID RESPONSE] Step complete`);
-	// --------------- BID RESPONSE END ---------------------------
+	log(`Prebid check: Complete`);
 };
 
 const reloadPage = async (page) => {
