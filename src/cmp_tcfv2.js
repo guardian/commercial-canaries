@@ -148,39 +148,54 @@ const getCurrentLocation = async (page) => {
 };
 
 const checkPrebid = async (page) => {
-	log(`Reloading page: Start`);
+	// --------------- RELOAD PAGE START ---------------------------
+	log(`[TEST 4: RELOAD PAGE] Step start`);
 	const reloadResponse = await page.reload({
 		waitUntil: 'domcontentloaded',
 		timeout: 30000,
 	});
 	if (!reloadResponse) {
-		logError(`Reloading page : Failed`);
+		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
 		throw 'Failed to refresh page!';
 	}
-	log(`Reloading page: Complete`);
+	log(`[TEST 4: RELOAD PAGE] Step complete`);
+	// --------------- RELOAD PAGE END ---------------------------
 
+	// --------------- CANADA START ---------------------------
+	log(`[TEST 4: CANADA] Step start`);
 	const currentLocation = await getCurrentLocation(page);
 	if (currentLocation === 'CA') {
-		log('In Canada we do not run Prebid');
+		log('[TEST 4: CANADA] In Canada we do not run Prebid');
 		return Promise.resolve();
 	}
+	log(`[TEST 4: CANADA] Step complete`);
+	// --------------- CANADA END ---------------------------
 
+	// --------------- PAGESKIN START ---------------------------
+	log(`[TEST 4: PAGESKIN] Step start`);
 	const hasPageskin = await page.evaluate(() =>
 		document.body.classList.contains('has-page-skin'),
 	);
 
 	if (hasPageskin) {
-		log('Pageskin detected. Prebid will not run');
+		log('[TEST 4: PAGESKIN] Pageskin detected. Prebid will not run');
 		return Promise.resolve();
 	}
+	log(`[TEST 4: PAGESKIN] Step complete`);
+	// --------------- PAGESKIN END ---------------------------
 
+	// --------------- PUBMATIC START ---------------------------
+	log(`[TEST 4: PUBMATIC] Step start`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL));
-	log(`Prebid check: Complete`);
-};
+	log(`[TEST 4: PUBMATIC] Step complete`);
+	// --------------- PUBMATIC END ---------------------------
 
+	log(`[TEST 4: BID RESPONSE] Step complete`);
+	// --------------- BID RESPONSE END ---------------------------
+};
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -197,23 +212,25 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-	log(`Test 1 start: CMP loads and the ads are NOT displayed on initial load`);
+	log(
+		`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`,
+	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
 	await checkTopAdDidNotLoad(page);
-	log(`Test 1 completed`);
+	log(`[TEST 1] completed`);
 
 	log(
-		`Test 2 start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
+		`[TEST 2] start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
 	);
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
-	log(`Test 2 completed`);
+	log(`[TEST 2]  completed`);
 
 	log(
-		`Test 3 start: Adverts load and the CMP is NOT displayed when the page is reloaded`,
+		`[TEST 3] start: Adverts load and the CMP is NOT displayed when the page is reloaded`,
 	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
@@ -222,14 +239,14 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page);
-	log(`Test 3 completed`);
+	log(`[TEST 3] completed`);
 
-	log(`Test 4 start: Prebid`);
+	log(`[TEST 4] start: Prebid`);
 	await checkPrebid(page);
-	log(`Test 4 completed`);
+	log(`[TEST 4] completed`);
 
 	log(
-		`Test 5 start: After we clear local storage and cookies, the CMP banner is displayed once again`,
+		`[TEST 5] start: After we clear local storage and cookies, the CMP banner is displayed once again`,
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
@@ -240,7 +257,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await checkCMPIsOnPage(page);
 	await checkTopAdDidNotLoad(page);
-	log(`Test 5 completed`);
+	log(`[TEST 5] completed`);
 };
 
 const pageLoadBlueprint = async function () {
