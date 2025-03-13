@@ -256,7 +256,7 @@ const checkPrebid = async (page) => {
 
 	if (topAboveNavBidderRequests.length === 0) {
 		log(
-			'[TEST 4: BID RESPONSE] Bid Response for top-above-nav is null or pbjs is not defined',
+			'[TEST 4: BID RESPONSE] Bid Response not found.'
 		);
 	}
 	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
