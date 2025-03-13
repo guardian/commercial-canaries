@@ -275,7 +275,9 @@ const checkPrebid = async (page) => {
 	expectedBidders.forEach((bidder) => {
 		if (!theActualBidders.includes(bidder)) {
 			allMatched = false;
-			log(`[TEST 4: BID RESPONSE] Missing bidder: ${bidder}`);
+			logError('[TEST 4: BID RESPONSE] Missing bidder: ${bidder}');
+			throw new Error('Bidders did not match');
+
 		}
 	});
 	if (allMatched) {
