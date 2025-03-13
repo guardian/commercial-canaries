@@ -200,7 +200,11 @@ const checkPrebid = async (page) => {
 	const theActualBidders = topAboveNavBidderRequests.map(
 		(bidder) => bidder.bidderCode,
 	);
-	log(`[TEST 4: BID RESPONSE] Actual Bidders: ${JSON.stringify(theActualBidders)}`);
+	log(
+		`[TEST 4: BID RESPONSE] Actual Bidders: ${JSON.stringify(
+			theActualBidders,
+		)}`,
+	);
 
 	let allMatched = true;
 

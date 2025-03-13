@@ -262,7 +262,7 @@ const checkPage = async (pageType, url) => {
 	await clearCookies(page);
 
 	// Now we can run our tests.
-	log(`[Test 1] start: Adverts load and the CMP is displayed on initial load`);
+	log(`[TEST 1] start: Adverts load and the CMP is displayed on initial load`);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page);
