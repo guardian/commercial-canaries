@@ -107,6 +107,14 @@ const checkPrebid = async (page) => {
 	log(`[TEST 4: RELOAD PAGE] Step complete`);
 	// --------------- RELOAD PAGE END ---------------------------
 
+	// --------------- BUNDLE START ---------------------------
+	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
+	await page.waitForRequest((req) =>
+		req.url().includes('graun.Prebid.js.commercial.js'),
+	);
+	log(`[TEST 4: PREBID BUNDLE] Step start`);
+	// --------------- BUNDLE END ---------------------------
+
 	// --------------- PAGESKIN START ---------------------------
 	log(`[TEST 4: PAGESKIN] Step start`);
 	const hasPageskin = await page.evaluate(() =>
@@ -129,6 +137,85 @@ const checkPrebid = async (page) => {
 	log(`[TEST 4: PUBMATIC] Step complete`);
 	// --------------- PUBMATIC END ---------------------------
 
+	// --------------- PBJS START ---------------------------
+	log(`[TEST 4: PBJS] Step start`);
+	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
+	if (!hasPrebid) {
+		logError('[TEST 4: PBJS] Prebid.js is not loaded');
+		throw new Error('Prebid.js is missing');
+	}
+	log(`[TEST 4: PBJS] Step complete`);
+	// --------------- PBJS END ---------------------------
+
+	// --------------- BID RESPONSE START ---------------------------
+	log(`[TEST 4: BID RESPONSE] Step start`);
+	await page.waitForFunction(
+		() => {
+			const events = window.pbjs?.getEvents() ?? [];
+			return events.find(
+				(event) =>
+					event.eventType === 'auctionInit' &&
+					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+			);
+		},
+		{ timeout: 10000 },
+	);
+
+	const topAboveNavBidderRequests = await page.evaluate(() => {
+		const auctionInitEvent = window.pbjs
+			?.getEvents()
+			.find(
+				(event) =>
+					event.eventType === 'auctionInit' &&
+					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+			);
+
+		return auctionInitEvent?.args.bidderRequests || [];
+	});
+
+	const expectedBidders = [
+		'ix',
+		'rubicon',
+		'criteo',
+		'trustx',
+		'pubmatic',
+		'ozone',
+		'ttd',
+		'kargo',
+		'adyoulike',
+		'triplelift',
+	];
+
+	if (topAboveNavBidderRequests.length === 0) {
+		log(
+			'[TEST 4: BID RESPONSE] Bid Response not found.',
+		);
+	}
+	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
+		log(
+			`[TEST 4: BID RESPONSE] Expected ${expectedBidders.length} bidders, got ${topAboveNavBidderRequests.length}`,
+		);
+	}
+
+	const theActualBidders = topAboveNavBidderRequests.map(
+		(bidder) => bidder.bidderCode,
+	);
+	log(`[TEST 4: BID RESPONSE] Actual Bidders: ${JSON.stringify(theActualBidders)}`);
+
+	let allMatched = true;
+
+	expectedBidders.forEach((bidder) => {
+		if (!theActualBidders.includes(bidder)) {
+			allMatched = false;
+			logError('[TEST 4: BID RESPONSE] Missing bidder: ${bidder}');
+			throw new Error('Bidders did not match');
+		}
+	});
+	if (allMatched) {
+		log(`[TEST 4: BID RESPONSE] All bidders matched`);
+	} else {
+		log(`[TEST 4: BID RESPONSE] Not all bidders matched`);
+	}
 	log(`[TEST 4: BID RESPONSE] Step complete`);
 	// --------------- BID RESPONSE END ---------------------------
 };
