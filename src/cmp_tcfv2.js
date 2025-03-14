@@ -161,14 +161,6 @@ const checkPrebid = async (page) => {
 	log(`[TEST 4: RELOAD PAGE] Step complete`);
 	// --------------- RELOAD PAGE END ---------------------------
 
-	// --------------- BUNDLE START ---------------------------
-	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	await page.waitForRequest((req) =>
-		req.url().includes('graun.Prebid.js.commercial.js'),
-	);
-	log(`[TEST 4: PREBID BUNDLE] Step start`);
-	// --------------- BUNDLE END ---------------------------
-
 	// --------------- CANADA START ---------------------------
 	log(`[TEST 4: CANADA] Step start`);
 	const currentLocation = await getCurrentLocation(page);
@@ -178,6 +170,14 @@ const checkPrebid = async (page) => {
 	}
 	log(`[TEST 4: CANADA] Step complete`);
 	// --------------- CANADA END ---------------------------
+
+	// --------------- BUNDLE START ---------------------------
+	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
+	await page.waitForRequest((req) =>
+		req.url().includes('graun.Prebid.js.commercial.js'),
+	);
+	log(`[TEST 4: PREBID BUNDLE] Step start`);
+	// --------------- BUNDLE END ---------------------------
 
 	// --------------- PAGESKIN START ---------------------------
 	log(`[TEST 4: PAGESKIN] Step start`);
