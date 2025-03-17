@@ -6,20 +6,14 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -33,17 +27,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/CODE",
               ],
             ],
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -52,6 +45,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -64,12 +58,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -263,12 +251,6 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -296,7 +278,9 @@ Object {
                 "Dimensions": Array [
                   Object {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": Object {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -313,18 +297,36 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -338,17 +340,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/PROD",
               ],
             ],
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -357,6 +358,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -369,12 +371,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -568,20 +564,14 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -595,17 +585,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/CODE",
               ],
             ],
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -614,6 +603,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -626,12 +616,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -825,12 +809,6 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -858,7 +836,9 @@ Object {
                 "Dimensions": Array [
                   Object {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": Object {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -875,18 +855,36 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -900,17 +898,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/PROD",
               ],
             ],
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -919,6 +916,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -931,12 +929,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1130,20 +1122,14 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -1157,17 +1143,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/CODE",
               ],
             ],
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -1176,6 +1161,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1188,12 +1174,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1387,12 +1367,6 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -1420,7 +1394,9 @@ Object {
                 "Dimensions": Array [
                   Object {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": Object {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -1437,18 +1413,36 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -1462,17 +1456,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/PROD",
               ],
             ],
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -1481,6 +1474,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1493,12 +1487,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1692,20 +1680,14 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -1719,17 +1701,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/CODE",
               ],
             ],
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -1738,6 +1719,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -1750,12 +1732,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1949,12 +1925,6 @@ Object {
     "gu:cdk:constructs": Array [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": Object {
     "Alarm7103F465": Object {
       "Properties": Object {
@@ -1982,7 +1952,9 @@ Object {
                 "Dimensions": Array [
                   Object {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": Object {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -1999,18 +1971,36 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
+    "Canary11957FE2": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
           "Fn::Join": Array [
             "",
             Array [
-              "s3://cw-syn-results-",
+              "s3://s3://cw-syn-results-",
               Object {
                 "Ref": "AWS::AccountId",
               },
@@ -2024,17 +2014,16 @@ Object {
             "Fn::Join": Array [
               "",
               Array [
-                "cw-syn-canary-",
+                "s3://cw-syn-canary-",
                 Object {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/PROD",
               ],
             ],
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "Role1ABCC5F0",
@@ -2043,6 +2032,7 @@ Object {
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": Object {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2055,12 +2045,6 @@ Object {
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": Array [
-          Object {
-            "Key": "BuildId",
-            "Value": Object {
-              "Ref": "BuildId",
-            },
-          },
           Object {
             "Key": "gu:cdk:version",
             "Value": "TEST",
