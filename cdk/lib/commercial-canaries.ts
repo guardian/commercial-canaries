@@ -158,6 +158,7 @@ export class CommercialCanaries extends GuStack {
 					dimensionsMap: {
 						CanaryName: canaryName,
 					},
+					region: this.region,
 				}),
 				threshold: 80,
 				treatMissingData: TreatMissingData.BREACHING,
