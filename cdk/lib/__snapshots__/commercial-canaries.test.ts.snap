@@ -6,14 +6,61 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
+          {
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
+            },
+          },
+        ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Period": 300,
+        "Statistic": "Average",
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -43,7 +90,6 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -52,6 +98,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -64,12 +111,6 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -263,12 +304,6 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
     "Alarm7103F465": {
       "Properties": {
@@ -280,39 +315,26 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": [
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
-            "Id": "expr_1",
-            "Label": "successPercent",
-          },
-          {
-            "Id": "successPercentRaw",
-            "MetricStat": {
-              "Metric": {
-                "Dimensions": [
-                  {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
             },
-            "ReturnData": false,
           },
         ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Period": 300,
+        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -336,7 +358,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -366,7 +388,6 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -375,6 +396,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -387,12 +409,6 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -586,14 +602,61 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
+          {
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
+            },
+          },
+        ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Period": 300,
+        "Statistic": "Average",
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -623,7 +686,6 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -632,6 +694,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -644,12 +707,6 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -843,12 +900,6 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
     "Alarm7103F465": {
       "Properties": {
@@ -860,39 +911,26 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": [
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
-            "Id": "expr_1",
-            "Label": "successPercent",
-          },
-          {
-            "Id": "successPercentRaw",
-            "MetricStat": {
-              "Metric": {
-                "Dimensions": [
-                  {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
             },
-            "ReturnData": false,
           },
         ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Period": 300,
+        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -916,7 +954,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -946,7 +984,6 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -955,6 +992,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -967,12 +1005,6 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1166,14 +1198,61 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
+          {
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
+            },
+          },
+        ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Period": 300,
+        "Statistic": "Average",
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1203,7 +1282,6 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -1212,6 +1290,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1224,12 +1303,6 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1423,12 +1496,6 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
     "Alarm7103F465": {
       "Properties": {
@@ -1440,39 +1507,26 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": [
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
-            "Id": "expr_1",
-            "Label": "successPercent",
-          },
-          {
-            "Id": "successPercentRaw",
-            "MetricStat": {
-              "Metric": {
-                "Dimensions": [
-                  {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
             },
-            "ReturnData": false,
           },
         ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Period": 300,
+        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1496,7 +1550,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1526,7 +1580,6 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -1535,6 +1588,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1547,12 +1601,6 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1746,14 +1794,61 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
+          {
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
+            },
+          },
+        ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Period": 300,
+        "Statistic": "Average",
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1783,7 +1878,6 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -1792,6 +1886,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -1804,12 +1899,6 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -2003,12 +2092,6 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": {
-    "BuildId": {
-      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
-      "Type": "String",
-    },
-  },
   "Resources": {
     "Alarm7103F465": {
       "Properties": {
@@ -2020,39 +2103,26 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": [
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 2,
+        "Dimensions": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
-            "Id": "expr_1",
-            "Label": "successPercent",
-          },
-          {
-            "Id": "successPercentRaw",
-            "MetricStat": {
-              "Metric": {
-                "Dimensions": [
-                  {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
+            "Name": "CanaryName",
+            "Value": {
+              "Ref": "Canary11957FE2",
             },
-            "ReturnData": false,
           },
         ],
+        "EvaluationPeriods": 2,
+        "MetricName": "SuccessPercent",
+        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Period": 300,
+        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -2076,7 +2146,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -2106,7 +2176,6 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
             "Role1ABCC5F0",
@@ -2115,6 +2184,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2127,12 +2197,6 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
-          {
-            "Key": "BuildId",
-            "Value": {
-              "Ref": "BuildId",
-            },
-          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
