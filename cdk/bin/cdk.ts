@@ -1,27 +1,52 @@
-import 'source-map-support/register';
 import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
-import { App } from 'aws-cdk-lib';
+import { App as CDKApp } from 'aws-cdk-lib';
 import { CommercialCanaries } from '../lib/commercial-canaries';
+import type { Region } from '../lib/regions';
 import { regions } from '../lib/regions';
 
-const app = new App();
+const cdkApp = new CDKApp();
 
-const stages = ['CODE', 'PROD'];
-
-stages.forEach((stage) => {
-	regions.forEach(({ locationAbbr, region }) => {
-		new CommercialCanaries(app, `CommercialCanaries-${locationAbbr}-${stage}`, {
+const canaryApp = ({
+	locationAbbr,
+	stage,
+	region,
+}: {
+	locationAbbr: Region['locationAbbr'];
+	stage: 'CODE' | 'PROD';
+	region: Region['awsRegion'];
+}) =>
+	new CommercialCanaries(
+		cdkApp,
+		`CommercialCanaries-${locationAbbr}-${stage}`,
+		{
 			stack: 'frontend',
-			env: {
-				region: region,
-			},
+			env: { region },
 			stage,
 			cloudFormationStackName: `commercial-canary`,
-		});
-	});
-});
+		},
+	);
 
-const riffRaff = new RiffRaffYamlFile(app);
+/** EU - CODE */
+canaryApp({ locationAbbr: 'EU', region: 'eu-west-1', stage: 'CODE' });
+/** EU - PROD */
+canaryApp({ locationAbbr: 'EU', region: 'eu-west-1', stage: 'PROD' });
+
+/** Canada - CODE */
+canaryApp({ locationAbbr: 'CA', region: 'ca-central-1', stage: 'CODE' });
+/** Canada - PROD */
+canaryApp({ locationAbbr: 'CA', region: 'ca-central-1', stage: 'PROD' });
+
+/** US - CODE */
+canaryApp({ locationAbbr: 'US', region: 'us-west-1', stage: 'CODE' });
+/** US - PROD */
+canaryApp({ locationAbbr: 'US', region: 'us-west-1', stage: 'PROD' });
+
+/** Australia - CODE */
+canaryApp({ locationAbbr: 'AUS', region: 'ap-southeast-2', stage: 'CODE' });
+/** Australia - PROD */
+canaryApp({ locationAbbr: 'AUS', region: 'ap-southeast-2', stage: 'PROD' });
+
+const riffRaff = new RiffRaffYamlFile(cdkApp);
 const {
 	riffRaffYaml: { deployments },
 } = riffRaff;
@@ -32,11 +57,11 @@ deployments.forEach((deployment) => {
 	deployment.parameters.cloudFormationStackByTags = false;
 });
 
-regions.forEach(({ locationAbbr, region }) => {
+regions.forEach(({ locationAbbr, awsRegion }) => {
 	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
 		type: 'aws-s3',
 		app: 'commercial-canaries',
-		regions: new Set([region]),
+		regions: new Set([awsRegion]),
 		stacks: new Set(['frontend']),
 		parameters: {
 			bucketSsmKey: `/account/services/commercial-canary.bucket`,
