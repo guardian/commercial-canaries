@@ -28,7 +28,6 @@ export class CommercialCanaries extends GuStack {
 			throw new Error('env.region is required');
 		}
 
-		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
 		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
 		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;
@@ -143,7 +142,7 @@ export class CommercialCanaries extends GuStack {
 
 		new Subscription(this, `Subscription-${stage}-${env.region}`, {
 			topic,
-			endpoint: email,
+			endpoint: `commercial.canaries+${stage}-${env.region}@guardian.co.uk`,
 			protocol: SubscriptionProtocol.EMAIL,
 			region: env.region,
 		});

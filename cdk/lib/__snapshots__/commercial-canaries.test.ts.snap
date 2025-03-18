@@ -254,7 +254,7 @@ Object {
     },
     "SubscriptionCODEapsoutheast21E1B4D9D": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+CODE-ap-southeast-2@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
         "TopicArn": Object {
@@ -544,7 +544,7 @@ Object {
     },
     "SubscriptionPRODapsoutheast241550A69": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+PROD-ap-southeast-2@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
         "TopicArn": Object {
@@ -834,7 +834,7 @@ Object {
     },
     "SubscriptionCODEcacentral1443D4638": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+CODE-ca-central-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
         "TopicArn": Object {
@@ -1124,7 +1124,7 @@ Object {
     },
     "SubscriptionPRODcacentral1485BD312": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+PROD-ca-central-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
         "TopicArn": Object {
@@ -1414,7 +1414,7 @@ Object {
     },
     "SubscriptionCODEeuwest1D9A99453": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+CODE-eu-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
         "TopicArn": Object {
@@ -1704,7 +1704,7 @@ Object {
     },
     "SubscriptionPRODeuwest18472BFD2": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+PROD-eu-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
         "TopicArn": Object {
@@ -1994,7 +1994,7 @@ Object {
     },
     "SubscriptionCODEuswest176FCF696": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+CODE-us-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
         "TopicArn": Object {
@@ -2284,7 +2284,7 @@ Object {
     },
     "SubscriptionPRODuswest1F1008298": Object {
       "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
+        "Endpoint": "commercial.canaries+PROD-us-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
         "TopicArn": Object {
