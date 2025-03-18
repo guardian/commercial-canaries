@@ -13,34 +13,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -247,39 +219,6 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
-    },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "CODE",
-          },
-        ],
-      },
-      "Type": "AWS::SNS::Topic",
-    },
   },
 }
 `;
@@ -297,16 +236,16 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
+    "AlarmPROD8A842476": Object {
       "Properties": Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicBFC7AF6E",
+            "Ref": "TopicPROD02C7A195",
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -318,6 +257,11 @@ Object {
         "EvaluationPeriods": 5,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": Array [
+          Object {
+            "Ref": "TopicPROD02C7A195",
+          },
+        ],
         "Period": 60,
         "Statistic": "Average",
         "Threshold": 80,
@@ -531,17 +475,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
+    "SubscriptionPROD6213BADC": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
+          "Ref": "TopicPROD02C7A195",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
+    "TopicPROD02C7A195": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -581,34 +525,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -815,39 +731,6 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
-    },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "CODE",
-          },
-        ],
-      },
-      "Type": "AWS::SNS::Topic",
-    },
   },
 }
 `;
@@ -865,16 +748,16 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
+    "AlarmPROD8A842476": Object {
       "Properties": Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicBFC7AF6E",
+            "Ref": "TopicPROD02C7A195",
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -886,6 +769,11 @@ Object {
         "EvaluationPeriods": 5,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": Array [
+          Object {
+            "Ref": "TopicPROD02C7A195",
+          },
+        ],
         "Period": 60,
         "Statistic": "Average",
         "Threshold": 80,
@@ -1099,17 +987,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
+    "SubscriptionPROD6213BADC": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
+          "Ref": "TopicPROD02C7A195",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
+    "TopicPROD02C7A195": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1149,34 +1037,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -1383,39 +1243,6 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
-    },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "CODE",
-          },
-        ],
-      },
-      "Type": "AWS::SNS::Topic",
-    },
   },
 }
 `;
@@ -1433,16 +1260,16 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
+    "AlarmPROD8A842476": Object {
       "Properties": Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicBFC7AF6E",
+            "Ref": "TopicPROD02C7A195",
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1454,6 +1281,11 @@ Object {
         "EvaluationPeriods": 5,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": Array [
+          Object {
+            "Ref": "TopicPROD02C7A195",
+          },
+        ],
         "Period": 60,
         "Statistic": "Average",
         "Threshold": 80,
@@ -1667,17 +1499,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
+    "SubscriptionPROD6213BADC": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
+          "Ref": "TopicPROD02C7A195",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
+    "TopicPROD02C7A195": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1717,34 +1549,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -1951,39 +1755,6 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
-    },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "CODE",
-          },
-        ],
-      },
-      "Type": "AWS::SNS::Topic",
-    },
   },
 }
 `;
@@ -2001,16 +1772,16 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
+    "AlarmPROD8A842476": Object {
       "Properties": Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicBFC7AF6E",
+            "Ref": "TopicPROD02C7A195",
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -2022,6 +1793,11 @@ Object {
         "EvaluationPeriods": 5,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": Array [
+          Object {
+            "Ref": "TopicPROD02C7A195",
+          },
+        ],
         "Period": 60,
         "Statistic": "Average",
         "Threshold": 80,
@@ -2235,17 +2011,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
+    "SubscriptionPROD6213BADC": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
+          "Ref": "TopicPROD02C7A195",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
+    "TopicPROD02C7A195": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
