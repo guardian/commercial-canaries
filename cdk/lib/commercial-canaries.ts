@@ -146,6 +146,7 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
+		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
 		if (stage === 'PROD') {
 			const alarm = new Alarm(this, 'Alarm', {
 				actionsEnabled: true,
