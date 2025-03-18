@@ -14,8 +14,7 @@ import {
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
-import { Topic } from 'aws-cdk-lib/aws-sns';
-import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
+import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
 const THIRTY_MINUTES_IN_SECONDS = '1800';
 
@@ -139,32 +138,36 @@ export class CommercialCanaries extends GuStack {
 			],
 		});
 
-		if (stage === 'PROD') {
-			const topic = new Topic(this, 'Topic');
-			topic.addSubscription(new EmailSubscription(email));
+		// if (stage === 'PROD') {
+		const topic = new Topic(this, 'Topic');
 
-			const alarm = new Alarm(this, `Alarm`, {
-				actionsEnabled: true,
-				alarmDescription: 'Either a Front or an Article CMP has failed',
-				alarmName: `Commercial canary`,
-				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
-				datapointsToAlarm: 5,
-				evaluationPeriods: 5,
-				metric: new Metric({
-					namespace: 'CloudWatchSynthetics',
-					metricName: 'SuccessPercent',
-					statistic: 'avg',
-					period: Duration.minutes(1),
-					dimensionsMap: {
-						CanaryName: canaryName,
-					},
-				}),
-				threshold: 80,
-				treatMissingData: TreatMissingData.BREACHING,
-			});
+		new Subscription(this, 'Subscription', {
+			topic,
+			endpoint: email,
+			protocol: SubscriptionProtocol.EMAIL,
+		});
 
-			alarm.addAlarmAction(new SnsAction(topic));
-			alarm.addOkAction(new SnsAction(topic));
-		}
+		const alarm = new Alarm(this, `Alarm`, {
+			actionsEnabled: true,
+			alarmDescription: 'Either a Front or an Article CMP has failed',
+			alarmName: `Commercial canary`,
+			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
+			datapointsToAlarm: 5,
+			evaluationPeriods: 5,
+			metric: new Metric({
+				namespace: 'CloudWatchSynthetics',
+				metricName: 'SuccessPercent',
+				statistic: 'avg',
+				period: Duration.minutes(1),
+				dimensionsMap: {
+					CanaryName: canaryName,
+				},
+			}),
+			threshold: 80,
+			treatMissingData: TreatMissingData.BREACHING,
+		});
+
+		alarm.addAlarmAction(new SnsAction(topic));
 	}
 }
+// }
