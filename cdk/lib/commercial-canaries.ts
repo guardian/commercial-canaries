@@ -146,29 +146,29 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
-		// if (stage === 'PROD') {
-		const alarm = new Alarm(this, 'Alarm', {
-			actionsEnabled: true,
-			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
-			alarmName: `commercial-canary-${stage}`,
-			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
-			datapointsToAlarm: 5,
-			evaluationPeriods: 5,
-			metric: new Metric({
-				namespace: 'CloudWatchSynthetics',
-				metricName: 'SuccessPercent',
-				statistic: 'avg',
-				period: Duration.minutes(1),
-				dimensionsMap: {
-					CanaryName: canaryName,
-				},
-			}),
-			threshold: 80,
-			treatMissingData: TreatMissingData.BREACHING,
-		});
+		if (stage === 'PROD') {
+			const alarm = new Alarm(this, 'Alarm', {
+				actionsEnabled: true,
+				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+				alarmName: `commercial-canary-${stage}`,
+				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
+				datapointsToAlarm: 5,
+				evaluationPeriods: 5,
+				metric: new Metric({
+					namespace: 'CloudWatchSynthetics',
+					metricName: 'SuccessPercent',
+					statistic: 'avg',
+					period: Duration.minutes(1),
+					dimensionsMap: {
+						CanaryName: canaryName,
+					},
+				}),
+				threshold: 80,
+				treatMissingData: TreatMissingData.BREACHING,
+			});
 
-		alarm.addAlarmAction(new SnsAction(topic));
-		alarm.addOkAction(new SnsAction(topic));
+			alarm.addAlarmAction(new SnsAction(topic));
+			alarm.addOkAction(new SnsAction(topic));
+		}
 	}
 }
-// }

@@ -13,39 +13,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -593,39 +560,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -1173,39 +1107,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -1753,39 +1654,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "Dimensions": Array [
-          Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_code",
-          },
-        ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Period": 60,
-        "Statistic": "Average",
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
