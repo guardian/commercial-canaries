@@ -137,20 +137,20 @@ export class CommercialCanaries extends GuStack {
 			],
 		});
 
-		// if (stage === 'PROD') {
-		const topic = new Topic(this, `Topic-${stage}-${env.region}`);
+		const topic = new Topic(this, 'Topic');
 
-		new Subscription(this, `Subscription-${stage}-${env.region}`, {
+		new Subscription(this, 'Subscription', {
 			topic,
 			endpoint: `commercial.canaries+${stage}-${env.region}@guardian.co.uk`,
 			protocol: SubscriptionProtocol.EMAIL,
 			region: env.region,
 		});
 
-		const alarm = new Alarm(this, `Alarm-${stage}`, {
+		// if (stage === 'PROD') {
+		const alarm = new Alarm(this, 'Alarm', {
 			actionsEnabled: true,
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
-			alarmName: `commercial-canary-${stage}-${env.region}`,
+			alarmName: `commercial-canary-${stage}`,
 			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 			datapointsToAlarm: 5,
 			evaluationPeriods: 5,
