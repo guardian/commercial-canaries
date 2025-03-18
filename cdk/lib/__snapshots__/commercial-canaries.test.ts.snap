@@ -18,11 +18,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEapsoutheast2E8902FA1",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-CODE",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmName": "commercial-canary-CODE-ap-southeast-2",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -36,7 +36,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEapsoutheast2E8902FA1",
           },
         ],
         "Period": 60,
@@ -252,18 +252,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionCODE8883E38D": Object {
+    "SubscriptionCODEapsoutheast21E1B4D9D": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
         "TopicArn": Object {
-          "Ref": "TopicCODEA0288998",
+          "Ref": "TopicCODEapsoutheast2E8902FA1",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicCODEA0288998": Object {
+    "TopicCODEapsoutheast2E8902FA1": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -308,11 +308,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODapsoutheast2108028D5",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmName": "commercial-canary-PROD-ap-southeast-2",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -326,7 +326,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODapsoutheast2108028D5",
           },
         ],
         "Period": 60,
@@ -542,18 +542,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionPROD6213BADC": Object {
+    "SubscriptionPRODapsoutheast241550A69": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
         "TopicArn": Object {
-          "Ref": "TopicPROD02C7A195",
+          "Ref": "TopicPRODapsoutheast2108028D5",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicPROD02C7A195": Object {
+    "TopicPRODapsoutheast2108028D5": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -598,11 +598,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEcacentral1CD569A70",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-CODE",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmName": "commercial-canary-CODE-ca-central-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -616,7 +616,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEcacentral1CD569A70",
           },
         ],
         "Period": 60,
@@ -832,18 +832,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionCODE8883E38D": Object {
+    "SubscriptionCODEcacentral1443D4638": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
         "TopicArn": Object {
-          "Ref": "TopicCODEA0288998",
+          "Ref": "TopicCODEcacentral1CD569A70",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicCODEA0288998": Object {
+    "TopicCODEcacentral1CD569A70": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -888,11 +888,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODcacentral14C91E7FF",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmName": "commercial-canary-PROD-ca-central-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -906,7 +906,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODcacentral14C91E7FF",
           },
         ],
         "Period": 60,
@@ -1122,18 +1122,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionPROD6213BADC": Object {
+    "SubscriptionPRODcacentral1485BD312": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
         "TopicArn": Object {
-          "Ref": "TopicPROD02C7A195",
+          "Ref": "TopicPRODcacentral14C91E7FF",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicPROD02C7A195": Object {
+    "TopicPRODcacentral14C91E7FF": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1178,11 +1178,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEeuwest18E4F95DD",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-CODE",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmName": "commercial-canary-CODE-eu-west-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1196,7 +1196,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEeuwest18E4F95DD",
           },
         ],
         "Period": 60,
@@ -1412,18 +1412,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionCODE8883E38D": Object {
+    "SubscriptionCODEeuwest1D9A99453": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
         "TopicArn": Object {
-          "Ref": "TopicCODEA0288998",
+          "Ref": "TopicCODEeuwest18E4F95DD",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicCODEA0288998": Object {
+    "TopicCODEeuwest18E4F95DD": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1468,11 +1468,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODeuwest132F1B0C5",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmName": "commercial-canary-PROD-eu-west-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1486,7 +1486,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODeuwest132F1B0C5",
           },
         ],
         "Period": 60,
@@ -1702,18 +1702,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionPROD6213BADC": Object {
+    "SubscriptionPRODeuwest18472BFD2": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
         "TopicArn": Object {
-          "Ref": "TopicPROD02C7A195",
+          "Ref": "TopicPRODeuwest132F1B0C5",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicPROD02C7A195": Object {
+    "TopicPRODeuwest132F1B0C5": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1758,11 +1758,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEuswest1BCC7F1D9",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-CODE",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmName": "commercial-canary-CODE-us-west-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1776,7 +1776,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicCODEA0288998",
+            "Ref": "TopicCODEuswest1BCC7F1D9",
           },
         ],
         "Period": 60,
@@ -1992,18 +1992,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionCODE8883E38D": Object {
+    "SubscriptionCODEuswest176FCF696": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
         "TopicArn": Object {
-          "Ref": "TopicCODEA0288998",
+          "Ref": "TopicCODEuswest1BCC7F1D9",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicCODEA0288998": Object {
+    "TopicCODEuswest1BCC7F1D9": Object {
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -2048,11 +2048,11 @@ Object {
         "ActionsEnabled": true,
         "AlarmActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODuswest13F6F85C0",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmName": "commercial-canary-PROD-us-west-1",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -2066,7 +2066,7 @@ Object {
         "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
-            "Ref": "TopicPROD02C7A195",
+            "Ref": "TopicPRODuswest13F6F85C0",
           },
         ],
         "Period": 60,
@@ -2282,18 +2282,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SubscriptionPROD6213BADC": Object {
+    "SubscriptionPRODuswest1F1008298": Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
         "TopicArn": Object {
-          "Ref": "TopicPROD02C7A195",
+          "Ref": "TopicPRODuswest13F6F85C0",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicPROD02C7A195": Object {
+    "TopicPRODuswest13F6F85C0": Object {
       "Properties": Object {
         "Tags": Array [
           Object {

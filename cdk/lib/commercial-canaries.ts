@@ -139,9 +139,9 @@ export class CommercialCanaries extends GuStack {
 		});
 
 		// if (stage === 'PROD') {
-		const topic = new Topic(this, `Topic-${stage}`);
+		const topic = new Topic(this, `Topic-${stage}-${env.region}`);
 
-		new Subscription(this, `Subscription-${stage}`, {
+		new Subscription(this, `Subscription-${stage}-${env.region}`, {
 			topic,
 			endpoint: email,
 			protocol: SubscriptionProtocol.EMAIL,
@@ -150,8 +150,8 @@ export class CommercialCanaries extends GuStack {
 
 		const alarm = new Alarm(this, `Alarm-${stage}`, {
 			actionsEnabled: true,
-			alarmDescription: 'Either a Front or an Article CMP has failed',
-			alarmName: `commercial-canary-${stage}`,
+			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+			alarmName: `commercial-canary-${stage}-${env.region}`,
 			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 			datapointsToAlarm: 5,
 			evaluationPeriods: 5,
