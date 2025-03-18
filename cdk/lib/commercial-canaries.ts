@@ -145,6 +145,7 @@ export class CommercialCanaries extends GuStack {
 			topic,
 			endpoint: email,
 			protocol: SubscriptionProtocol.EMAIL,
+			region: env.region,
 		});
 
 		const alarm = new Alarm(this, `Alarm-${stage}`, {

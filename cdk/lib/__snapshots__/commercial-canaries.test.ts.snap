@@ -256,6 +256,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "ap-southeast-2",
         "TopicArn": Object {
           "Ref": "TopicCODEA0288998",
         },
@@ -545,6 +546,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "ap-southeast-2",
         "TopicArn": Object {
           "Ref": "TopicPROD02C7A195",
         },
@@ -834,6 +836,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "ca-central-1",
         "TopicArn": Object {
           "Ref": "TopicCODEA0288998",
         },
@@ -1123,6 +1126,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "ca-central-1",
         "TopicArn": Object {
           "Ref": "TopicPROD02C7A195",
         },
@@ -1412,6 +1416,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "eu-west-1",
         "TopicArn": Object {
           "Ref": "TopicCODEA0288998",
         },
@@ -1701,6 +1706,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "eu-west-1",
         "TopicArn": Object {
           "Ref": "TopicPROD02C7A195",
         },
@@ -1990,6 +1996,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "us-west-1",
         "TopicArn": Object {
           "Ref": "TopicCODEA0288998",
         },
@@ -2279,6 +2286,7 @@ Object {
       "Properties": Object {
         "Endpoint": "commercial.canaries@guardian.co.uk",
         "Protocol": "email",
+        "Region": "us-west-1",
         "TopicArn": Object {
           "Ref": "TopicPROD02C7A195",
         },
