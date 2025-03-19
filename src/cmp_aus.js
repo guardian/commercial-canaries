@@ -1,3 +1,4 @@
+const { URL } = require('url');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -44,9 +45,12 @@ const checkTopAdHasLoaded = async (page) => {
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Continue" on CMP`);
-	const frame = page
-		.frames()
-		.find((f) => f.url().startsWith('https://sourcepoint.theguardian.com'));
+	const allowedHosts = ['sourcepoint.theguardian.com'];
+
+	const frame = page.frames().find((f) => {
+		const parsedUrl = new URL(f.url());
+		return allowedHosts.includes(parsedUrl.host);
+	});
 	await frame.click('button[title="Continue"]');
 };
 
@@ -188,9 +192,7 @@ const checkPrebid = async (page) => {
 	];
 
 	if (topAboveNavBidderRequests.length === 0) {
-		log(
-			'[TEST 4: BID RESPONSE] Bid Response not found.',
-		);
+		log('[TEST 4: BID RESPONSE] Bid Response not found.');
 	}
 	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
 		log(
