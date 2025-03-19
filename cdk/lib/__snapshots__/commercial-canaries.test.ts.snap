@@ -219,6 +219,40 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+CODE-ap-southeast-2@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "ap-southeast-2",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "TopicBFC7AF6E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::SNS::Topic",
+    },
   },
 }
 `;
@@ -244,8 +278,8 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -475,6 +509,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+PROD-ap-southeast-2@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "ap-southeast-2",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
     "TopicBFC7AF6E": Object {
       "Properties": Object {
         "Tags": Array [
@@ -497,16 +542,6 @@ Object {
         ],
       },
       "Type": "AWS::SNS::Topic",
-    },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
     },
   },
 }
@@ -731,6 +766,40 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+CODE-ca-central-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "ca-central-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "TopicBFC7AF6E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::SNS::Topic",
+    },
   },
 }
 `;
@@ -756,8 +825,8 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -987,6 +1056,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+PROD-ca-central-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "ca-central-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
     "TopicBFC7AF6E": Object {
       "Properties": Object {
         "Tags": Array [
@@ -1009,16 +1089,6 @@ Object {
         ],
       },
       "Type": "AWS::SNS::Topic",
-    },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
     },
   },
 }
@@ -1243,6 +1313,40 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+CODE-eu-west-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "eu-west-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "TopicBFC7AF6E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::SNS::Topic",
+    },
   },
 }
 `;
@@ -1268,8 +1372,8 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -1499,6 +1603,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+PROD-eu-west-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "eu-west-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
     "TopicBFC7AF6E": Object {
       "Properties": Object {
         "Tags": Array [
@@ -1521,16 +1636,6 @@ Object {
         ],
       },
       "Type": "AWS::SNS::Topic",
-    },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
     },
   },
 }
@@ -1755,6 +1860,40 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+CODE-us-west-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "us-west-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "TopicBFC7AF6E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::SNS::Topic",
+    },
   },
 }
 `;
@@ -1780,8 +1919,8 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed",
-        "AlarmName": "Commercial canary",
+        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "Dimensions": Array [
@@ -2011,6 +2150,17 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "Subscription391C9821": Object {
+      "Properties": Object {
+        "Endpoint": "commercial.canaries+PROD-us-west-1@guardian.co.uk",
+        "Protocol": "email",
+        "Region": "us-west-1",
+        "TopicArn": Object {
+          "Ref": "TopicBFC7AF6E",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
     "TopicBFC7AF6E": Object {
       "Properties": Object {
         "Tags": Array [
@@ -2033,16 +2183,6 @@ Object {
         ],
       },
       "Type": "AWS::SNS::Topic",
-    },
-    "TopiccommercialcanariesguardiancoukA88DBBEE": Object {
-      "Properties": Object {
-        "Endpoint": "commercial.canaries@guardian.co.uk",
-        "Protocol": "email",
-        "TopicArn": Object {
-          "Ref": "TopicBFC7AF6E",
-        },
-      },
-      "Type": "AWS::SNS::Subscription",
     },
   },
 }

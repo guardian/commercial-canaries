@@ -14,8 +14,7 @@ import {
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
-import { Topic } from 'aws-cdk-lib/aws-sns';
-import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
+import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
 const THIRTY_MINUTES_IN_SECONDS = '1800';
 
@@ -29,7 +28,6 @@ export class CommercialCanaries extends GuStack {
 			throw new Error('env.region is required');
 		}
 
-		const email = 'commercial.canaries@guardian.co.uk';
 		const accountId = this.account;
 		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
 		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;
@@ -139,14 +137,21 @@ export class CommercialCanaries extends GuStack {
 			],
 		});
 
-		if (stage === 'PROD') {
-			const topic = new Topic(this, 'Topic');
-			topic.addSubscription(new EmailSubscription(email));
+		const topic = new Topic(this, 'Topic');
 
-			const alarm = new Alarm(this, `Alarm`, {
+		new Subscription(this, 'Subscription', {
+			topic,
+			endpoint: `commercial.canaries+${stage}-${env.region}@guardian.co.uk`,
+			protocol: SubscriptionProtocol.EMAIL,
+			region: env.region,
+		});
+
+		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
+		if (stage === 'PROD') {
+			const alarm = new Alarm(this, 'Alarm', {
 				actionsEnabled: true,
-				alarmDescription: 'Either a Front or an Article CMP has failed',
-				alarmName: `Commercial canary`,
+				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+				alarmName: `commercial-canary-${stage}`,
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,
