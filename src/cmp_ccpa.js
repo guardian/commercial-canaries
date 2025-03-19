@@ -46,11 +46,9 @@ const checkTopAdHasLoaded = async (page) => {
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
-	const allowedHosts = ['sourcepoint.theguardian.com'];
-
 	const frame = page.frames().find((f) => {
 		const parsedUrl = new URL(f.url());
-		return allowedHosts.includes(parsedUrl.host);
+		return parsedUrl.host === 'sourcepoint.theguardian.com';
 	});
 
 	if (frame) {
