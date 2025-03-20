@@ -282,22 +282,41 @@ Object {
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
-        "Dimensions": Array [
+        "EvaluationPeriods": 5,
+        "Metrics": Array [
           Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_prod",
+            "Expression": "AVG(successPercentFilled)",
+            "Id": "expr_1",
+          },
+          Object {
+            "Expression": "FILL(METRICS(), 0)",
+            "Id": "successPercentFilled",
+            "ReturnData": false,
+          },
+          Object {
+            "Id": "successPercent",
+            "MetricStat": Object {
+              "Metric": Object {
+                "Dimensions": Array [
+                  Object {
+                    "Name": "CanaryName",
+                    "Value": "comm_cmp_canary_prod",
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 60,
-        "Statistic": "Average",
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -829,22 +848,41 @@ Object {
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
-        "Dimensions": Array [
+        "EvaluationPeriods": 5,
+        "Metrics": Array [
           Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_prod",
+            "Expression": "AVG(successPercentFilled)",
+            "Id": "expr_1",
+          },
+          Object {
+            "Expression": "FILL(METRICS(), 0)",
+            "Id": "successPercentFilled",
+            "ReturnData": false,
+          },
+          Object {
+            "Id": "successPercent",
+            "MetricStat": Object {
+              "Metric": Object {
+                "Dimensions": Array [
+                  Object {
+                    "Name": "CanaryName",
+                    "Value": "comm_cmp_canary_prod",
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 60,
-        "Statistic": "Average",
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -1376,22 +1414,41 @@ Object {
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
-        "Dimensions": Array [
+        "EvaluationPeriods": 5,
+        "Metrics": Array [
           Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_prod",
+            "Expression": "AVG(successPercentFilled)",
+            "Id": "expr_1",
+          },
+          Object {
+            "Expression": "FILL(METRICS(), 0)",
+            "Id": "successPercentFilled",
+            "ReturnData": false,
+          },
+          Object {
+            "Id": "successPercent",
+            "MetricStat": Object {
+              "Metric": Object {
+                "Dimensions": Array [
+                  Object {
+                    "Name": "CanaryName",
+                    "Value": "comm_cmp_canary_prod",
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 60,
-        "Statistic": "Average",
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -1923,22 +1980,41 @@ Object {
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
-        "Dimensions": Array [
+        "EvaluationPeriods": 5,
+        "Metrics": Array [
           Object {
-            "Name": "CanaryName",
-            "Value": "comm_cmp_canary_prod",
+            "Expression": "AVG(successPercentFilled)",
+            "Id": "expr_1",
+          },
+          Object {
+            "Expression": "FILL(METRICS(), 0)",
+            "Id": "successPercentFilled",
+            "ReturnData": false,
+          },
+          Object {
+            "Id": "successPercent",
+            "MetricStat": Object {
+              "Metric": Object {
+                "Dimensions": Array [
+                  Object {
+                    "Name": "CanaryName",
+                    "Value": "comm_cmp_canary_prod",
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 5,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 60,
-        "Statistic": "Average",
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
