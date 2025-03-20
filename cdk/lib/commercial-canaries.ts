@@ -149,23 +149,6 @@ export class CommercialCanaries extends GuStack {
 
 		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
 		// if (stage === 'PROD') {
-		const successPercentFilled = new MathExpression({
-			// Make sure to fill in missing data with 0 before calculating the average
-			expression: 'FILL(successPercent, 0)',
-			period: Duration.minutes(1),
-			usingMetrics: {
-				successPercent: new Metric({
-					namespace: 'CloudWatchSynthetics',
-					metricName: 'SuccessPercent',
-					statistic: 'avg',
-					period: Duration.minutes(1),
-					dimensionsMap: {
-						CanaryName: canaryName,
-					},
-				}),
-			},
-		});
-
 		const alarm = new Alarm(this, 'Alarm', {
 			actionsEnabled: true,
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
@@ -174,9 +157,20 @@ export class CommercialCanaries extends GuStack {
 			datapointsToAlarm: 5,
 			evaluationPeriods: 5,
 			metric: new MathExpression({
-				expression: 'AVG(successPercentFilled)',
+				// Make sure to fill in missing data with 0 before calculating the average
+				expression: 'FILL(successPercent, 0)',
 				period: Duration.minutes(1),
-				usingMetrics: { successPercentFilled },
+				usingMetrics: {
+					successPercent: new Metric({
+						namespace: 'CloudWatchSynthetics',
+						metricName: 'SuccessPercent',
+						statistic: 'avg',
+						period: Duration.minutes(1),
+						dimensionsMap: {
+							CanaryName: canaryName,
+						},
+					}),
+				},
 			}),
 			threshold: 80,
 			treatMissingData: TreatMissingData.BREACHING,

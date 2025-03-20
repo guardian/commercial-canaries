@@ -28,13 +28,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -337,13 +332,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -646,13 +636,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -955,13 +940,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -1264,13 +1244,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -1573,13 +1548,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -1882,13 +1852,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
@@ -2191,13 +2156,8 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "AVG(successPercentFilled)",
-            "Id": "expr_1",
-          },
-          Object {
             "Expression": "FILL(successPercent, 0)",
-            "Id": "successPercentFilled",
-            "ReturnData": false,
+            "Id": "expr_1",
           },
           Object {
             "Id": "successPercent",
