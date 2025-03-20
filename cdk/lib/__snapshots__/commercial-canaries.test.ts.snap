@@ -32,7 +32,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -341,7 +341,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -650,7 +650,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -959,7 +959,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -1268,7 +1268,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -1577,7 +1577,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -1886,7 +1886,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },
@@ -2195,7 +2195,7 @@ Object {
             "Id": "expr_1",
           },
           Object {
-            "Expression": "FILL(METRICS(), 0)",
+            "Expression": "FILL(successPercent, 0)",
             "Id": "successPercentFilled",
             "ReturnData": false,
           },

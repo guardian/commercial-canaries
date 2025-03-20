@@ -151,7 +151,7 @@ export class CommercialCanaries extends GuStack {
 		// if (stage === 'PROD') {
 		const successPercentFilled = new MathExpression({
 			// Make sure to fill in missing data with 0 before calculating the average
-			expression: 'FILL(METRICS(), 0)',
+			expression: 'FILL(successPercent, 0)',
 			period: Duration.minutes(1),
 			usingMetrics: {
 				successPercent: new Metric({
