@@ -13,53 +13,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
-            "Expression": "FILL(successPercent, 0)",
-            "Id": "expr_1",
-          },
-          Object {
-            "Id": "successPercent",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_code",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
-            },
-            "ReturnData": false,
-          },
-        ],
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -332,11 +285,12 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "FILL(successPercent, 0)",
+            "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
+            "Label": "successPercent",
           },
           Object {
-            "Id": "successPercent",
+            "Id": "successPercentRaw",
             "MetricStat": Object {
               "Metric": Object {
                 "Dimensions": Array [
@@ -621,53 +575,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
-            "Expression": "FILL(successPercent, 0)",
-            "Id": "expr_1",
-          },
-          Object {
-            "Id": "successPercent",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_code",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
-            },
-            "ReturnData": false,
-          },
-        ],
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -940,11 +847,12 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "FILL(successPercent, 0)",
+            "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
+            "Label": "successPercent",
           },
           Object {
-            "Id": "successPercent",
+            "Id": "successPercentRaw",
             "MetricStat": Object {
               "Metric": Object {
                 "Dimensions": Array [
@@ -1229,53 +1137,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
-            "Expression": "FILL(successPercent, 0)",
-            "Id": "expr_1",
-          },
-          Object {
-            "Id": "successPercent",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_code",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
-            },
-            "ReturnData": false,
-          },
-        ],
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -1548,11 +1409,12 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "FILL(successPercent, 0)",
+            "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
+            "Label": "successPercent",
           },
           Object {
-            "Id": "successPercent",
+            "Id": "successPercentRaw",
             "MetricStat": Object {
               "Metric": Object {
                 "Dimensions": Array [
@@ -1837,53 +1699,6 @@ Object {
     },
   },
   "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
-        "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
-        "AlarmName": "commercial-canary-CODE",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
-        "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
-            "Expression": "FILL(successPercent, 0)",
-            "Id": "expr_1",
-          },
-          Object {
-            "Id": "successPercent",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
-                    "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_code",
-                  },
-                ],
-                "MetricName": "SuccessPercent",
-                "Namespace": "CloudWatchSynthetics",
-              },
-              "Period": 60,
-              "Stat": "Average",
-            },
-            "ReturnData": false,
-          },
-        ],
-        "OKActions": Array [
-          Object {
-            "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Threshold": 80,
-        "TreatMissingData": "breaching",
-      },
-      "Type": "AWS::CloudWatch::Alarm",
-    },
     "Canary": Object {
       "Properties": Object {
         "ArtifactS3Location": Object {
@@ -2156,11 +1971,12 @@ Object {
         "EvaluationPeriods": 5,
         "Metrics": Array [
           Object {
-            "Expression": "FILL(successPercent, 0)",
+            "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
+            "Label": "successPercent",
           },
           Object {
-            "Id": "successPercent",
+            "Id": "successPercentRaw",
             "MetricStat": Object {
               "Metric": Object {
                 "Dimensions": Array [
