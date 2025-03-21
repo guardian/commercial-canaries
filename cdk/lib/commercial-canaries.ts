@@ -11,12 +11,11 @@ import {
 	Alarm,
 	ComparisonOperator,
 	MathExpression,
-	Metric,
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
-import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: GuStackProps) {
@@ -141,7 +140,6 @@ export class CommercialCanaries extends GuStack {
 
 		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
 		if (stage === 'PROD') {
-
 			const alarm = new Alarm(this, 'Alarm', {
 				actionsEnabled: true,
 				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
@@ -154,8 +152,8 @@ export class CommercialCanaries extends GuStack {
 					expression: 'FILL(successPercentRaw, 0)',
 					period: Duration.minutes(1),
 					usingMetrics: {
-			      /** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
-      			successPercentRaw: canary.metricSuccessPercent()
+						/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
+						successPercentRaw: canary.metricSuccessPercent(),
 					},
 				}),
 				threshold: 80,
