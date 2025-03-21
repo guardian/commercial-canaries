@@ -10,6 +10,7 @@ import {
 import {
 	Alarm,
 	ComparisonOperator,
+	MathExpression,
 	Metric,
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
@@ -155,13 +156,20 @@ export class CommercialCanaries extends GuStack {
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,
-				metric: new Metric({
-					namespace: 'CloudWatchSynthetics',
-					metricName: 'SuccessPercent',
-					statistic: 'avg',
+				metric: new MathExpression({
+					label: 'successPercent',
+					expression: 'FILL(successPercentRaw, 0)',
 					period: Duration.minutes(1),
-					dimensionsMap: {
-						CanaryName: canaryName,
+					usingMetrics: {
+						successPercentRaw: new Metric({
+							namespace: 'CloudWatchSynthetics',
+							metricName: 'SuccessPercent',
+							statistic: 'avg',
+							period: Duration.minutes(1),
+							dimensionsMap: {
+								CanaryName: canaryName,
+							},
+						}),
 					},
 				}),
 				threshold: 80,
