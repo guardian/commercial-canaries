@@ -15,44 +15,40 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.2.2
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4.3.0
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Run script to create zip files
-        run: |
-          chmod +x ./.github/scripts/create-artifacts.sh
-          ./.github/scripts/create-artifacts.sh
+        run: .github/scripts/create-artifacts.sh
         shell: bash
 
-      - name: Install CDK dependencies
-        working-directory: './cdk'
-        run: yarn
+      - name: Corepack
+        run: corepack enable
 
-      - name: CDK Test
-        working-directory: './cdk'
-        run: yarn test
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: CDK Lint
-        working-directory: './cdk'
-        run: yarn lint
+      - name: Test
+        run: pnpm test
+
+      - name: Lint
+        run: pnpm lint
 
       - name: CDK Build
-        working-directory: './cdk'
-        run: yarn build
+        run: pnpm build
 
       - name: CDK Synth
-        working-directory: './cdk'
-        run: yarn synth
+        run: pnpm synth
 
-      - uses: guardian/actions-riff-raff@v4
+      - uses: guardian/actions-riff-raff@v4.1.8
         with:
           projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-          configPath: cdk/cdk.out/riff-raff.yaml
+          configPath: cdk.out/riff-raff.yaml
           contentDirectories: |
             upload-eu:
               - builds/tcfv2
@@ -63,4 +59,4 @@ jobs:
             upload-aus:
               - builds/aus
             cdk.out:
-              - cdk/cdk.out
+              - cdk.out
