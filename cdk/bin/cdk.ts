@@ -1,4 +1,3 @@
-import 'source-map-support/register';
 import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
 import { App } from 'aws-cdk-lib';
 import { CommercialCanaries } from '../lib/commercial-canaries';
