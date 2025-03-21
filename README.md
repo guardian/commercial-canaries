@@ -56,7 +56,7 @@ From here, you can see all the details relating to the canary and the recent run
 
 ## Requirements
 
--   [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+-   [PNPM](https://pnpm.io/installation)
 
 ## Development
 

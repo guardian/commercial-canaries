@@ -6,12 +6,27 @@
   "repository": "git@github.com:guardian/commercial-canaries.git",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "bash ./build.sh"
+    "build": "tsc",
+    "test": "jest --verbose",
+    "test-update": "jest -u",
+    "format": "prettier --write \"{lib,bin}/**/*.ts\"",
+    "lint": "eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern",
+    "synth": "cdk synth --path-metadata false --version-reporting false",
+    "diff": "cdk diff --path-metadata false --version-reporting false"
   },
   "devDependencies": {
-    "@guardian/eslint-config": "^0.6.0",
-    "@guardian/prettier": "^0.6.0",
-    "eslint": "^7.30.0",
-    "prettier": "^2.3.2"
+    "@guardian/cdk": "61.3.2",
+    "@guardian/eslint-config": "11.0.0",
+    "@guardian/prettier": "8.0.1",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.13.11",
+    "aws-cdk": "2.1005.0",
+    "aws-cdk-lib": "2.185.0",
+    "eslint": "9.22.0",
+    "jest": "29.7.0",
+    "prettier": "3.5.3",
+    "ts-jest": "29.2.6",
+    "ts-node": "10.9.2",
+    "typescript": "5.7.2"
   }
 }
