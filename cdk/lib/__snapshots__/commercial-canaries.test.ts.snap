@@ -1,40 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+  "Resources": {
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-ap-southeast-2/CODE",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-ap-southeast-2",
@@ -44,45 +44,45 @@ Object {
           "S3Key": "CODE/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -90,14 +90,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -105,26 +105,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ap-southeast-2/*",
@@ -132,20 +132,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ap-southeast-2/*",
@@ -153,19 +153,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:ap-southeast-2:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
@@ -173,18 +173,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -198,20 +198,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ap-southeast-2",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -219,33 +219,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+CODE-ap-southeast-2@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -258,23 +258,23 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
+  "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
         "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
+        "AlarmActions": [
+          {
             "Ref": "TopicBFC7AF6E",
           },
         ],
@@ -283,18 +283,18 @@ Object {
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
+        "Metrics": [
+          {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
             "Label": "successPercent",
           },
-          Object {
+          {
             "Id": "successPercentRaw",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
                     "Name": "CanaryName",
                     "Value": "comm_cmp_canary_prod",
                   },
@@ -308,9 +308,27 @@ Object {
             "ReturnData": false,
           },
         ],
-        "OKActions": Array [
-          Object {
+        "OKActions": [
+          {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -318,28 +336,28 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-ap-southeast-2/PROD",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-ap-southeast-2",
@@ -349,45 +367,45 @@ Object {
           "S3Key": "PROD/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -395,14 +413,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -410,26 +428,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ap-southeast-2/*",
@@ -437,20 +455,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ap-southeast-2/*",
@@ -458,19 +476,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:ap-southeast-2:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
@@ -478,18 +496,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -503,20 +521,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ap-southeast-2",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -524,33 +542,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+PROD-ap-southeast-2@guardian.co.uk",
         "Protocol": "email",
         "Region": "ap-southeast-2",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -563,40 +581,40 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+  "Resources": {
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-ca-central-1/CODE",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-ca-central-1",
@@ -606,45 +624,45 @@ Object {
           "S3Key": "CODE/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -652,14 +670,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -667,26 +685,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ca-central-1/*",
@@ -694,20 +712,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ca-central-1/*",
@@ -715,19 +733,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:ca-central-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
@@ -735,18 +753,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -760,20 +778,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ca-central-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -781,33 +799,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+CODE-ca-central-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -820,23 +838,23 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
+  "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
         "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
+        "AlarmActions": [
+          {
             "Ref": "TopicBFC7AF6E",
           },
         ],
@@ -845,18 +863,18 @@ Object {
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
+        "Metrics": [
+          {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
             "Label": "successPercent",
           },
-          Object {
+          {
             "Id": "successPercentRaw",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
                     "Name": "CanaryName",
                     "Value": "comm_cmp_canary_prod",
                   },
@@ -870,9 +888,27 @@ Object {
             "ReturnData": false,
           },
         ],
-        "OKActions": Array [
-          Object {
+        "OKActions": [
+          {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -880,28 +916,28 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-ca-central-1/PROD",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-ca-central-1",
@@ -911,45 +947,45 @@ Object {
           "S3Key": "PROD/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -957,14 +993,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -972,26 +1008,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ca-central-1/*",
@@ -999,20 +1035,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-ca-central-1/*",
@@ -1020,19 +1056,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:ca-central-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
@@ -1040,18 +1076,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -1065,20 +1101,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ca-central-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -1086,33 +1122,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+PROD-ca-central-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "ca-central-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -1125,40 +1161,40 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+  "Resources": {
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-eu-west-1/CODE",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-eu-west-1",
@@ -1168,45 +1204,45 @@ Object {
           "S3Key": "CODE/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1214,14 +1250,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -1229,26 +1265,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-eu-west-1/*",
@@ -1256,20 +1292,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-eu-west-1/*",
@@ -1277,19 +1313,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:eu-west-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
@@ -1297,18 +1333,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -1322,20 +1358,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-eu-west-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1343,33 +1379,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+CODE-eu-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1382,23 +1418,23 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
+  "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
         "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
+        "AlarmActions": [
+          {
             "Ref": "TopicBFC7AF6E",
           },
         ],
@@ -1407,18 +1443,18 @@ Object {
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
+        "Metrics": [
+          {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
             "Label": "successPercent",
           },
-          Object {
+          {
             "Id": "successPercentRaw",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
                     "Name": "CanaryName",
                     "Value": "comm_cmp_canary_prod",
                   },
@@ -1432,9 +1468,27 @@ Object {
             "ReturnData": false,
           },
         ],
-        "OKActions": Array [
-          Object {
+        "OKActions": [
+          {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -1442,28 +1496,28 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-eu-west-1/PROD",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-eu-west-1",
@@ -1473,45 +1527,45 @@ Object {
           "S3Key": "PROD/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -1519,14 +1573,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -1534,26 +1588,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-eu-west-1/*",
@@ -1561,20 +1615,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-eu-west-1/*",
@@ -1582,19 +1636,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:eu-west-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
@@ -1602,18 +1656,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -1627,20 +1681,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-eu-west-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -1648,33 +1702,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+PROD-eu-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "eu-west-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -1687,40 +1741,40 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+  "Resources": {
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-us-west-1/CODE",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-us-west-1",
@@ -1730,45 +1784,45 @@ Object {
           "S3Key": "CODE/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_code",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1776,14 +1830,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -1791,26 +1845,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-us-west-1/*",
@@ -1818,20 +1872,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-us-west-1/*",
@@ -1839,19 +1893,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:us-west-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
@@ -1859,18 +1913,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -1884,20 +1938,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-us-west-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1905,33 +1959,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+CODE-us-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "CODE",
           },
@@ -1944,23 +1998,23 @@ Object {
 `;
 
 exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
-Object {
-  "Metadata": Object {
-    "gu:cdk:constructs": Array [],
+{
+  "Metadata": {
+    "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
-  "Parameters": Object {
-    "BuildId": Object {
+  "Parameters": {
+    "BuildId": {
       "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
       "Type": "String",
     },
   },
-  "Resources": Object {
-    "Alarm7103F465": Object {
-      "Properties": Object {
+  "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
         "ActionsEnabled": true,
-        "AlarmActions": Array [
-          Object {
+        "AlarmActions": [
+          {
             "Ref": "TopicBFC7AF6E",
           },
         ],
@@ -1969,18 +2023,18 @@ Object {
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
-        "Metrics": Array [
-          Object {
+        "Metrics": [
+          {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
             "Label": "successPercent",
           },
-          Object {
+          {
             "Id": "successPercentRaw",
-            "MetricStat": Object {
-              "Metric": Object {
-                "Dimensions": Array [
-                  Object {
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
                     "Name": "CanaryName",
                     "Value": "comm_cmp_canary_prod",
                   },
@@ -1994,9 +2048,27 @@ Object {
             "ReturnData": false,
           },
         ],
-        "OKActions": Array [
-          Object {
+        "OKActions": [
+          {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -2004,28 +2076,28 @@ Object {
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": Object {
-      "Properties": Object {
-        "ArtifactS3Location": Object {
-          "Fn::Join": Array [
+    "Canary": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "s3://cw-syn-results-",
-              Object {
+              {
                 "Ref": "AWS::AccountId",
               },
               "-us-west-1/PROD",
             ],
           ],
         },
-        "Code": Object {
+        "Code": {
           "Handler": "pageLoadBlueprint.handler",
-          "S3Bucket": Object {
-            "Fn::Join": Array [
+          "S3Bucket": {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "cw-syn-canary-",
-                Object {
+                {
                   "Ref": "AWS::AccountId",
                 },
                 "-us-west-1",
@@ -2035,45 +2107,45 @@ Object {
           "S3Key": "PROD/nodejs.zip",
         },
         "DeleteLambdaResourcesOnCanaryDeletion": true,
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "Role1ABCC5F0",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
         "Name": "comm_cmp_canary_prod",
-        "RunConfig": Object {
+        "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
         "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
-        "Schedule": Object {
+        "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
         },
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "BuildId",
-            "Value": Object {
+            "Value": {
               "Ref": "BuildId",
             },
           },
-          Object {
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -2081,14 +2153,14 @@ Object {
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "Role1ABCC5F0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
@@ -2096,26 +2168,26 @@ Object {
           "Version": "2012-10-17",
         },
         "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": Array [
+        "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
         ],
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-canary-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-us-west-1/*",
@@ -2123,20 +2195,20 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:PutObject",
                     "s3:GetObject",
                     "s3:GetBucketLocation",
                     "s3:DeleteObject",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:s3:::cw-syn-results-",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         "-us-west-1/*",
@@ -2144,19 +2216,19 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
                     "logs:CreateLogGroup",
                   ],
                   "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::Join": Array [
+                  "Resource": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:aws:logs:us-west-1:",
-                        Object {
+                        {
                           "Ref": "AWS::AccountId",
                         },
                         ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
@@ -2164,18 +2236,18 @@ Object {
                     ],
                   },
                 },
-                Object {
-                  "Action": Array [
+                {
+                  "Action": [
                     "s3:ListAllMyBuckets",
                     "xray:PutTraceSegments",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
                 },
-                Object {
+                {
                   "Action": "cloudwatch:PutMetricData",
-                  "Condition": Object {
-                    "StringEquals": Object {
+                  "Condition": {
+                    "StringEquals": {
                       "cloudwatch:namespace": "CloudWatchSynthetics",
                     },
                   },
@@ -2189,20 +2261,20 @@ Object {
           },
         ],
         "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-us-west-1",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
@@ -2210,33 +2282,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "Subscription391C9821": Object {
-      "Properties": Object {
+    "Subscription391C9821": {
+      "Properties": {
         "Endpoint": "commercial.canaries+PROD-us-west-1@guardian.co.uk",
         "Protocol": "email",
         "Region": "us-west-1",
-        "TopicArn": Object {
+        "TopicArn": {
           "Ref": "TopicBFC7AF6E",
         },
       },
       "Type": "AWS::SNS::Subscription",
     },
-    "TopicBFC7AF6E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "TopicBFC7AF6E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
-          Object {
+          {
             "Key": "gu:repo",
             "Value": "guardian/commercial-canaries",
           },
-          Object {
+          {
             "Key": "Stack",
             "Value": "frontend",
           },
-          Object {
+          {
             "Key": "Stage",
             "Value": "PROD",
           },
