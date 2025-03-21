@@ -1,5 +1,5 @@
 module.exports = {
-  testMatch: ['<rootDir>/lib/**/*.test.ts'],
+  testMatch: ['<rootDir>/cdk/lib/**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
