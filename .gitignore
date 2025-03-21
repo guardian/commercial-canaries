@@ -2,13 +2,6 @@ node_modules
 /.idea
 /builds
 .vscode/*
-
-*.js
-!jest.config.js
-!jest.setup.js
-!.eslintrc.js
-*.d.ts
-node_modules
 dist
 
 # CDK asset staging directory
