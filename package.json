@@ -9,7 +9,7 @@
     "build": "tsc",
     "test": "jest --verbose",
     "test-update": "jest -u",
-    "format": "prettier --write \"{lib,bin}/**/*.ts\"",
+    "format": "prettier --write \"**/*.ts\"",
     "lint": "eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern",
     "synth": "cdk synth --path-metadata false --version-reporting false",
     "diff": "cdk diff --path-metadata false --version-reporting false"
