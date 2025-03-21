@@ -38,7 +38,7 @@ export class CommercialCanaries extends GuStack {
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
 
 		/**
-		 * This is used to ensure the canary is redeployed when the build id changes as it increments for each riff-raff build
+		 *  This is used to ensure the canary is redeployed when the build id changes as it increments for each riff-raff build
 		 */
 		const buildId = new CfnParameter(this, 'BuildId', {
 			type: 'String',
@@ -171,7 +171,6 @@ export class CommercialCanaries extends GuStack {
 							},
 						}),
 					},
-					region: this.region,
 				}),
 				threshold: 80,
 				treatMissingData: TreatMissingData.BREACHING,
