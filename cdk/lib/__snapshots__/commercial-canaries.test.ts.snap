@@ -313,6 +313,24 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -873,6 +891,24 @@ Object {
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -1437,6 +1473,24 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -1997,6 +2051,24 @@ Object {
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          Object {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          Object {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          Object {
+            "Key": "Stage",
+            "Value": "PROD",
           },
         ],
         "Threshold": 80,
