@@ -60,7 +60,7 @@ From here, you can see all the details relating to the canary and the recent run
 
 ## Development
 
-Canaries are located in the src folder. To test changes, open a Pull Request and `actions-riff-raff` will add a comment to it with a link to deploy your branch to `CODE` which will update the test canary `comm_cmp_canary_code`. You can check on the progress of the Github Action (here)[https://github.com/guardian/commercial-canaries/actions/workflows/deploy.yaml]. If a run does not start automatically, then you can start in manually, as the workflow has a workflow_dispatch event trigger.
+Canaries are located in the src folder. To test changes, open a Pull Request and `actions-riff-raff` will add a comment to it with a link to deploy your branch to `CODE` which will update the test canary `comm_cmp_canary_code`. You can check on the progress of the Github Action [here](https://github.com/guardian/commercial-canaries/actions/workflows/deploy.yaml). If a run does not start automatically, then you can start in manually, as the workflow has a workflow_dispatch event trigger.
 
 To check the progress of the update in Riffraff, go to the History tab and search for the project `frontend::commercial-canaries`.
 
@@ -74,7 +74,7 @@ Continuous deployment is set up using a combination of Github Actions and Riffra
 
 ### Process
 
-A push to the main branch will trigger the Github Action `deploy.yaml`, which runs the script `create-artifacts.sh` to zip up the lambda functions. These need to be zipped because AWS expects to find a zip file containing a template when creating a canary. It will also run cdk commands which will run tests and generate the CloudFormation templates. Each zip file and CloudFormation template is uploaded to Riffraff using (actions-riff-raff)[https://github.com/guardian/actions-riff-raff]. Continuous deployment is set up in Riffraff for each AWS region. Riffraff will then upload the files to S3 and execute the CloudFormation script to update the necessary resources, including the canary code.
+A push to the main branch will trigger the Github Action `deploy.yaml`, which runs the script `create-artifacts.sh` to zip up the lambda functions. These need to be zipped because AWS expects to find a zip file containing a template when creating a canary. It will also run cdk commands which will run tests and generate the CloudFormation templates. Each zip file and CloudFormation template is uploaded to Riffraff using [actions-riff-raff](https://github.com/guardian/actions-riff-raff). Continuous deployment is set up in Riffraff for each AWS region. Riffraff will then upload the files to S3 and execute the CloudFormation script to update the necessary resources, including the canary code.
 
 ### Further information
 
