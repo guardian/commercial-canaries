@@ -1,27 +1,11 @@
-import 'source-map-support/register';
 import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
-import { App } from 'aws-cdk-lib';
+import { App as CDKApp } from 'aws-cdk-lib';
 import { CommercialCanaries } from '../lib/commercial-canaries';
 import { regions } from '../lib/regions';
 
-const app = new App();
+const cdkApp = new CDKApp();
 
-const stages = ['CODE', 'PROD'];
-
-stages.forEach((stage) => {
-	regions.forEach(({ locationAbbr, region }) => {
-		new CommercialCanaries(app, `CommercialCanaries-${locationAbbr}-${stage}`, {
-			stack: 'frontend',
-			env: {
-				region: region,
-			},
-			stage,
-			cloudFormationStackName: `commercial-canary`,
-		});
-	});
-});
-
-const riffRaff = new RiffRaffYamlFile(app);
+const riffRaff = new RiffRaffYamlFile(cdkApp);
 const {
 	riffRaffYaml: { deployments },
 } = riffRaff;
@@ -32,21 +16,36 @@ deployments.forEach((deployment) => {
 	deployment.parameters.cloudFormationStackByTags = false;
 });
 
-regions.forEach(({ locationAbbr, region }) => {
-	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
-		type: 'aws-s3',
-		app: 'commercial-canaries',
-		regions: new Set([region]),
-		stacks: new Set(['frontend']),
-		parameters: {
-			bucketSsmKey: `/account/services/commercial-canary.bucket`,
-			cacheControl: 'private',
-			publicReadAcl: false,
-			prefixStack: false,
-			prefixPackage: false,
-		},
-		contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
-	});
-});
+['CODE', 'PROD'].map((stage) =>
+	regions.map(({ region, locationAbbr }) => {
+		// CDK app
+		new CommercialCanaries(
+			cdkApp,
+			`CommercialCanaries-${locationAbbr}-${stage}`,
+			{
+				stack: 'frontend',
+				env: { region },
+				stage,
+				cloudFormationStackName: `commercial-canary`,
+			},
+		);
+
+		// Corresponding RiffRaff deployment for app
+		deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
+			type: 'aws-s3',
+			app: 'commercial-canaries',
+			regions: new Set([region]),
+			stacks: new Set(['frontend']),
+			parameters: {
+				bucketSsmKey: `/account/services/commercial-canary.bucket`,
+				cacheControl: 'private',
+				publicReadAcl: false,
+				prefixStack: false,
+				prefixPackage: false,
+			},
+			contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
+		});
+	}),
+);
 
 riffRaff.synth();
