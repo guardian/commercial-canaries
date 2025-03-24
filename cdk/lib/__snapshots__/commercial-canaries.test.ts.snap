@@ -313,24 +313,6 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "PROD",
-          },
-        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -893,24 +875,6 @@ Object {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "PROD",
-          },
-        ],
         "Threshold": 80,
         "TreatMissingData": "breaching",
       },
@@ -1160,7 +1124,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the UK CODE snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
@@ -1417,7 +1381,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the UK PROD snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
@@ -1471,24 +1435,6 @@ Object {
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "PROD",
           },
         ],
         "Threshold": 80,
@@ -1740,7 +1686,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the USA CODE snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
@@ -1997,7 +1943,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the USA PROD snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
@@ -2051,24 +1997,6 @@ Object {
         "OKActions": Array [
           Object {
             "Ref": "TopicBFC7AF6E",
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "gu:cdk:version",
-            "Value": "TEST",
-          },
-          Object {
-            "Key": "gu:repo",
-            "Value": "guardian/commercial-canaries",
-          },
-          Object {
-            "Key": "Stack",
-            "Value": "frontend",
-          },
-          Object {
-            "Key": "Stage",
-            "Value": "PROD",
           },
         ],
         "Threshold": 80,
