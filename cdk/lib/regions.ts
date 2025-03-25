@@ -19,7 +19,7 @@ export const regions: Region[] = [
 		region: 'ca-central-1',
 	},
 	{
-		location: 'USA',
+		location: 'US',
 		locationAbbr: 'US',
 		build: 'ccpa',
 		region: 'us-west-1',

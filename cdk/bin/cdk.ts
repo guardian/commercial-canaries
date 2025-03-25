@@ -8,6 +8,7 @@ const cdkApp = new App();
 
 const stages = ['CODE', 'PROD'];
 const stack = 'frontend';
+const cloudFormationStackName = 'commercial-canary';
 
 const canaryApps = stages
 	.map((stage) =>
@@ -19,8 +20,8 @@ const canaryApps = stages
 					{
 						stack,
 						stage,
-						env: { region: region },
-						cloudFormationStackName: 'commercial-canary',
+						env: { region },
+						cloudFormationStackName,
 					},
 				),
 				locationAbbr,
@@ -36,7 +37,7 @@ const {
 } = riffRaff;
 
 deployments.forEach((deployment) => {
-	deployment.parameters.cloudFormationStackName = 'commercial-canary';
+	deployment.parameters.cloudFormationStackName = cloudFormationStackName;
 	deployment.parameters.prependStackToCloudFormationStackName = false;
 	deployment.parameters.cloudFormationStackByTags = false;
 });

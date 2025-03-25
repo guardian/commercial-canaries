@@ -1686,7 +1686,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the USA CODE snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
@@ -1943,7 +1943,7 @@ Object {
 }
 `;
 
-exports[`The CommercialCanaries stack matches the USA PROD snapshot 1`] = `
+exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
 Object {
   "Metadata": Object {
     "gu:cdk:constructs": Array [],
