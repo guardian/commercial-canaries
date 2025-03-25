@@ -6,30 +6,28 @@ import { regions } from '../lib/regions';
 
 const cdkApp = new App();
 
-const stages = ['CODE', 'PROD'];
+const stages = ['PROD', 'CODE'];
 const stack = 'frontend';
 const cloudFormationStackName = 'commercial-canary';
 
-const canaryApps = stages
-	.map((stage) =>
-		regions.map(({ locationAbbr, region }) => {
-			return {
-				app: new CommercialCanaries(
-					cdkApp,
-					`CommercialCanaries-${locationAbbr}-${stage}`,
-					{
-						stack,
-						stage,
-						env: { region },
-						cloudFormationStackName,
-					},
-				),
-				locationAbbr,
-				region,
-			};
-		}),
-	)
-	.flat();
+const canaryApps = stages.map((stage) =>
+	regions.map(({ locationAbbr, region }) => {
+		return {
+			app: new CommercialCanaries(
+				cdkApp,
+				`CommercialCanaries-${locationAbbr}-${stage}`,
+				{
+					stack,
+					stage,
+					env: { region },
+					cloudFormationStackName,
+				},
+			),
+			locationAbbr,
+			region,
+		};
+	}),
+);
 
 const riffRaff = new RiffRaffYamlFile(cdkApp);
 const {
@@ -42,7 +40,7 @@ deployments.forEach((deployment) => {
 	deployment.parameters.cloudFormationStackByTags = false;
 });
 
-canaryApps.forEach(({ locationAbbr, region }) => {
+canaryApps[0].forEach(({ locationAbbr, region }) => {
 	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
 		type: 'aws-s3',
 		app: 'commercial-canaries',
