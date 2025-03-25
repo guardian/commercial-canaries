@@ -19,7 +19,8 @@ jobs:
 
       - uses: actions/setup-node@v4.3.0
         with:
-          node-version: '22'
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Run script to create zip files
         run: .github/scripts/create-artifacts.sh
