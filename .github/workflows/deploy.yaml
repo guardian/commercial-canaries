@@ -54,7 +54,7 @@ jobs:
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           configPath: cdk/cdk.out/riff-raff.yaml
           contentDirectories: |
-            upload-uk:
+            upload-eu:
               - builds/tcfv2
             upload-ca:
               - builds/tcfv2
