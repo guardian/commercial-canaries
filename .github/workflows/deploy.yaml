@@ -17,17 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
+      - name: Corepack
+        run: corepack enable
+
       - uses: actions/setup-node@v4.3.0
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-
-      - name: Run script to create zip files
-        run: .github/scripts/create-artifacts.sh
-        shell: bash
-
-      - name: Corepack
-        run: corepack enable
 
       - name: Install dependencies
         run: pnpm install
@@ -43,6 +39,10 @@ jobs:
 
       - name: CDK Synth
         run: pnpm synth
+
+      - name: Run script to create zip files
+        run: .github/scripts/create-artifacts.sh
+        shell: bash
 
       - uses: guardian/actions-riff-raff@v4.1.8
         with:
