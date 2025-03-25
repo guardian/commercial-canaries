@@ -1,9 +1,14 @@
-import type { Region } from './types/Region';
+export type Region = {
+	location: string;
+	locationAbbr: 'EU' | 'CA' | 'US' | 'AUS';
+	build: 'tcfv2' | 'ccpa' | 'aus';
+	region: 'eu-west-1' | 'ca-central-1' | 'us-west-1' | 'ap-southeast-2';
+};
 
 export const regions: Region[] = [
 	{
-		location: 'UK',
-		locationAbbr: 'UK',
+		location: 'Europe',
+		locationAbbr: 'EU',
 		build: 'tcfv2',
 		region: 'eu-west-1',
 	},
