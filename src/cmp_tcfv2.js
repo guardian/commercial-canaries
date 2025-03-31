@@ -375,18 +375,18 @@ const pageLoadBlueprint = async function () {
 
 	startTime = new Date().getTime();
 
-	// The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
+	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
 	await synthetics.executeStep('Test Front page', async function () {
 		await checkPage(
 			'front',
-			'https://www.theguardian.com?adtest=fixed-puppies',
+			'https://www.theguardian.com?adtest=fixed-puppies-ci',
 		);
 	});
 
 	await synthetics.executeStep('Test Article page', async function () {
 		await checkPage(
 			'article',
-			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies',
+			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
 		);
 	});
 };
