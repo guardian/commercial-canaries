@@ -340,18 +340,18 @@ const pageLoadBlueprint = async function () {
 
 	startTime = new Date().getTime();
 
-	// The query param "adtest=fixed-puppies" is used to ensure that GAM provides us with an ad for our slot
+	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
 	await synthetics.executeStep('Test Front page', async function () {
 		await checkPage(
 			'front',
-			'https://www.theguardian.com/us?adtest=fixed-puppies',
+			'https://www.theguardian.com/us?adtest=fixed-puppies-ci',
 		);
 	});
 
 	await synthetics.executeStep('Test Article page', async function () {
 		await checkPage(
 			'article',
-			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies',
+			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci',
 		);
 	});
 };
