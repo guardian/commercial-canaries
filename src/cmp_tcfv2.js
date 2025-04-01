@@ -52,7 +52,6 @@ const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Complete`);
 };
 
-
 const checkTopAdDidNotLoad = async (page) => {
 	log(`Checking ads do not load: Start`);
 
@@ -84,16 +83,13 @@ const interactWithCMP = async (page) => {
 
 const checkCMPIsOnPage = async (page) => {
 	log(`Waiting for CMP: Start`);
-    try {
-      await page.waitForSelector('[id*="sp_message_container"]');
-    } catch (e) {
-      logError(`Could not find CMP: ${e.message}`);
-      await synthetics.takeScreenshot(
-        `${page}-page`,
-        'Could not find CMP',
-      );
-      throw new Error('top-above-nav ad did not load');
-    }
+	try {
+		await page.waitForSelector('[id*="sp_message_container"]');
+	} catch (e) {
+		logError(`Could not find CMP: ${e.message}`);
+		await synthetics.takeScreenshot(`${page}-page`, 'Could not find CMP');
+		throw new Error('top-above-nav ad did not load');
+	}
 
 	log(`Waiting for CMP: Finish`);
 };
