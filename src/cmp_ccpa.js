@@ -103,12 +103,12 @@ const checkPrebid = async (page) => {
 		timeout: 30000,
 	});
 
-  const waitForPrebidScript = page.waitForRequest((req) =>
+	const waitForPrebidScript = page.waitForRequest((req) =>
 		req.url().includes('graun.Prebid.js.commercial.js'),
 	);
-  const waitForPubmatic = page.waitForRequest((req) =>
-    req.url().includes('hbopenbid.pubmatic.com/translator'),
-  );
+	const waitForPubmatic = page.waitForRequest((req) =>
+		req.url().includes('hbopenbid.pubmatic.com/translator'),
+	);
 
 	if (!reloadResponse) {
 		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
