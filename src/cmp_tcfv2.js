@@ -150,6 +150,13 @@ const getCurrentLocation = async (page) => {
 };
 
 const checkPrebid = async (page) => {
+	// --------------- RELOAD PAGE START ---------------------------
+	log(`[TEST 4: RELOAD PAGE] Step start`);
+	const reloadResponse = await page.reload({
+		waitUntil: 'domcontentloaded',
+		timeout: 30000,
+	});
+
   const waitForPrebidScript = page.waitForRequest((req) =>
 		req.url().includes('graun.Prebid.js.commercial.js'),
 	);
@@ -157,12 +164,6 @@ const checkPrebid = async (page) => {
     req.url().includes('hbopenbid.pubmatic.com/translator'),
   );
 
-	// --------------- RELOAD PAGE START ---------------------------
-	log(`[TEST 4: RELOAD PAGE] Step start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
 	if (!reloadResponse) {
 		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
 		throw 'Failed to refresh page!';
