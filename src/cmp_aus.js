@@ -98,6 +98,12 @@ const reloadPage = async (page) => {
 };
 
 const checkPrebid = async (page) => {
+  const waitForPrebidScript = page.waitForRequest((req) =>
+		req.url().includes('graun.Prebid.js.commercial.js'),
+	);
+  const waitForPubmatic = page.waitForRequest((req) =>
+    req.url().includes('hbopenbid.pubmatic.com/translator'),
+  );
 	// --------------- RELOAD PAGE START ---------------------------
 	log(`[TEST 4: RELOAD PAGE] Step start`);
 	const reloadResponse = await page.reload({
@@ -113,9 +119,7 @@ const checkPrebid = async (page) => {
 
 	// --------------- BUNDLE START ---------------------------
 	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	await page.waitForRequest((req) =>
-		req.url().includes('graun.Prebid.js.commercial.js'),
-	);
+	await waitForPrebidScript;
 	log(`[TEST 4: PREBID BUNDLE] Step start`);
 	// --------------- BUNDLE END ---------------------------
 
@@ -134,10 +138,7 @@ const checkPrebid = async (page) => {
 
 	// --------------- PUBMATIC START ---------------------------
 	log(`[TEST 4: PUBMATIC] Step start`);
-	const prebidURL =
-		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
-
-	await page.waitForRequest((req) => req.url().includes(prebidURL));
+	await waitForPubmatic;
 	log(`[TEST 4: PUBMATIC] Step complete`);
 	// --------------- PUBMATIC END ---------------------------
 
