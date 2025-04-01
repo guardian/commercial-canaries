@@ -35,12 +35,23 @@ const clearLocalStorage = async (page) => {
 
 const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Start`);
-	await page.waitForSelector(
-		'.ad-slot--top-above-nav .ad-slot__content iframe',
-		{ timeout: 30000 },
-	);
+	try {
+		await page.waitForSelector(
+			'.ad-slot--top-above-nav .ad-slot__content iframe',
+			{ timeout: 30000 },
+		);
+	} catch (e) {
+		logError(`Failed to load top-above-nav ad: ${e.message}`);
+		await synthetics.takeScreenshot(
+			`${page}-page`,
+			'Failed to load top-above-nav ad',
+		);
+		throw new Error('top-above-nav ad did not load');
+	}
+
 	log(`Waiting for ads to load: Complete`);
 };
+
 
 const checkTopAdDidNotLoad = async (page) => {
 	log(`Checking ads do not load: Start`);
