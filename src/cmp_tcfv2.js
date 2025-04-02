@@ -35,10 +35,20 @@ const clearLocalStorage = async (page) => {
 
 const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Start`);
-	await page.waitForSelector(
-		'.ad-slot--top-above-nav .ad-slot__content iframe',
-		{ timeout: 30000 },
-	);
+	try {
+		await page.waitForSelector(
+			'.ad-slot--top-above-nav .ad-slot__content iframe',
+			{ timeout: 30000 },
+		);
+	} catch (e) {
+		logError(`Failed to load top-above-nav ad: ${e.message}`);
+		await synthetics.takeScreenshot(
+			`${page}-page`,
+			'Failed to load top-above-nav ad',
+		);
+		throw new Error('top-above-nav ad did not load');
+	}
+
 	log(`Waiting for ads to load: Complete`);
 };
 
@@ -73,7 +83,14 @@ const interactWithCMP = async (page) => {
 
 const checkCMPIsOnPage = async (page) => {
 	log(`Waiting for CMP: Start`);
-	await page.waitForSelector('[id*="sp_message_container"]');
+	try {
+		await page.waitForSelector('[id*="sp_message_container"]');
+	} catch (e) {
+		logError(`Could not find CMP: ${e.message}`);
+		await synthetics.takeScreenshot(`${page}-page`, 'Could not find CMP');
+		throw new Error('top-above-nav ad did not load');
+	}
+
 	log(`Waiting for CMP: Finish`);
 };
 
