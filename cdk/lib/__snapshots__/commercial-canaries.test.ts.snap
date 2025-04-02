@@ -56,7 +56,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -379,7 +379,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -636,7 +636,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -959,7 +959,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -1216,7 +1216,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -1539,7 +1539,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
@@ -1796,7 +1796,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "1800",
           "Expression": "rate(1 minute)",
@@ -2119,7 +2119,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
         },
-        "RuntimeVersion": "syn-nodejs-puppeteer-7.0",
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
         "Schedule": {
           "DurationInSeconds": "0",
           "Expression": "rate(1 minute)",
