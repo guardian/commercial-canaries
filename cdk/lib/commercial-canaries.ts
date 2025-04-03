@@ -151,7 +151,7 @@ export class CommercialCanaries extends GuStack {
 		 * |  success rate: 80%   |  success rate: 60%   |  success rate: 60%   | // IS TRIGGERED (two consecutive failure periods)
 		 *
 		 */
-		const alarm = new Alarm(this, 'CanaryFailureAlarm', {
+		const alarm = new Alarm(this, 'Alarm', {
 			actionsEnabled: stage === 'PROD', // Only allow actions in prod
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
 			alarmName: `commercial-canary-${stage}`,
