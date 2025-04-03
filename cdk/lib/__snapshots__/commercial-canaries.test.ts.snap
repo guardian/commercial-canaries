@@ -71,7 +71,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -85,11 +85,11 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2/CODE",
+                "-ap-southeast-2",
               ],
             ],
           },
@@ -384,7 +384,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -398,11 +398,11 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2/PROD",
+                "-ap-southeast-2",
               ],
             ],
           },
@@ -687,7 +687,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -701,11 +701,11 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1/CODE",
+                "-ca-central-1",
               ],
             ],
           },
@@ -1000,7 +1000,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -1014,11 +1014,11 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1/PROD",
+                "-ca-central-1",
               ],
             ],
           },
@@ -1303,7 +1303,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -1317,11 +1317,11 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1/CODE",
+                "-eu-west-1",
               ],
             ],
           },
@@ -1616,7 +1616,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -1630,11 +1630,11 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1/PROD",
+                "-eu-west-1",
               ],
             ],
           },
@@ -1919,7 +1919,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -1933,11 +1933,11 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1/CODE",
+                "-us-west-1",
               ],
             ],
           },
@@ -2232,7 +2232,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           "Fn::Join": [
             "",
             [
-              "s3://s3://cw-syn-results-",
+              "s3://cw-syn-results-",
               {
                 "Ref": "AWS::AccountId",
               },
@@ -2246,11 +2246,11 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Fn::Join": [
               "",
               [
-                "s3://cw-syn-canary-",
+                "cw-syn-canary-",
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1/PROD",
+                "-us-west-1",
               ],
             ],
           },

@@ -97,21 +97,23 @@ export class CommercialCanaries extends GuStack {
 			},
 		});
 
+		const canaryCodeS3Bucket = Bucket.fromBucketName(
+			this,
+			'CanaryS3Bucket',
+			s3BucketNameCanary,
+		);
+
+		const canaryArtifactsS3Bucket = Bucket.fromBucketName(
+			this,
+			'CanaryArtifactsS3Bucket',
+			`${s3BucketNameResults}/${stage.toUpperCase()}`,
+		);
+
 		const canary = new synthetics.Canary(this, 'Canary', {
-			artifactsBucketLocation: {
-				bucket: Bucket.fromBucketName(
-					this,
-					'ResultsS3Bucket',
-					`s3://${s3BucketNameResults}/${stage.toUpperCase()}`,
-				),
-			},
+			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
-					Bucket.fromBucketName(
-						this,
-						'CanaryS3Bucket',
-						`s3://${s3BucketNameCanary}/${stage.toUpperCase()}`,
-					),
+					canaryCodeS3Bucket,
 					`${stage}/nodejs.zip`,
 				),
 				handler: 'pageLoadBlueprint.handler',
@@ -121,7 +123,7 @@ export class CommercialCanaries extends GuStack {
 			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_7_0,
 			timeout: Duration.seconds(60),
 			memory: Size.mebibytes(isTcf ? 2048 : 3008),
-			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
+			artifactsBucketLocation: { bucket: canaryArtifactsS3Bucket },
 			// Don't run non-prod canaries indefinitely
 			timeToLive: stage === 'PROD' ? undefined : Duration.minutes(30),
 			provisionedResourceCleanup: true,
