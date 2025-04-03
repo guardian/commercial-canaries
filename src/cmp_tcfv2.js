@@ -33,6 +33,14 @@ const clearLocalStorage = async (page) => {
 	log(`Cleared local storage`);
 };
 
+const setAdTestCookie = async (page) => {
+	await page.setCookie({
+		name: 'adtest',
+		value: 'fixed-puppies-ci',
+		domain: '.theguardian.com',
+	});
+};
+
 const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Start`);
 	try {
@@ -320,6 +328,7 @@ const checkPage = async (pageType, url) => {
 	await loadPage(page, url);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 
 	// Now we can run our tests.
 	log(
@@ -360,6 +369,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
