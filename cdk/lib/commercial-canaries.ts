@@ -147,15 +147,8 @@ export class CommercialCanaries extends GuStack {
 			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 			datapointsToAlarm: 5,
 			evaluationPeriods: 5,
-			metric: new MathExpression({
-				label: 'successPercent',
-				expression: 'FILL(successPercentRaw, 0)',
-				period: Duration.minutes(1),
-				usingMetrics: {
-					/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
-					successPercentRaw: canary.metricSuccessPercent(),
-				},
-			}),
+			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
+			metric: canary.metricSuccessPercent(),
 			threshold: 80,
 			treatMissingData: TreatMissingData.BREACHING,
 		});
