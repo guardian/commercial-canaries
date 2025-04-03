@@ -15,12 +15,12 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -329,12 +329,12 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -643,12 +643,12 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -957,12 +957,12 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1271,12 +1271,12 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1585,12 +1585,12 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1899,12 +1899,12 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -2213,12 +2213,12 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 5 minutes.
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 3,
-        "EvaluationPeriods": 5,
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
