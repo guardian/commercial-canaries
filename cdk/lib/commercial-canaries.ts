@@ -138,9 +138,8 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `Low success rate for canary in ${env.region} over the last 5 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
-			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 			/**
 			 * This metric represents the success rate where missing data is filled in with zeros
 			 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
@@ -154,10 +153,11 @@ export class CommercialCanaries extends GuStack {
 					}),
 				},
 			}),
-			/** Alarm is triggered if canary does not result in 5 successful runs in a period of 10 minutes */
-			datapointsToAlarm: 5,
-			evaluationPeriods: 10,
+			/** Alarm is triggered if canary fails (or fails to run) 3 times in a period of 5 minutes */
+			datapointsToAlarm: 3,
+			evaluationPeriods: 5,
 			threshold: 100, // the metric is either 100% or 0% when evaluating minute-by-minute
+			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			treatMissingData: TreatMissingData.BREACHING,
 		});
 
