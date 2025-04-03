@@ -15,28 +15,44 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -55,8 +71,8 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Value": "CODE",
           },
         ],
-        "Threshold": 80,
-        "TreatMissingData": "missing",
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -313,28 +329,44 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -353,7 +385,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
@@ -611,28 +643,44 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -651,8 +699,8 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Value": "CODE",
           },
         ],
-        "Threshold": 80,
-        "TreatMissingData": "missing",
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -909,28 +957,44 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -949,7 +1013,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
@@ -1207,28 +1271,44 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1247,8 +1327,8 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Value": "CODE",
           },
         ],
-        "Threshold": 80,
-        "TreatMissingData": "missing",
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -1505,28 +1585,44 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1545,7 +1641,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
@@ -1803,28 +1899,44 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1843,8 +1955,8 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Value": "CODE",
           },
         ],
-        "Threshold": 80,
-        "TreatMissingData": "missing",
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -2101,28 +2213,44 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 10,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -2141,7 +2269,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",

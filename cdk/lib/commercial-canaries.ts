@@ -10,6 +10,7 @@ import {
 import {
 	Alarm,
 	ComparisonOperator,
+	MathExpression,
 	Stats,
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
@@ -97,33 +98,27 @@ export class CommercialCanaries extends GuStack {
 			},
 		});
 
-		const canaryCodeS3Bucket = Bucket.fromBucketName(
-			this,
-			'CanaryS3Bucket',
-			s3BucketNameCanary,
-		);
-
-		const canaryArtifactsS3Bucket = Bucket.fromBucketName(
-			this,
-			'CanaryArtifactsS3Bucket',
-			`${s3BucketNameResults}/${stage.toUpperCase()}`,
-		);
-
 		const canary = new synthetics.Canary(this, 'Canary', {
-			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
+			artifactsBucketLocation: {
+				bucket: Bucket.fromBucketName(
+					this,
+					'CanaryArtifactsS3Bucket',
+					`${s3BucketNameResults}/${stage.toUpperCase()}`,
+				),
+			},
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
-					canaryCodeS3Bucket,
-					`${stage}/nodejs.zip`,
+					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
+					`${stage.toUpperCase()}/nodejs.zip`,
 				),
 				handler: 'pageLoadBlueprint.handler',
 			}),
 			role,
 			canaryName,
 			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_7_0,
+			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
 			timeout: Duration.seconds(60),
 			memory: Size.mebibytes(isTcf ? 2048 : 3008),
-			artifactsBucketLocation: { bucket: canaryArtifactsS3Bucket },
 			// Don't run non-prod canaries indefinitely
 			timeToLive: stage === 'PROD' ? undefined : Duration.minutes(30),
 			provisionedResourceCleanup: true,
@@ -141,34 +136,33 @@ export class CommercialCanaries extends GuStack {
 		});
 
 		/**
-		 * Alarm triggered if canary has an average success rate of lower than 80%
-		 * over five minutes twice in a row (ie over a total of a ten minute period)
-		 *
-		 * For example, a fifteen minute period visualisation:
-		 *
-		 * | <--- 5 minutes ----> | <--- 5 minutes ----> | <--- 5 minutes ----> |
-		 * |  success rate: 40%   |  success rate: 100%  |  success rate: 60%   | // NOT TRIGGERED (two non-consecutive failure periods)
-		 * |  success rate: 80%   |  success rate: 60%   |  success rate: 60%   | // IS TRIGGERED (two consecutive failure periods)
+		 * Metric representing the canary success rate per minute, where missing data is filled in with zeros
+		 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
 		 */
+		const alarmMetric = new MathExpression({
+			label: 'successRate',
+			expression: 'FILL(successPercentRaw, 0)',
+			period: Duration.minutes(1),
+			usingMetrics: {
+				successPercentRaw: canary.metricSuccessPercent({
+					statistic: Stats.AVERAGE,
+					period: Duration.minutes(1),
+				}),
+			},
+		});
+
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
+			metric: alarmMetric,
+			/** Alarm is triggered if canary fails (or fails to run) 5 times in a period of 10 minutes */
+			datapointsToAlarm: 5,
+			evaluationPeriods: 10,
+			threshold: 100, // the metric is either 100% or 0% when evaluating minute-by-minute
 			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
-			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
-			metric: canary.metricSuccessPercent({
-				statistic: Stats.AVERAGE,
-				period: Duration.minutes(5),
-			}),
-			datapointsToAlarm: 2,
-			evaluationPeriods: 2,
-			threshold: 80,
-			// Only treat missing data as breaching in PROD
-			treatMissingData:
-				stage === 'PROD'
-					? TreatMissingData.BREACHING
-					: TreatMissingData.MISSING,
+			treatMissingData: TreatMissingData.BREACHING,
 		});
 
 		alarm.addAlarmAction(new SnsAction(topic));
