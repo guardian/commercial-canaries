@@ -2,22 +2,21 @@ import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import type { App } from 'aws-cdk-lib';
 import {
-	CfnParameter,
 	Duration,
 	aws_iam as iam,
+	Size,
 	aws_synthetics as synthetics,
 } from 'aws-cdk-lib';
 import {
 	Alarm,
 	ComparisonOperator,
 	MathExpression,
-	Metric,
+	Stats,
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
-
-const THIRTY_MINUTES_IN_SECONDS = '1800';
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: GuStackProps) {
@@ -30,31 +29,22 @@ export class CommercialCanaries extends GuStack {
 		}
 
 		const accountId = this.account;
-		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
-		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;
+		const s3BucketNameCanary = `cw-syn-canary-${accountId}-${env.region}`;
+		const s3BucketNameResults = `cw-syn-results-${accountId}-${env.region}`;
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
 		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
 
-		/**
-		 *  This is used to ensure the canary is redeployed when the build id changes as it increments for each riff-raff build
-		 */
-		const buildId = new CfnParameter(this, 'BuildId', {
-			type: 'String',
-			description:
-				'The riff-raff build id, automatically generated and provided by riff-raff',
-		});
-
 		const policyDocument = new iam.PolicyDocument({
 			statements: [
 				new iam.PolicyStatement({
-					resources: [`arn:aws:s3:::${S3BucketCanary}/*`],
+					resources: [`arn:aws:s3:::${s3BucketNameCanary}/*`],
 					actions: ['s3:PutObject', 's3:GetObject', 's3:GetBucketLocation'],
 					effect: iam.Effect.ALLOW,
 				}),
 				new iam.PolicyStatement({
-					resources: [`arn:aws:s3:::${S3BucketResults}/*`],
+					resources: [`arn:aws:s3:::${s3BucketNameResults}/*`],
 					actions: [
 						's3:PutObject',
 						's3:GetObject',
@@ -108,38 +98,36 @@ export class CommercialCanaries extends GuStack {
 			},
 		});
 
-		new synthetics.CfnCanary(this, 'Canary', {
-			artifactS3Location: `s3://${S3BucketResults}/${stage.toUpperCase()}`,
-			code: {
+		const canary = new synthetics.Canary(this, 'Canary', {
+			artifactsBucketLocation: {
+				bucket: Bucket.fromBucketName(
+					this,
+					'CanaryArtifactsS3Bucket',
+					`${s3BucketNameResults}/${stage.toUpperCase()}`,
+				),
+			},
+			test: synthetics.Test.custom({
+				code: synthetics.Code.fromBucket(
+					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
+					`${stage.toUpperCase()}/nodejs.zip`,
+				),
 				handler: 'pageLoadBlueprint.handler',
-				s3Bucket: S3BucketCanary,
-				s3Key: `${stage}/nodejs.zip`,
-			},
-			executionRoleArn: role.roleArn,
-			name: canaryName,
-			runtimeVersion: 'syn-nodejs-puppeteer-7.0',
-			runConfig: {
-				timeoutInSeconds: 60,
-				memoryInMb: isTcf ? 2048 : 3008,
-			},
-			schedule: {
-				expression: 'rate(1 minute)',
-				durationInSeconds: stage === 'PROD' ? '0' : THIRTY_MINUTES_IN_SECONDS, // Don't run non-prod canaries indefinitely
-			},
-			deleteLambdaResourcesOnCanaryDeletion: true,
-			successRetentionPeriod: 7,
-			failureRetentionPeriod: 31,
-			startCanaryAfterCreation: true,
-			tags: [
-				{
-					key: 'BuildId',
-					value: buildId.valueAsString,
-				},
-			],
+			}),
+			role,
+			canaryName,
+			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_7_0,
+			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
+			timeout: Duration.seconds(60),
+			memory: Size.mebibytes(isTcf ? 2048 : 3008),
+			// Don't run non-prod canaries indefinitely
+			timeToLive: stage === 'PROD' ? undefined : Duration.minutes(30),
+			provisionedResourceCleanup: true,
+			successRetentionPeriod: Duration.days(7),
+			failureRetentionPeriod: Duration.days(31),
+			startAfterCreation: true,
 		});
 
 		const topic = new Topic(this, 'Topic');
-
 		new Subscription(this, 'Subscription', {
 			topic,
 			endpoint: `commercial.canaries+${stage}-${env.region}@guardian.co.uk`,
@@ -147,37 +135,37 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
-		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
-		if (stage === 'PROD') {
-			const alarm = new Alarm(this, 'Alarm', {
-				actionsEnabled: true,
-				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
-				alarmName: `commercial-canary-${stage}`,
-				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
-				datapointsToAlarm: 5,
-				evaluationPeriods: 5,
-				metric: new MathExpression({
-					label: 'successPercent',
-					expression: 'FILL(successPercentRaw, 0)',
+		/**
+		 * Metric representing the canary success rate per minute, where missing data is filled in with zeros
+		 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
+		 */
+		const alarmMetric = new MathExpression({
+			label: 'successRate',
+			expression: 'FILL(successPercentRaw, 0)',
+			period: Duration.minutes(1),
+			usingMetrics: {
+				successPercentRaw: canary.metricSuccessPercent({
+					statistic: Stats.AVERAGE,
 					period: Duration.minutes(1),
-					usingMetrics: {
-						successPercentRaw: new Metric({
-							namespace: 'CloudWatchSynthetics',
-							metricName: 'SuccessPercent',
-							statistic: 'avg',
-							period: Duration.minutes(1),
-							dimensionsMap: {
-								CanaryName: canaryName,
-							},
-						}),
-					},
 				}),
-				threshold: 80,
-				treatMissingData: TreatMissingData.BREACHING,
-			});
+			},
+		});
 
-			alarm.addAlarmAction(new SnsAction(topic));
-			alarm.addOkAction(new SnsAction(topic));
-		}
+		const alarm = new Alarm(this, 'Alarm', {
+			// Only allow alarm actions in PROD
+			actionsEnabled: stage === 'PROD',
+			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmName: `commercial-canary-${stage}`,
+			metric: alarmMetric,
+			/** Alarm is triggered if canary fails (or fails to run) 5 times in a period of 10 minutes */
+			datapointsToAlarm: 5,
+			evaluationPeriods: 10,
+			threshold: 100, // the metric is either 100% or 0% when evaluating minute-by-minute
+			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
+			treatMissingData: TreatMissingData.BREACHING,
+		});
+
+		alarm.addAlarmAction(new SnsAction(topic));
+		alarm.addOkAction(new SnsAction(topic));
 	}
 }
