@@ -10,10 +10,15 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
     "Alarm7103F465": {
       "Properties": {
         "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -25,6 +30,11 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
         "EvaluationPeriods": 2,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "Period": 300,
         "Statistic": "Average",
         "Tags": [
@@ -46,7 +56,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           },
         ],
         "Threshold": 80,
-        "TreatMissingData": "breaching",
+        "TreatMissingData": "missing",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -306,7 +316,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -596,10 +606,15 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
     "Alarm7103F465": {
       "Properties": {
         "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -611,6 +626,11 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
         "EvaluationPeriods": 2,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "Period": 300,
         "Statistic": "Average",
         "Tags": [
@@ -632,7 +652,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           },
         ],
         "Threshold": 80,
-        "TreatMissingData": "breaching",
+        "TreatMissingData": "missing",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -892,7 +912,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -1182,10 +1202,15 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
     "Alarm7103F465": {
       "Properties": {
         "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -1197,6 +1222,11 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
         "EvaluationPeriods": 2,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "Period": 300,
         "Statistic": "Average",
         "Tags": [
@@ -1218,7 +1248,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           },
         ],
         "Threshold": 80,
-        "TreatMissingData": "breaching",
+        "TreatMissingData": "missing",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -1478,7 +1508,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -1768,10 +1798,15 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
     "Alarm7103F465": {
       "Properties": {
         "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",
@@ -1783,6 +1818,11 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
         "EvaluationPeriods": 2,
         "MetricName": "SuccessPercent",
         "Namespace": "CloudWatchSynthetics",
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
         "Period": 300,
         "Statistic": "Average",
         "Tags": [
@@ -1804,7 +1844,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           },
         ],
         "Threshold": 80,
-        "TreatMissingData": "breaching",
+        "TreatMissingData": "missing",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
@@ -2064,7 +2104,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 1,
+        "DatapointsToAlarm": 2,
         "Dimensions": [
           {
             "Name": "CanaryName",

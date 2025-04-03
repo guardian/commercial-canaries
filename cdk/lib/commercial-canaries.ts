@@ -10,7 +10,7 @@ import {
 import {
 	Alarm,
 	ComparisonOperator,
-	MathExpression,
+	Stats,
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
@@ -149,27 +149,29 @@ export class CommercialCanaries extends GuStack {
 		 * | <--- 5 minutes ----> | <--- 5 minutes ----> | <--- 5 minutes ----> |
 		 * |  success rate: 40%   |  success rate: 100%  |  success rate: 60%   | // NOT TRIGGERED (two non-consecutive failure periods)
 		 * |  success rate: 80%   |  success rate: 60%   |  success rate: 60%   | // IS TRIGGERED (two consecutive failure periods)
-		 *
 		 */
 		const alarm = new Alarm(this, 'Alarm', {
-			actionsEnabled: stage === 'PROD', // Only allow actions in prod
+			// Only allow alarm actions in PROD
+			actionsEnabled: stage === 'PROD',
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
 			alarmName: `commercial-canary-${stage}`,
 			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
 			metric: canary.metricSuccessPercent({
-				statistic: 'avg',
+				statistic: Stats.AVERAGE,
 				period: Duration.minutes(5),
 			}),
-			datapointsToAlarm: 1,
+			datapointsToAlarm: 2,
 			evaluationPeriods: 2,
 			threshold: 80,
-			treatMissingData: TreatMissingData.BREACHING,
+			// Only treat missing data as breaching in PROD
+			treatMissingData:
+				stage === 'PROD'
+					? TreatMissingData.BREACHING
+					: TreatMissingData.MISSING,
 		});
 
-		if (stage === 'PROD') {
-			alarm.addAlarmAction(new SnsAction(topic));
-			alarm.addOkAction(new SnsAction(topic));
-		}
+		alarm.addAlarmAction(new SnsAction(topic));
+		alarm.addOkAction(new SnsAction(topic));
 	}
 }
