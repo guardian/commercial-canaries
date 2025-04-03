@@ -19,25 +19,39 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -318,25 +332,39 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -617,25 +645,39 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -916,25 +958,39 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1215,25 +1271,39 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1514,25 +1584,39 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1813,25 +1897,39 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -2112,25 +2210,39 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
-        "DatapointsToAlarm": 2,
-        "Dimensions": [
+        "EvaluationPeriods": 2,
+        "Metrics": [
           {
-            "Name": "CanaryName",
-            "Value": {
-              "Ref": "Canary11957FE2",
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 300,
+              "Stat": "Average",
             },
+            "ReturnData": false,
           },
         ],
-        "EvaluationPeriods": 2,
-        "MetricName": "SuccessPercent",
-        "Namespace": "CloudWatchSynthetics",
         "OKActions": [
           {
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "Period": 300,
-        "Statistic": "Average",
         "Tags": [
           {
             "Key": "gu:cdk:version",
