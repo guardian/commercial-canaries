@@ -33,7 +33,7 @@ export class CommercialCanaries extends GuStack {
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
-		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
+		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}_1`;
 
 		const policyDocument = new iam.PolicyDocument({
 			statements: [
