@@ -8,6 +8,8 @@ const {
 	checkTopAdHasLoaded,
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,
+	loadPage,
+	reloadPage,
 } = require('./utils');
 
 const LOG_EVERY_REQUEST = false;
@@ -167,46 +169,6 @@ const checkPrebid = async (page) => {
 	// --------------- BID RESPONSE END ---------------------------
 };
 
-const reloadPage = async (page) => {
-	log(`Reloading page: Start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!reloadResponse) {
-		logError(`Reloading page: Failed`);
-		throw 'Failed to refresh page!';
-	}
-
-	// We see some run failures if we do not include a wait time after a page reload
-	await page.waitForTimeout(3000);
-
-	log(`Reloading page: Complete`);
-};
-
-const loadPage = async (page, url) => {
-	log(`Loading page: Start`);
-	const response = await page.goto(url, {
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!response) {
-		logError('Loading page: Failed');
-		throw 'Failed to load page!';
-	}
-
-	// If the response status code is not a 2xx success code
-	if (response.status() < 200 || response.status() > 299) {
-		logError(`Loading page: Failed. Status code: ${response.status()}`);
-		throw 'Failed to load page!';
-	}
-
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
-
-	log(`Loading page: Complete`);
-};
-
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
@@ -280,8 +242,6 @@ const pageLoadBlueprint = async function () {
 		screenshotOnStepSuccess: false,
 		screenshotOnStepFailure: true,
 	});
-
-	startTime = new Date().getTime();
 
 	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
 	await synthetics.executeStep('Test Front page', async function () {
