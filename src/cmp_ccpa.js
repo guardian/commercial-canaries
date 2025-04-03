@@ -1,4 +1,3 @@
-const { URL } = require('url');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -34,6 +33,14 @@ const clearLocalStorage = async (page) => {
 	log(`Cleared local storage`);
 };
 
+const setAdTestCookie = async (page) => {
+	await page.setCookie({
+		name: 'adtest',
+		value: 'fixed-puppies-ci',
+		domain: '.theguardian.com',
+	});
+};
+
 const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Start`);
 	try {
@@ -56,17 +63,15 @@ const checkTopAdHasLoaded = async (page) => {
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
-	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
-	});
+	const iframeElementHandle = await page.$('iframe[id*="sp_message_iframe"]');
+	const iframe = await iframeElementHandle.contentFrame();
 
-	if (frame) {
-		await frame.waitForSelector(
+	if (iframe) {
+		await iframe.waitForSelector(
 			'button[title="Do not sell or share my personal information"]',
 			{ timeout: 5000 },
 		);
-		await frame.click(
+		await iframe.click(
 			'button[title="Do not sell or share my personal information"]',
 		);
 	} else {
@@ -74,8 +79,6 @@ const interactWithCMP = async (page) => {
 	}
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -252,9 +255,6 @@ const reloadPage = async (page) => {
 		throw 'Failed to refresh page!';
 	}
 
-	// We see some run failures if we do not include a wait time after a page reload
-	await page.waitForTimeout(3000);
-
 	log(`Reloading page: Complete`);
 };
 
@@ -275,9 +275,6 @@ const loadPage = async (page, url) => {
 		throw 'Failed to load page!';
 	}
 
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
-
 	log(`Loading page: Complete`);
 };
 
@@ -295,6 +292,7 @@ const checkPage = async (pageType, url) => {
 	await loadPage(page, url);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 
 	// Now we can run our tests.
 	log(`[TEST 1] start: Adverts load and the CMP is displayed on initial load`);
@@ -321,6 +319,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,

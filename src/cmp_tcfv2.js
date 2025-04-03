@@ -1,4 +1,3 @@
-const { URL } = require('url');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -31,6 +30,14 @@ const clearCookies = async (page) => {
 const clearLocalStorage = async (page) => {
 	await page.evaluate(() => localStorage.clear());
 	log(`Cleared local storage`);
+};
+
+const setAdTestCookie = async (page) => {
+	await page.setCookie({
+		name: 'adtest',
+		value: 'fixed-puppies-ci',
+		domain: '.theguardian.com',
+	});
 };
 
 const checkTopAdHasLoaded = async (page) => {
@@ -68,17 +75,14 @@ const checkTopAdDidNotLoad = async (page) => {
 };
 
 const interactWithCMP = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Yes I'm Happy"`);
-	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
-	});
+	log(`Clicking on "Accept All"`);
 
-	// Accept cookies
-	await frame.click(
-		'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-	);
+	const iframeElementHandle = await page.$('iframe[id*="sp_message_iframe"]');
+	const iframe = await iframeElementHandle.contentFrame();
+
+	await iframe.evaluate(() => {
+		document.querySelector('button.btn-primary.sp_choice_type_11').click();
+	});
 };
 
 const checkCMPIsOnPage = async (page) => {
@@ -126,9 +130,6 @@ const reloadPage = async (page) => {
 		throw 'Failed to refresh page!';
 	}
 
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
-
 	log(`Reloading page: Complete`);
 };
 
@@ -148,9 +149,6 @@ const loadPage = async (page, url) => {
 		logError(`Loading page: Failed. Status code: ${response.status()}`);
 		throw 'Failed to load page!';
 	}
-
-	// We see some run failures if we do not include a wait time after a page reload
-	await page.waitForTimeout(3000);
 
 	log(`Loading page: Complete`);
 };
@@ -320,6 +318,7 @@ const checkPage = async (pageType, url) => {
 	await loadPage(page, url);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 
 	// Now we can run our tests.
 	log(
@@ -360,6 +359,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
+	await setAdTestCookie(page);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
