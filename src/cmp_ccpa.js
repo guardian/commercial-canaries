@@ -1,28 +1,17 @@
 const { URL } = require('url');
 const synthetics = require('Synthetics');
-const { log, logError, clearCookies, clearLocalStorage } = require('./utils');
+const {
+	log,
+	logError,
+	clearCookies,
+	clearLocalStorage,
+	checkTopAdHasLoaded,
+	checkCMPIsOnPage,
+	checkCMPIsNotVisible,
+} = require('./utils');
 
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
-
-const checkTopAdHasLoaded = async (page) => {
-	log(`Waiting for ads to load: Start`);
-	try {
-		await page.waitForSelector(
-			'.ad-slot--top-above-nav .ad-slot__content iframe',
-			{ timeout: 30000 },
-		);
-	} catch (e) {
-		logError(`Failed to load top-above-nav ad: ${e.message}`);
-		await synthetics.takeScreenshot(
-			`${page}-page`,
-			'Failed to load top-above-nav ad',
-		);
-		throw new Error('top-above-nav ad did not load');
-	}
-
-	log(`Waiting for ads to load: Complete`);
-};
 
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
@@ -47,40 +36,6 @@ const interactWithCMP = async (page) => {
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
 	await page.waitForTimeout(3000);
-};
-
-const checkCMPIsOnPage = async (page) => {
-	log(`Waiting for CMP: Start`);
-	try {
-		await page.waitForSelector('[id*="sp_message_container"]');
-	} catch (e) {
-		logError(`Could not find CMP: ${e.message}`);
-		await synthetics.takeScreenshot(`${page}-page`, 'Could not find CMP');
-		throw new Error('top-above-nav ad did not load');
-	}
-
-	log(`Waiting for CMP: Finish`);
-};
-
-const checkCMPIsNotVisible = async (page) => {
-	log(`Checking CMP is Hidden: Start`);
-
-	const getSpMessageDisplayProperty = function () {
-		const element = document.querySelector('[id*="sp_message_container"]');
-		if (element) {
-			const computedStyle = window.getComputedStyle(element);
-			return computedStyle.getPropertyValue('display');
-		}
-	};
-
-	const display = await page.evaluate(getSpMessageDisplayProperty);
-
-	// Use `!=` rather than `!==` here because display is a DOMString type
-	if (display && display != 'none') {
-		throw Error('CMP still present on page');
-	}
-
-	log('CMP hidden or removed from page');
 };
 
 const checkPrebid = async (page) => {
