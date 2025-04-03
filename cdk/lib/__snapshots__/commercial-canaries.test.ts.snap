@@ -84,11 +84,11 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/CODE",
               ],
             ],
           },
-          "S3Key": "CODE/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -382,11 +382,11 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/PROD",
               ],
             ],
           },
-          "S3Key": "PROD/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -680,11 +680,11 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/CODE",
               ],
             ],
           },
-          "S3Key": "CODE/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -978,11 +978,11 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/PROD",
               ],
             ],
           },
-          "S3Key": "PROD/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1276,11 +1276,11 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/CODE",
               ],
             ],
           },
-          "S3Key": "CODE/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1574,11 +1574,11 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/PROD",
               ],
             ],
           },
-          "S3Key": "PROD/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1872,11 +1872,11 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/CODE",
               ],
             ],
           },
-          "S3Key": "CODE/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -2170,11 +2170,11 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/PROD",
               ],
             ],
           },
-          "S3Key": "PROD/nodejs.zip",
+          "S3Key": "nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
