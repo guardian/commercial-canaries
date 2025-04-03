@@ -1,4 +1,3 @@
-const { URL } = require('url');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -64,17 +63,15 @@ const checkTopAdHasLoaded = async (page) => {
 const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
-	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
-	});
+	const iframeElementHandle = await page.$('iframe[id*="sp_message_iframe"]');
+	const iframe = await iframeElementHandle.contentFrame();
 
-	if (frame) {
-		await frame.waitForSelector(
+	if (iframe) {
+		await iframe.waitForSelector(
 			'button[title="Do not sell or share my personal information"]',
 			{ timeout: 5000 },
 		);
-		await frame.click(
+		await iframe.click(
 			'button[title="Do not sell or share my personal information"]',
 		);
 	} else {

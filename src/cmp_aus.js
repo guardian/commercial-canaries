@@ -1,4 +1,3 @@
-const { URL } = require('url');
 const synthetics = require('Synthetics');
 const logger = require('SyntheticsLogger');
 
@@ -64,11 +63,9 @@ const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Continue" on CMP`);
 
-	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
-	});
-	await frame.click('button[title="Continue"]');
+	const iframeElementHandle = await page.$('iframe[id*="sp_message_iframe"]');
+	const iframe = await iframeElementHandle.contentFrame();
+	await iframe.click('button[title="Continue"]');
 };
 
 const checkCMPIsOnPage = async (page) => {
