@@ -140,15 +140,29 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
-		const alarm = new Alarm(this, 'Alarm', {
-			actionsEnabled: true,
+		/**
+		 * Alarm triggered if canary has an average success rate of lower than 80%
+		 * over five minutes twice in a row (ie over a total of a ten minute period)
+		 *
+		 * For example, a fifteen minute period visualisation:
+		 *
+		 * | <--- 5 minutes ----> | <--- 5 minutes ----> | <--- 5 minutes ----> |
+		 * |  success rate: 40%   |  success rate: 100%  |  success rate: 60%   | // NOT TRIGGERED (two non-consecutive failure periods)
+		 * |  success rate: 80%   |  success rate: 60%   |  success rate: 60%   | // IS TRIGGERED (two consecutive failure periods)
+		 *
+		 */
+		const alarm = new Alarm(this, 'CanaryFailureAlarm', {
+			actionsEnabled: stage === 'PROD', // Only allow actions in prod
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
 			alarmName: `commercial-canary-${stage}`,
-			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
-			datapointsToAlarm: 5,
-			evaluationPeriods: 5,
+			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
-			metric: canary.metricSuccessPercent(),
+			metric: canary.metricSuccessPercent({
+				statistic: 'avg',
+				period: Duration.minutes(5),
+			}),
+			datapointsToAlarm: 1,
+			evaluationPeriods: 2,
 			threshold: 80,
 			treatMissingData: TreatMissingData.BREACHING,
 		});
