@@ -369,7 +369,6 @@ const checkPage = async (pageType, url) => {
 	);
 	await clearLocalStorage(page);
 	await clearCookies(page);
-	await setAdTestCookie(page);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
