@@ -151,7 +151,8 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}.
+        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
@@ -162,11 +163,7 @@ export class CommercialCanaries extends GuStack {
 			datapointsToAlarm: 2,
 			evaluationPeriods: 2,
 			threshold: 80,
-			// Only treat missing data as breaching in PROD
-			treatMissingData:
-				stage === 'PROD'
-					? TreatMissingData.BREACHING
-					: TreatMissingData.MISSING,
+			treatMissingData: TreatMissingData.BREACHING,
 		});
 
 		alarm.addAlarmAction(new SnsAction(topic));
