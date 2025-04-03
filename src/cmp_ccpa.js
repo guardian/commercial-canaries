@@ -1,38 +1,9 @@
 const { URL } = require('url');
 const synthetics = require('Synthetics');
-const logger = require('SyntheticsLogger');
+const { log, logError, clearCookies, clearLocalStorage } = require('./utils');
 
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
-
-let startTime = new Date().getTime();
-const getTimeSinceStart = () => new Date().getTime() - startTime;
-
-/**
- * We use custom log messages so that we can easily differentiate
- * between logs from this file and other logs in Cloudwatch.
- *
- */
-const formatMessage = (message) =>
-	`GuCanaryRun. Time: ${getTimeSinceStart() / 1000}s. Message: ${message}`;
-
-const log = (message) => {
-	logger.info(formatMessage(message));
-};
-const logError = (message) => {
-	logger.error(formatMessage(message));
-};
-
-const clearCookies = async (page) => {
-	const allCookies = await page.cookies();
-	await page.deleteCookie(...allCookies);
-	log(`Cleared Cookies`);
-};
-
-const clearLocalStorage = async (page) => {
-	await page.evaluate(() => localStorage.clear());
-	log(`Cleared local storage`);
-};
 
 const checkTopAdHasLoaded = async (page) => {
 	log(`Waiting for ads to load: Start`);
