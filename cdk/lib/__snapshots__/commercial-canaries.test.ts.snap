@@ -7,6 +7,64 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
     "gu:cdk:version": "TEST",
   },
   "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
     "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
@@ -565,6 +623,64 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
     "gu:cdk:version": "TEST",
   },
   "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
     "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
@@ -1123,6 +1239,64 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
     "gu:cdk:version": "TEST",
   },
   "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
     "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
@@ -1681,6 +1855,64 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
     "gu:cdk:version": "TEST",
   },
   "Resources": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successPercent",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 80,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
     "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {

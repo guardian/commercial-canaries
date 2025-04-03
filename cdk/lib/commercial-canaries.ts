@@ -138,28 +138,27 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
-		// We add the alarm only for PROD but it's easier to keep the topic and subscription in both stages.
-		if (stage === 'PROD') {
-			const alarm = new Alarm(this, 'Alarm', {
-				actionsEnabled: true,
-				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
-				alarmName: `commercial-canary-${stage}`,
-				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
-				datapointsToAlarm: 5,
-				evaluationPeriods: 5,
-				metric: new MathExpression({
-					label: 'successPercent',
-					expression: 'FILL(successPercentRaw, 0)',
-					period: Duration.minutes(1),
-					usingMetrics: {
-						/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
-						successPercentRaw: canary.metricSuccessPercent(),
-					},
-				}),
-				threshold: 80,
-				treatMissingData: TreatMissingData.BREACHING,
-			});
+		const alarm = new Alarm(this, 'Alarm', {
+			actionsEnabled: true,
+			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
+			alarmName: `commercial-canary-${stage}`,
+			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
+			datapointsToAlarm: 5,
+			evaluationPeriods: 5,
+			metric: new MathExpression({
+				label: 'successPercent',
+				expression: 'FILL(successPercentRaw, 0)',
+				period: Duration.minutes(1),
+				usingMetrics: {
+					/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
+					successPercentRaw: canary.metricSuccessPercent(),
+				},
+			}),
+			threshold: 80,
+			treatMissingData: TreatMissingData.BREACHING,
+		});
 
+		if (stage === 'PROD') {
 			alarm.addAlarmAction(new SnsAction(topic));
 			alarm.addOkAction(new SnsAction(topic));
 		}
