@@ -107,12 +107,8 @@ export class CommercialCanaries extends GuStack {
 			},
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
-					Bucket.fromBucketName(
-						this,
-						'CanaryS3Bucket',
-						`${s3BucketNameCanary}/${stage.toUpperCase()}`,
-					),
-					'nodejs.zip',
+					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
+					`${stage.toUpperCase()}/nodejs.zip`,
 				),
 				handler: 'pageLoadBlueprint.handler',
 			}),
@@ -151,8 +147,7 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */

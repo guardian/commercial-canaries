@@ -16,7 +16,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -85,11 +85,11 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2/CODE",
+                "-ap-southeast-2",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "CODE/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -315,7 +315,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -384,11 +384,11 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2/PROD",
+                "-ap-southeast-2",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "PROD/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -614,7 +614,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -683,11 +683,11 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1/CODE",
+                "-ca-central-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "CODE/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -913,7 +913,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -982,11 +982,11 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1/PROD",
+                "-ca-central-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "PROD/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1212,7 +1212,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -1281,11 +1281,11 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1/CODE",
+                "-eu-west-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "CODE/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1511,7 +1511,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -1580,11 +1580,11 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1/PROD",
+                "-eu-west-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "PROD/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -1810,7 +1810,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -1879,11 +1879,11 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1/CODE",
+                "-us-west-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "CODE/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
@@ -2109,7 +2109,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1.
-        See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 2,
@@ -2178,11 +2178,11 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1/PROD",
+                "-us-west-1",
               ],
             ],
           },
-          "S3Key": "nodejs.zip",
+          "S3Key": "PROD/nodejs.zip",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
