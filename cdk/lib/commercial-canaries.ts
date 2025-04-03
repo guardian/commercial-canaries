@@ -135,27 +135,18 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
-		/**
-		 * Alarm triggered if canary has an average success rate of lower than 80%
-		 * over five minutes twice in a row (ie over a total of a ten minute period)
-		 *
-		 * For example, a fifteen minute period visualisation:
-		 *
-		 * | <--- 5 minutes ----> | <--- 5 minutes ----> | <--- 5 minutes ----> |
-		 * |  success rate: 40%   |  success rate: 100%  |  success rate: 60%   | // NOT TRIGGERED (two non-consecutive failure periods)
-		 * |  success rate: 80%   |  success rate: 60%   |  success rate: 60%   | // IS TRIGGERED (two consecutive failure periods)
-		 */
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
 			alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
-			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
-			/** @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms */
+			comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
+			/**
+			 * This metric represents the success rate where missing data is filled in with zeros
+			 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
+			 */
 			metric: new MathExpression({
-				label: 'successPercent',
 				expression: 'FILL(successPercentRaw, 0)',
-				period: Duration.minutes(5),
 				usingMetrics: {
 					successPercentRaw: canary.metricSuccessPercent({
 						statistic: Stats.AVERAGE,
@@ -163,8 +154,10 @@ export class CommercialCanaries extends GuStack {
 					}),
 				},
 			}),
-			evaluationPeriods: 2,
-			threshold: 80,
+			/** Alarm is triggered if canary does not result in 5 successful runs in a period of 10 minutes */
+			datapointsToAlarm: 5,
+			evaluationPeriods: 10,
+			threshold: 100, // the metric is either 100% or 0% when evaluating minute-by-minute
 			treatMissingData: TreatMissingData.BREACHING,
 		});
 
