@@ -135,24 +135,28 @@ export class CommercialCanaries extends GuStack {
 			region: env.region,
 		});
 
+		/**
+		 * Metric representing the canary success rate per minute, where missing data is filled in with zeros
+		 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
+		 */
+		const alarmMetric = new MathExpression({
+			label: 'successRate',
+			expression: 'FILL(successPercentRaw, 0)',
+			period: Duration.minutes(1),
+			usingMetrics: {
+				successPercentRaw: canary.metricSuccessPercent({
+					statistic: Stats.AVERAGE,
+					period: Duration.minutes(1),
+				}),
+			},
+		});
+
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
 			alarmDescription: `Low success rate for canary in ${env.region} over the last 5 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
-			/**
-			 * This metric represents the success rate where missing data is filled in with zeros
-			 * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_synthetics-readme.html#alarms
-			 */
-			metric: new MathExpression({
-				expression: 'FILL(successPercentRaw, 0)',
-				usingMetrics: {
-					successPercentRaw: canary.metricSuccessPercent({
-						statistic: Stats.AVERAGE,
-						period: Duration.minutes(1),
-					}),
-				},
-			}),
+			metric: alarmMetric,
 			/** Alarm is triggered if canary fails (or fails to run) 3 times in a period of 5 minutes */
 			datapointsToAlarm: 3,
 			evaluationPeriods: 5,
