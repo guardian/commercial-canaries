@@ -30,12 +30,12 @@ export class CommercialCanaries extends GuStack {
 		}
 
 		const accountId = this.account;
-		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}`;
-		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}`;
+		const S3BucketCanary = `cw-syn-canary-${accountId}-${env.region}/front`;
+		const S3BucketResults = `cw-syn-results-${accountId}-${env.region}/front`;
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
-		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}`;
+		const canaryName = `comm_cmp_canary_${stage.toLocaleLowerCase()}-front`;
 
 		/**
 		 *  This is used to ensure the canary is redeployed when the build id changes as it increments for each riff-raff build
@@ -94,7 +94,7 @@ export class CommercialCanaries extends GuStack {
 
 		const role = new iam.Role(this, 'Role', {
 			assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
-			roleName: `CloudWatchSyntheticsRole-${canaryName}-${env.region}`,
+			roleName: `SyntheticsRole-${canaryName}-${env.region}`,
 			description:
 				'CloudWatch Synthetics lambda execution role for running canaries',
 			managedPolicies: [
@@ -111,7 +111,7 @@ export class CommercialCanaries extends GuStack {
 		new synthetics.CfnCanary(this, 'Canary', {
 			artifactS3Location: `s3://${S3BucketResults}/${stage.toUpperCase()}`,
 			code: {
-				handler: 'pageLoadBlueprint.handler',
+				handler: 'pageLoadFront.handler',
 				s3Bucket: S3BucketCanary,
 				s3Key: `${stage}/nodejs.zip`,
 			},
@@ -152,7 +152,7 @@ export class CommercialCanaries extends GuStack {
 			const alarm = new Alarm(this, 'Alarm', {
 				actionsEnabled: true,
 				alarmDescription: `Either a Front or an Article CMP has failed in ${env.region}`,
-				alarmName: `commercial-canary-${stage}`,
+				alarmName: `commercial-canary-${stage}-front`,
 				comparisonOperator: ComparisonOperator.LESS_THAN_OR_EQUAL_TO_THRESHOLD,
 				datapointsToAlarm: 5,
 				evaluationPeriods: 5,
