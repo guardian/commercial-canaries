@@ -28,7 +28,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -351,7 +351,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -608,7 +608,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -931,7 +931,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1188,7 +1188,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1511,7 +1511,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1768,7 +1768,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -2091,7 +2091,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
