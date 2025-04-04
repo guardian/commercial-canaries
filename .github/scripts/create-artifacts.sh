@@ -8,6 +8,7 @@ echo "Creating TCFV2 artifact..."
 mkdir -p tcfv2/nodejs/node_modules
 cd tcfv2
 cp ../../src/lib nodejs/node_modules/lib
+cp ../../src/cmp_tcfv2.js nodejs/node_modules/cmp_tcfv2.js
 cp ../../src/cmp_tcfv2_article.js nodejs/node_modules/pageLoadArticle.js
 cp ../../src/cmp_tcfv2_front.js nodejs/node_modules/pageLoadFront.js
 zip -r nodejs.zip nodejs

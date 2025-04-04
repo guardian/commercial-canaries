@@ -1,4 +1,4 @@
-import { log, logError } from './logging';
+const { log, logError } = require('./logging');
 
 export const interactWithCMP = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()

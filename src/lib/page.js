@@ -1,4 +1,4 @@
-import { log, logError } from './logging';
+const { log, logError } = require('./logging');
 
 export const reloadPage = async (page) => {
 	log(`Reloading page: Start`);
