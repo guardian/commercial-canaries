@@ -35,21 +35,22 @@ export class CommercialCanaries extends GuStack {
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		const canary = new synthetics.Canary(this, 'Canary', {
-			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}`,
+			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}-front`,
 			artifactsBucketLocation: {
 				bucket: Bucket.fromBucketName(
 					this,
 					'CanaryArtifactsS3Bucket',
 					`${s3BucketNameResults}`,
 				),
-				prefix: `${stage.toUpperCase()}`,
+				prefix: `${stage.toUpperCase()}/front`,
 			},
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
 					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
 					`${stage.toUpperCase()}/nodejs.zip`,
 				),
-				handler: 'pageLoadBlueprint.handler',
+				handler: 'pageLoadFront.handler',
 			}),
 			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_9_1,
 			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
@@ -102,7 +103,7 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `Front canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			metric: alarmMetric,
 			/** Alarm is triggered if canary fails (or fails to run) 5 times in a row */

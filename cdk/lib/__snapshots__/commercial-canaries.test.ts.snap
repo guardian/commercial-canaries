@@ -21,7 +21,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in ap-southeast-2.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -92,12 +92,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/CODE",
+              "-ap-southeast-2/CODE/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -119,7 +119,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code",
+        "Name": "commercial_canary_code-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -221,7 +221,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/CODE/*",
+                        "-ap-southeast-2/CODE/front/*",
                       ],
                     ],
                   },
@@ -352,7 +352,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in ap-southeast-2.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -423,12 +423,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/PROD",
+              "-ap-southeast-2/PROD/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -450,7 +450,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod",
+        "Name": "commercial_canary_prod-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -552,7 +552,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/PROD/*",
+                        "-ap-southeast-2/PROD/front/*",
                       ],
                     ],
                   },
@@ -683,7 +683,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in ca-central-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -754,12 +754,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/CODE",
+              "-ca-central-1/CODE/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -781,7 +781,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code",
+        "Name": "commercial_canary_code-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -883,7 +883,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/CODE/*",
+                        "-ca-central-1/CODE/front/*",
                       ],
                     ],
                   },
@@ -1014,7 +1014,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in ca-central-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -1085,12 +1085,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/PROD",
+              "-ca-central-1/PROD/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1112,7 +1112,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod",
+        "Name": "commercial_canary_prod-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1214,7 +1214,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/PROD/*",
+                        "-ca-central-1/PROD/front/*",
                       ],
                     ],
                   },
@@ -1345,7 +1345,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in eu-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -1416,12 +1416,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/CODE",
+              "-eu-west-1/CODE/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1443,7 +1443,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code",
+        "Name": "commercial_canary_code-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1545,7 +1545,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/CODE/*",
+                        "-eu-west-1/CODE/front/*",
                       ],
                     ],
                   },
@@ -1676,7 +1676,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in eu-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -1747,12 +1747,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/PROD",
+              "-eu-west-1/PROD/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1774,7 +1774,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod",
+        "Name": "commercial_canary_prod-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1876,7 +1876,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/PROD/*",
+                        "-eu-west-1/PROD/front/*",
                       ],
                     ],
                   },
@@ -2007,7 +2007,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in us-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -2078,12 +2078,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/CODE",
+              "-us-west-1/CODE/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -2105,7 +2105,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code",
+        "Name": "commercial_canary_code-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2207,7 +2207,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/CODE/*",
+                        "-us-west-1/CODE/front/*",
                       ],
                     ],
                   },
@@ -2338,7 +2338,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+        "AlarmDescription": "Front canary is failing in us-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -2409,12 +2409,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/PROD",
+              "-us-west-1/PROD/front",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadBlueprint.handler",
+          "Handler": "pageLoadFront.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -2436,7 +2436,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod",
+        "Name": "commercial_canary_prod-front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2538,7 +2538,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/PROD/*",
+                        "-us-west-1/PROD/front/*",
                       ],
                     ],
                   },
