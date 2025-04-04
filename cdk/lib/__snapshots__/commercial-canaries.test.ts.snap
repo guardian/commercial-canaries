@@ -23,7 +23,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/CODE",
+              "-ap-southeast-2/front/CODE",
             ],
           ],
         },
@@ -37,7 +37,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/front",
               ],
             ],
           },
@@ -51,7 +51,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "comm_cmp_canary_code-front",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -127,7 +127,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/*",
+                        "-ap-southeast-2/front/*",
                       ],
                     ],
                   },
@@ -148,7 +148,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/*",
+                        "-ap-southeast-2/front/*",
                       ],
                     ],
                   },
@@ -168,7 +168,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-front-*",
                       ],
                     ],
                   },
@@ -197,7 +197,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ap-southeast-2",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_code-front-ap-southeast-2",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -279,7 +279,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmName": "commercial-canary-PROD-front",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
@@ -296,7 +296,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": "comm_cmp_canary_prod-front",
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -346,7 +346,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/PROD",
+              "-ap-southeast-2/front/PROD",
             ],
           ],
         },
@@ -360,7 +360,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ap-southeast-2",
+                "-ap-southeast-2/front",
               ],
             ],
           },
@@ -374,7 +374,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "comm_cmp_canary_prod-front",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -450,7 +450,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/*",
+                        "-ap-southeast-2/front/*",
                       ],
                     ],
                   },
@@ -471,7 +471,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ap-southeast-2/*",
+                        "-ap-southeast-2/front/*",
                       ],
                     ],
                   },
@@ -491,7 +491,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-front-*",
                       ],
                     ],
                   },
@@ -520,7 +520,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ap-southeast-2",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_prod-front-ap-southeast-2",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -603,7 +603,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/CODE",
+              "-ca-central-1/front/CODE",
             ],
           ],
         },
@@ -617,7 +617,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/front",
               ],
             ],
           },
@@ -631,7 +631,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "comm_cmp_canary_code-front",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -707,7 +707,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ca-central-1/front/*",
                       ],
                     ],
                   },
@@ -728,7 +728,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ca-central-1/front/*",
                       ],
                     ],
                   },
@@ -748,7 +748,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-front-*",
                       ],
                     ],
                   },
@@ -777,7 +777,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ca-central-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_code-front-ca-central-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -859,7 +859,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmName": "commercial-canary-PROD-front",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
@@ -876,7 +876,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": "comm_cmp_canary_prod-front",
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -926,7 +926,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/PROD",
+              "-ca-central-1/front/PROD",
             ],
           ],
         },
@@ -940,7 +940,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-ca-central-1",
+                "-ca-central-1/front",
               ],
             ],
           },
@@ -954,7 +954,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "comm_cmp_canary_prod-front",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1030,7 +1030,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ca-central-1/front/*",
                       ],
                     ],
                   },
@@ -1051,7 +1051,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-ca-central-1/*",
+                        "-ca-central-1/front/*",
                       ],
                     ],
                   },
@@ -1071,7 +1071,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-front-*",
                       ],
                     ],
                   },
@@ -1100,7 +1100,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ca-central-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_prod-front-ca-central-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1183,7 +1183,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/CODE",
+              "-eu-west-1/front/CODE",
             ],
           ],
         },
@@ -1197,7 +1197,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/front",
               ],
             ],
           },
@@ -1211,7 +1211,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "comm_cmp_canary_code-front",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1287,7 +1287,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/*",
+                        "-eu-west-1/front/*",
                       ],
                     ],
                   },
@@ -1308,7 +1308,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/*",
+                        "-eu-west-1/front/*",
                       ],
                     ],
                   },
@@ -1328,7 +1328,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-front-*",
                       ],
                     ],
                   },
@@ -1357,7 +1357,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-eu-west-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_code-front-eu-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1439,7 +1439,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmName": "commercial-canary-PROD-front",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
@@ -1456,7 +1456,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": "comm_cmp_canary_prod-front",
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -1506,7 +1506,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/PROD",
+              "-eu-west-1/front/PROD",
             ],
           ],
         },
@@ -1520,7 +1520,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-eu-west-1",
+                "-eu-west-1/front",
               ],
             ],
           },
@@ -1534,7 +1534,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "comm_cmp_canary_prod-front",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1610,7 +1610,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/*",
+                        "-eu-west-1/front/*",
                       ],
                     ],
                   },
@@ -1631,7 +1631,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-eu-west-1/*",
+                        "-eu-west-1/front/*",
                       ],
                     ],
                   },
@@ -1651,7 +1651,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-front-*",
                       ],
                     ],
                   },
@@ -1680,7 +1680,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-eu-west-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_prod-front-eu-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1763,7 +1763,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/CODE",
+              "-us-west-1/front/CODE",
             ],
           ],
         },
@@ -1777,7 +1777,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/front",
               ],
             ],
           },
@@ -1791,7 +1791,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "comm_cmp_canary_code-front",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -1867,7 +1867,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/*",
+                        "-us-west-1/front/*",
                       ],
                     ],
                   },
@@ -1888,7 +1888,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/*",
+                        "-us-west-1/front/*",
                       ],
                     ],
                   },
@@ -1908,7 +1908,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-front-*",
                       ],
                     ],
                   },
@@ -1937,7 +1937,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-us-west-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_code-front-us-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -2019,7 +2019,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
-        "AlarmName": "commercial-canary-PROD",
+        "AlarmName": "commercial-canary-PROD-front",
         "ComparisonOperator": "LessThanOrEqualToThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
@@ -2036,7 +2036,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": "comm_cmp_canary_prod-front",
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -2086,7 +2086,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/PROD",
+              "-us-west-1/front/PROD",
             ],
           ],
         },
@@ -2100,7 +2100,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                 {
                   "Ref": "AWS::AccountId",
                 },
-                "-us-west-1",
+                "-us-west-1/front",
               ],
             ],
           },
@@ -2114,7 +2114,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "comm_cmp_canary_prod-front",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2190,7 +2190,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/*",
+                        "-us-west-1/front/*",
                       ],
                     ],
                   },
@@ -2211,7 +2211,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        "-us-west-1/*",
+                        "-us-west-1/front/*",
                       ],
                     ],
                   },
@@ -2231,7 +2231,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                         {
                           "Ref": "AWS::AccountId",
                         },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
+                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-front-*",
                       ],
                     ],
                   },
@@ -2260,7 +2260,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "PolicyName": "PolicyDocument",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-us-west-1",
+        "RoleName": "SyntheticsRole-comm_cmp_canary_prod-front-us-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",

@@ -15,7 +15,7 @@ const canaryApps = stages
 			return {
 				app: new CommercialCanaries(
 					cdkApp,
-					`CommercialCanaries-${locationAbbr}-${stage}`,
+					`CommercialCanaries-${locationAbbr}-${stage}-front`,
 					{
 						stack,
 						stage,
