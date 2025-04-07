@@ -4,7 +4,7 @@ The commercial canaries are a set of [AWS Synthetics Canaries](https://docs.aws.
 
 ## Configuration
 
-Canaries are hosted in the following regions: Ireland, Canada, the US and Australia. A canary will initiate a run every one minute. The canary is called `comm_cmp_canary_prod`.
+Canaries are hosted in the following regions: Ireland, Canada, the US and Australia. A canary will initiate a run every one minute. The canary is called `commercial_canary_prod`.
 
 | Region             | AWS Region     | Banner button text                  |
 | ------------------ | -------------- | ----------------------------------- |
@@ -19,8 +19,8 @@ The US and Australia canaries have very similar source files, since the relation
 
 ### Ad loading rules
 
--   In Ireland and Canada we must not load ads before the CMP is interacted with and consent is given.
--   In the US and Australia we can load ads on page load, provided the user has not previously withdrawn their consent.
+- In Ireland and Canada we must not load ads before the CMP is interacted with and consent is given.
+- In the US and Australia we can load ads on page load, provided the user has not previously withdrawn their consent.
 
 Within the canary code we test the following:
 
@@ -37,30 +37,32 @@ You can find the status of each canary by logging into the frontend AWS console 
 
 ### Email notifications
 
-If ads are not loading in a region, the team is informed via email by a CloudWatch Alarm which is sent to commercial.canaries@guardian.co.uk. Five consecutive failures are required to send an alarm. Another email is sent on the first pass following an alarm.
+If ads are not loading in a region, the team is informed via email by a CloudWatch Alarm which is sent to commercial.canaries@guardian.co.uk. **Five consecutive failures** are required to send an alarm. Another email is sent on the first pass following an alarm.
 
--   On **failure** the email subject is: `ALARM: "Commercial canary" in Asia Pacific (Sydney)`
--   On **recovery** the email subject is: `OK: "Commercial canary" in Asia Pacific (Sydney)`
+- On **failure** the email subject is: `ALARM: "Commercial canary" in Asia Pacific (Sydney)`
+- On **recovery** the email subject is: `OK: "Commercial canary" in Asia Pacific (Sydney)`
 
 When you are logged into the AWS account for frontend via [Janus](https://janus.gutools.co.uk/) you can see more detailed status information or the raw output from the Lambda run that failed.
+
+There's also [a dashboard](https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status) to quickly visualise the status of canaries across all regions.
 
 ## Debugging
 
 Login to AWS frontend via Janus. To find the canary in AWS:
 
--   Ensure you are in the correct AWS region (`us-west-1`, `ap-southeast-2`, `eu-west-1` or `ca-central-1`)
--   Go to CloudWatch > Synthetics Canaries
--   Search for and select your canary. The canary is named `comm_cmp_canary_prod`
+- Ensure you are in the correct AWS region (`us-west-1`, `ap-southeast-2`, `eu-west-1` or `ca-central-1`)
+- Go to CloudWatch > Synthetics Canaries
+- Search for and select your canary. The canary is named `commercial_canary_prod`
 
 From here, you can see all the details relating to the canary and the recent runs. To see detailed logs, select Log groups from the sidebar and select your canary. At the current moment, we are experiencing infrequent and inconsistent failures; this does not indicate a serious problem with loading ads, but an inherent problem with testing ads via a headless browser.
 
 ## Requirements
 
--   [PNPM](https://pnpm.io/installation)
+- [PNPM](https://pnpm.io/installation)
 
 ## Development
 
-Canaries are located in the src folder. To test changes, open a Pull Request and `actions-riff-raff` will add a comment to it with a link to deploy your branch to `CODE` which will update the test canary `comm_cmp_canary_code`. You can check on the progress of the Github Action [here](https://github.com/guardian/commercial-canaries/actions/workflows/deploy.yaml). If a run does not start automatically, then you can start in manually, as the workflow has a workflow_dispatch event trigger.
+Canaries are located in the src folder. To test changes, open a Pull Request and `actions-riff-raff` will add a comment to it with a link to deploy your branch to `CODE` which will update the test canary `commercial_canary_code`. You can check on the progress of the Github Action [here](https://github.com/guardian/commercial-canaries/actions/workflows/deploy.yaml). If a run does not start automatically, then you can start in manually, as the workflow has a workflow_dispatch event trigger.
 
 To check the progress of the update in Riffraff, go to the History tab and search for the project `frontend::commercial-canaries`.
 
@@ -74,7 +76,9 @@ Continuous deployment is set up using a combination of Github Actions and Riffra
 
 ### Process
 
-A push to the main branch will trigger the Github Action `deploy.yaml`, which runs the script `create-artifacts.sh` to zip up the lambda functions. These need to be zipped because AWS expects to find a zip file containing a template when creating a canary. It will also run cdk commands which will run tests and generate the CloudFormation templates. Each zip file and CloudFormation template is uploaded to Riffraff using [actions-riff-raff](https://github.com/guardian/actions-riff-raff). Continuous deployment is set up in Riffraff for each AWS region. Riffraff will then upload the files to S3 and execute the CloudFormation script to update the necessary resources, including the canary code.
+A push to the main branch will trigger the Github Action `deploy.yaml`, which runs the script `create-artifacts.sh` to zip up the lambda functions. These need to be zipped because AWS expects to find a zip file containing a template when creating a canary.
+It will also run cdk commands which will run tests and generate the CloudFormation templates. Each zip file and CloudFormation template is uploaded to Riffraff using [actions-riff-raff](https://github.com/guardian/actions-riff-raff).
+Continuous deployment is set up in Riffraff for each AWS region. Riffraff will then upload the files to S3 and execute the CloudFormation script to update the necessary resources, including the canary code.
 
 ### Further information
 
