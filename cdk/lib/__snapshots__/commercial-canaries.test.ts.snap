@@ -108,7 +108,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -147,7 +147,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -161,82 +161,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ap-southeast-2:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -248,13 +220,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ap-southeast-2",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -422,7 +417,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -461,7 +456,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -475,82 +470,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ap-southeast-2:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -562,13 +529,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ap-southeast-2",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -736,7 +726,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -775,7 +765,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -789,82 +779,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ca-central-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -876,13 +838,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ca-central-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1050,7 +1035,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -1089,7 +1074,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1103,82 +1088,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ca-central-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1190,13 +1147,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ca-central-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1364,7 +1344,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -1403,7 +1383,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1417,82 +1397,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:eu-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1504,13 +1456,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-eu-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1678,7 +1653,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -1717,7 +1692,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1731,82 +1706,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:eu-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1818,13 +1765,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-eu-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -1992,7 +1962,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -2031,7 +2001,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -2045,82 +2015,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:us-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -2132,13 +2074,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-us-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
@@ -2306,7 +2271,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
@@ -2345,7 +2310,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -2359,82 +2324,54 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:us-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -2446,13 +2383,36 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-us-west-1",
         "Tags": [
           {
             "Key": "gu:cdk:version",
