@@ -5,6 +5,8 @@ const logger = require('SyntheticsLogger');
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
 
+const TWO_SECONDS = 2000;
+
 let startTime = new Date().getTime();
 const getTimeSinceStart = () => new Date().getTime() - startTime;
 
@@ -119,7 +121,7 @@ const reloadPage = async (page) => {
 	log(`Reloading page: Start`);
 	const reloadResponse = await page.reload({
 		waitUntil: 'domcontentloaded',
-		timeout: 30000,
+		timeout: TWO_SECONDS,
 	});
 	if (!reloadResponse) {
 		logError(`Reloading page: Failed`);
@@ -127,7 +129,7 @@ const reloadPage = async (page) => {
 	}
 
 	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
+	await page.waitForTimeout(TWO_SECONDS);
 
 	log(`Reloading page: Complete`);
 };
@@ -167,86 +169,53 @@ const getCurrentLocation = async (page) => {
 };
 
 const checkPrebid = async (page) => {
-	// --------------- RELOAD PAGE START ---------------------------
-	log(`[TEST 4: RELOAD PAGE] Step start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!reloadResponse) {
-		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
-		throw 'Failed to refresh page!';
+	await reloadPage(page);
+
+	log(`[PREBID] Checking request for Prebid bundle`);
+	try {
+		await page.waitForRequest(
+			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
+			TWO_SECONDS,
+		);
+	} catch (error) {
+		const currentLocation = await getCurrentLocation(page);
+		const hasPageskin = await page.evaluate(() =>
+			document.body.classList.contains('has-page-skin'),
+		);
+		if (currentLocation === 'CA') {
+			log('In Canada we do not run Prebid');
+			Promise.resolve();
+		} else if (hasPageskin) {
+			log('Pageskin detected. Prebid will not run');
+			Promise.resolve();
+		} else {
+			logError('No Prebid bundle fetch detected');
+			throw Error(error);
+		}
 	}
-	log(`[TEST 4: RELOAD PAGE] Step complete`);
-	// --------------- RELOAD PAGE END ---------------------------
 
-	// --------------- CANADA START ---------------------------
-	log(`[TEST 4: CANADA] Step start`);
-	const currentLocation = await getCurrentLocation(page);
-	if (currentLocation === 'CA') {
-		log('[TEST 4: CANADA] In Canada we do not run Prebid');
-		return Promise.resolve();
-	}
-	log(`[TEST 4: CANADA] Step complete`);
-	// --------------- CANADA END ---------------------------
-
-	// --------------- BUNDLE START ---------------------------
-	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	await page.waitForRequest((req) =>
-		req.url().includes('graun.Prebid.js.commercial.js'),
-	);
-	log(`[TEST 4: PREBID BUNDLE] Step start`);
-	// --------------- BUNDLE END ---------------------------
-
-	// --------------- PAGESKIN START ---------------------------
-	log(`[TEST 4: PAGESKIN] Step start`);
-	const hasPageskin = await page.evaluate(() =>
-		document.body.classList.contains('has-page-skin'),
-	);
-
-	if (hasPageskin) {
-		log('[TEST 4: PAGESKIN] Pageskin detected. Prebid will not run');
-		return Promise.resolve();
-	}
-	log(`[TEST 4: PAGESKIN] Step complete`);
-	// --------------- PAGESKIN END ---------------------------
-
-	// --------------- PUBMATIC START ---------------------------
-	log(`[TEST 4: PUBMATIC] Step start`);
+	log(`[PREBID] Checking request made to Pubmatic via Prebid`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+	const pubmaticUrlCalled = await page.waitForRequest((req) =>
+		req.url().includes(prebidURL),
+	);
+	if (!pubmaticUrlCalled) {
+		logError('pubmatic URL not called');
+		throw Error('Prebid call to Pubmatic not found');
+	}
 
-	await page.waitForRequest((req) => req.url().includes(prebidURL));
-	log(`[TEST 4: PUBMATIC] Step complete`);
-	// --------------- PUBMATIC END ---------------------------
-
-	// --------------- PBJS START ---------------------------
-	log(`[TEST 4: PBJS] Step start`);
+	log(`[PREBID] Checking existence of pbjs on the window object`);
 	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
 	if (!hasPrebid) {
-		logError('[TEST 4: PBJS] Prebid.js is not loaded');
-		throw new Error('Prebid.js is missing');
+		const msg = 'window.pbjs not found';
+		logError(msg);
+		throw Error(msg);
 	}
-	log(`[TEST 4: PBJS] Step complete`);
-	// --------------- PBJS END ---------------------------
 
-	// --------------- BID RESPONSE START ---------------------------
-	log(`[TEST 4: BID RESPONSE] Step start`);
-
-	await page.waitForFunction(
-		() => {
-			const events = window.pbjs?.getEvents() ?? [];
-			return events.find(
-				(event) =>
-					event.eventType === 'auctionInit' &&
-					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
-			);
-		},
-		{ timeout: 10000 },
-	);
-
-	const topAboveNavBidderRequests = await page.evaluate(() => {
-		const auctionInitEvent = window.pbjs
+	log(`[PREBID] Checking the bid response`);
+	const getAuctionInitEvent = () =>
+		window.pbjs
 			?.getEvents()
 			.find(
 				(event) =>
@@ -254,9 +223,21 @@ const checkPrebid = async (page) => {
 					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
 			);
 
-		return auctionInitEvent?.args.bidderRequests || [];
-	});
+	await page.waitForFunction(getAuctionInitEvent, { timeout: TWO_SECONDS });
 
+	const topAboveNavBidders = await page.evaluate(
+		() =>
+			getAuctionInitEvent()?.args.bidderRequests.map(
+				(bidder) => bidder.bidderCode,
+			) || [],
+	);
+
+	if (topAboveNavBidders.length === 0) {
+		logError('[PREBID] Bid response not found');
+		throw Error('No bid responses found for top above nav slot');
+	}
+
+	const currentLocation = await getCurrentLocation(page);
 	const expectedBidders = [
 		'oxd',
 		'and',
@@ -267,45 +248,22 @@ const checkPrebid = async (page) => {
 		'criteo',
 		'ttd',
 		'rubicon',
+		...(currentLocation === 'UK' ? ['xhb'] : []),
 	];
 
-	if (currentLocation === 'UK') {
-		expectedBidders.push('xhb');
-	}
-
-	if (topAboveNavBidderRequests.length === 0) {
-		log('[TEST 4: BID RESPONSE] Bid Response not found.');
-	}
-	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
-		log(
-			`[TEST 4: BID RESPONSE] Expected ${expectedBidders.length} bidders, got ${topAboveNavBidderRequests.length}`,
+	if (topAboveNavBidders.length !== expectedBidders.length) {
+		logError(
+			`[PREBID] Expected ${expectedBidders.length} bidders but got ${topAboveNavBidders.length}`,
 		);
+
+		log(`[PREBID] Actual Bidders ${JSON.stringify(topAboveNavBidders)}`);
+		logError(
+			`[PREBID] Missing bidder ${expectedBidders.find((bidder) => topAboveNavBidders.indexOf(bidder) === -1)}`,
+		);
+		throw Error('[PREBID] Bidders did not match expected bidders');
 	}
-
-	const theActualBidders = topAboveNavBidderRequests.map(
-		(bidder) => bidder.bidderCode,
-	);
-	log(
-		`[TEST 4: BID RESPONSE] Actual Bidders ${JSON.stringify(theActualBidders)}`,
-	);
-
-	let allMatched = true;
-
-	expectedBidders.forEach((bidder) => {
-		if (!theActualBidders.includes(bidder)) {
-			allMatched = false;
-			logError(`[TEST 4: BID RESPONSE] Missing bidder: ${bidder}`);
-			throw new Error('Bidders did not match');
-		}
-	});
-	if (allMatched) {
-		log(`[TEST 4: BID RESPONSE] All bidders matched`);
-	} else {
-		log(`[TEST 4: BID RESPONSE] Not all bidders matched`);
-	}
-	log(`[TEST 4: BID RESPONSE] Step complete`);
-	// --------------- BID RESPONSE END ---------------------------
 };
+
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
