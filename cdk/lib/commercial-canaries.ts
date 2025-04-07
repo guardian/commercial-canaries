@@ -86,9 +86,9 @@ export class CommercialCanaries extends GuStack {
 			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			metric: alarmMetric,
-			/** Alarm is triggered if canary fails (or fails to run) 5 times in a period of 10 minutes */
+			/** Alarm is triggered if canary fails (or fails to run) 5 times in a row */
 			datapointsToAlarm: 5,
-			evaluationPeriods: 10,
+			evaluationPeriods: 5,
 			threshold: 100, // the metric is either 100% or 0% when evaluating minute-by-minute
 			comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
 			treatMissingData: TreatMissingData.BREACHING,

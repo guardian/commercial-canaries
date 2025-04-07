@@ -20,7 +20,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -329,7 +329,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -638,7 +638,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -947,7 +947,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1256,7 +1256,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1565,7 +1565,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -1874,7 +1874,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
@@ -2183,7 +2183,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
-        "EvaluationPeriods": 10,
+        "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
