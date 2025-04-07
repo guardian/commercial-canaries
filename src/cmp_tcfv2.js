@@ -130,6 +130,9 @@ const reloadPage = async (page) => {
 		throw 'Failed to refresh page!';
 	}
 
+	// We see some run failures if we do not include a wait time after a page reload
+	await new Promise((r) => setTimeout(r, 3000));
+
 	log(`Reloading page: Complete`);
 };
 
@@ -149,6 +152,9 @@ const loadPage = async (page, url) => {
 		logError(`Loading page: Failed. Status code: ${response.status()}`);
 		throw 'Failed to load page!';
 	}
+
+	// We see some run failures if we do not include a wait time after a page load
+	await new Promise((r) => setTimeout(r, 3000));
 
 	log(`Loading page: Complete`);
 };
