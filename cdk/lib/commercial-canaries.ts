@@ -29,7 +29,7 @@ export class CommercialCanaries extends GuStack {
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		const canary = new synthetics.Canary(this, 'Canary', {
-			canaryName: `comm_cmp_canary_${stage.toLocaleLowerCase()}`,
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}`,
 			artifactsBucketLocation: {
 				bucket: Bucket.fromBucketName(
 					this,
