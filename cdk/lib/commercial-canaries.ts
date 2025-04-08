@@ -1,7 +1,13 @@
 import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import type { App } from 'aws-cdk-lib';
-import { Duration, Size, aws_synthetics as synthetics } from 'aws-cdk-lib';
+import {
+	CfnParameter,
+	Duration,
+	Size,
+	aws_synthetics as synthetics,
+	Tags,
+} from 'aws-cdk-lib';
 import {
 	Alarm,
 	ComparisonOperator,
@@ -55,6 +61,14 @@ export class CommercialCanaries extends GuStack {
 			failureRetentionPeriod: Duration.days(31),
 			startAfterCreation: true,
 		});
+
+		/** Ensures the canary is redeployed with every code change, since the code lives in S3 separate to the canary itself */
+		const buildId = new CfnParameter(this, 'BuildId', {
+			type: 'String',
+			description:
+				'The riff-raff build id, automatically generated and provided by riff-raff',
+		});
+		Tags.of(canary).add('buildId', buildId.valueAsString);
 
 		const topic = new Topic(this, 'Topic');
 		new Subscription(this, 'Subscription', {

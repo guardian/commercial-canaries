@@ -6,6 +6,12 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
   },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
+  },
   "Resources": {
     "Alarm7103F465": {
       "Properties": {
@@ -127,6 +133,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -252,6 +264,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -314,6 +332,12 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -436,6 +460,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -561,6 +591,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -623,6 +659,12 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -745,6 +787,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -870,6 +918,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -932,6 +986,12 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -1054,6 +1114,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1179,6 +1245,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -1241,6 +1313,12 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -1363,6 +1441,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1488,6 +1572,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -1550,6 +1640,12 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -1672,6 +1768,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1797,6 +1899,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -1859,6 +1967,12 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -1981,6 +2095,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -2106,6 +2226,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         ],
         "Tags": [
           {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
@@ -2168,6 +2294,12 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
   "Metadata": {
     "gu:cdk:constructs": [],
     "gu:cdk:version": "TEST",
+  },
+  "Parameters": {
+    "BuildId": {
+      "Description": "The riff-raff build id, automatically generated and provided by riff-raff",
+      "Type": "String",
+    },
   },
   "Resources": {
     "Alarm7103F465": {
@@ -2290,6 +2422,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "StartCanaryAfterCreation": true,
         "SuccessRetentionPeriod": 7,
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -2414,6 +2552,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           },
         ],
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
