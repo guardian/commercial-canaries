@@ -1,44 +1,27 @@
-const { URL } = require('url');
 const synthetics = require('Synthetics');
-const logger = require('SyntheticsLogger');
+const {
+	checkCMPIsOnPage,
+	checkCMPIsNotVisible,
+	interactWithCMPTcfv2,
+} = require('./utils/cmp');
+const { TWO_SECONDS, TWENTY_SECONDS } = require('./utils/constants');
+const { log, logError } = require('./utils/logging');
+const {
+	clearLocalStorage,
+	clearCookies,
+	loadPage,
+	reloadPage,
+} = require('./utils/page');
 
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
-
-let startTime = new Date().getTime();
-const getTimeSinceStart = () => new Date().getTime() - startTime;
-
-/**
- * We use custom log messages so that we can easily differentiate
- * between logs from this file and other logs in Cloudwatch.
- */
-const formatMessage = (message) =>
-	`GuCanaryRun. Time: ${getTimeSinceStart() / 1000}s. Message: ${message}`;
-
-const log = (message) => {
-	logger.info(formatMessage(message));
-};
-const logError = (message) => {
-	logger.error(formatMessage(message));
-};
-
-const clearCookies = async (page) => {
-	const allCookies = await page.cookies();
-	await page.deleteCookie(...allCookies);
-	log(`Cleared Cookies`);
-};
-
-const clearLocalStorage = async (page) => {
-	await page.evaluate(() => localStorage.clear());
-	log(`Cleared local storage`);
-};
 
 const checkTopAdHasLoaded = async (page, pageType) => {
 	log(`Waiting for ads to load: Start`);
 	try {
 		await page.waitForSelector(
 			'.ad-slot--top-above-nav .ad-slot__content iframe',
-			{ timeout: 10000 },
+			{ timeout: TWENTY_SECONDS },
 		);
 	} catch (e) {
 		logError(`Failed to load top-above-nav ad: ${e.message}`);
@@ -67,90 +50,9 @@ const checkTopAdDidNotLoad = async (page) => {
 	log(`Checking ads do not load: Complete`);
 };
 
-const interactWithCMP = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Yes I'm Happy"`);
-	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
-	});
-
-	// Accept cookies
-	await frame.click(
-		'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-	);
-};
-
-const checkCMPIsOnPage = async (page, pageType) => {
-	log(`Waiting for CMP: Start`);
-	try {
-		await page.waitForSelector('[id*="sp_message_container"]', {
-			timeout: 2000,
-		});
-	} catch (e) {
-		logError(`Could not find CMP: ${e.message}`);
-		await synthetics.takeScreenshot(`${pageType}-page`, 'Could not find CMP');
-		throw new Error('top-above-nav ad did not load');
-	}
-
-	log(`Waiting for CMP: Finish`);
-};
-
-const checkCMPIsNotVisible = async (page) => {
-	log(`Checking CMP is Hidden: Start`);
-
-	const getSpMessageDisplayProperty = function () {
-		const element = document.querySelector('[id*="sp_message_container"]');
-		if (element) {
-			const computedStyle = window.getComputedStyle(element);
-			return computedStyle.getPropertyValue('display');
-		}
-	};
-
-	const display = await page.evaluate(getSpMessageDisplayProperty);
-
-	// Use `!=` rather than `!==` here because display is a DOMString type
-	if (display && display != 'none') {
-		throw Error('CMP still present on page');
-	}
-
-	log('CMP hidden or removed from page');
-};
-
-const reloadPage = async (page) => {
-	log(`Reloading page: Start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!reloadResponse) {
-		logError(`Reloading page: Failed`);
-		throw 'Failed to refresh page!';
-	}
-	log(`Reloading page: Complete`);
-};
-
-const loadPage = async (page, url) => {
-	log(`Loading page: Start`);
-	const response = await page.goto(url, {
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!response) {
-		logError('Loading page: Failed');
-		throw 'Failed to load page!';
-	}
-
-	// If the response status code is not a 2xx success code
-	if (response.status() < 200 || response.status() > 299) {
-		logError(`Loading page: Failed. Status code: ${response.status()}`);
-		throw 'Failed to load page!';
-	}
-	log(`Loading page: Complete`);
-};
-
 const getCurrentLocation = async (page) => {
 	const currentLocation = () => {
+		// eslint-disable-next-line no-undef -- document object exists in the browser only
 		return document.cookie
 			.split('; ')
 			.find((row) => row.startsWith('GU_geo_country='))
@@ -169,7 +71,7 @@ const checkPrebid = async (page) => {
 	try {
 		await page.waitForRequest(
 			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
-			{ timeout: 2000 },
+			{ timeout: TWO_SECONDS },
 		);
 	} catch (timeoutError) {
 		if (currentLocation === 'CA') {
@@ -196,14 +98,16 @@ const checkPrebid = async (page) => {
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL), {
-		timeout: 2000,
+		timeout: TWO_SECONDS,
 	});
 	log(`[TEST 4: PUBMATIC] Step complete`);
 
 	log(`[TEST 4: PBJS] Step start`);
 	const hasPrebid = await page.waitForFunction(
-		() => window.pbjs !== undefined,
-		{ timeout: 2000 },
+		() =>
+			// eslint-disable-next-line no-undef -- window object exists in the browser only
+			window.pbjs !== undefined,
+		{ timeout: TWO_SECONDS },
 	);
 	if (!hasPrebid) {
 		logError('[TEST 4: PBJS] Prebid.js is not loaded');
@@ -212,9 +116,9 @@ const checkPrebid = async (page) => {
 	log(`[TEST 4: PBJS] Step complete`);
 
 	log(`[TEST 4: BID RESPONSE] Step start`);
-
 	await page.waitForFunction(
 		() => {
+			// eslint-disable-next-line no-undef -- window object exists in the browser only
 			const events = window.pbjs?.getEvents() ?? [];
 			return events.find(
 				(event) =>
@@ -222,10 +126,11 @@ const checkPrebid = async (page) => {
 					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
 			);
 		},
-		{ timeout: 2000 },
+		{ timeout: TWO_SECONDS },
 	);
 
 	const topAboveNavBidderRequests = await page.evaluate(() => {
+		// eslint-disable-next-line no-undef -- window object exists in the browser only
 		const auctionInitEvent = window.pbjs
 			?.getEvents()
 			.find(
@@ -314,7 +219,7 @@ const checkPage = async (pageType, url) => {
 	log(
 		`[TEST 2] start: Adverts load and the CMP is NOT displayed following interaction with the CMP`,
 	);
-	await interactWithCMP(page);
+	await interactWithCMPTcfv2(page);
 	await checkCMPIsNotVisible(page);
 	await checkTopAdHasLoaded(page, pageType);
 	log(`[TEST 2]  completed`);
@@ -369,8 +274,6 @@ const pageLoadBlueprint = async function () {
 		screenshotOnStepSuccess: false,
 		screenshotOnStepFailure: true,
 	});
-
-	startTime = new Date().getTime();
 
 	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
 	await synthetics.executeStep('Test Front page', async function () {
