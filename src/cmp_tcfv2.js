@@ -167,7 +167,6 @@ const getCurrentLocation = async (page) => {
 };
 
 const checkPrebid = async (page) => {
-	// --------------- RELOAD PAGE START ---------------------------
 	log(`[TEST 4: RELOAD PAGE] Step start`);
 	const reloadResponse = await page.reload({
 		waitUntil: 'domcontentloaded',
@@ -178,9 +177,7 @@ const checkPrebid = async (page) => {
 		throw 'Failed to refresh page!';
 	}
 	log(`[TEST 4: RELOAD PAGE] Step complete`);
-	// --------------- RELOAD PAGE END ---------------------------
 
-	// --------------- CANADA START ---------------------------
 	log(`[TEST 4: CANADA] Step start`);
 	const currentLocation = await getCurrentLocation(page);
 	if (currentLocation === 'CA') {
@@ -188,17 +185,13 @@ const checkPrebid = async (page) => {
 		return Promise.resolve();
 	}
 	log(`[TEST 4: CANADA] Step complete`);
-	// --------------- CANADA END ---------------------------
 
-	// --------------- BUNDLE START ---------------------------
 	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
 	await page.waitForRequest((req) =>
 		req.url().includes('graun.Prebid.js.commercial.js'),
 	);
 	log(`[TEST 4: PREBID BUNDLE] Step start`);
-	// --------------- BUNDLE END ---------------------------
 
-	// --------------- PAGESKIN START ---------------------------
 	log(`[TEST 4: PAGESKIN] Step start`);
 	const hasPageskin = await page.evaluate(() =>
 		document.body.classList.contains('has-page-skin'),
@@ -209,18 +202,14 @@ const checkPrebid = async (page) => {
 		return Promise.resolve();
 	}
 	log(`[TEST 4: PAGESKIN] Step complete`);
-	// --------------- PAGESKIN END ---------------------------
 
-	// --------------- PUBMATIC START ---------------------------
 	log(`[TEST 4: PUBMATIC] Step start`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
 	await page.waitForRequest((req) => req.url().includes(prebidURL));
 	log(`[TEST 4: PUBMATIC] Step complete`);
-	// --------------- PUBMATIC END ---------------------------
 
-	// --------------- PBJS START ---------------------------
 	log(`[TEST 4: PBJS] Step start`);
 	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
 	if (!hasPrebid) {
@@ -228,9 +217,7 @@ const checkPrebid = async (page) => {
 		throw new Error('Prebid.js is missing');
 	}
 	log(`[TEST 4: PBJS] Step complete`);
-	// --------------- PBJS END ---------------------------
 
-	// --------------- BID RESPONSE START ---------------------------
 	log(`[TEST 4: BID RESPONSE] Step start`);
 
 	await page.waitForFunction(
