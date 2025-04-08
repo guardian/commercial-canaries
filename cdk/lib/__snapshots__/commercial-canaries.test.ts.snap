@@ -13,7 +13,76 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
     },
   },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -43,15 +112,15 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "commercial_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -65,7 +134,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -90,7 +159,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -104,82 +173,54 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ap-southeast-2:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -191,14 +232,43 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ap-southeast-2",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -278,16 +348,17 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ap-southeast-2",
+        "AlarmDescription": "Low success rate for canary in ap-southeast-2 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
-            "Label": "successPercent",
+            "Label": "successRate",
           },
           {
             "Id": "successPercentRaw",
@@ -296,7 +367,9 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -331,12 +404,12 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -366,15 +439,15 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "commercial_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -388,7 +461,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -413,7 +486,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -427,82 +500,54 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ap-southeast-2:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -514,14 +559,43 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ap-southeast-2",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -593,7 +667,76 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
     },
   },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -623,15 +766,15 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "commercial_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -645,7 +788,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -670,7 +813,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -684,82 +827,54 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ca-central-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -771,14 +886,43 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-ca-central-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -858,16 +1002,17 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in ca-central-1",
+        "AlarmDescription": "Low success rate for canary in ca-central-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
-            "Label": "successPercent",
+            "Label": "successRate",
           },
           {
             "Id": "successPercentRaw",
@@ -876,7 +1021,9 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -911,12 +1058,12 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -946,15 +1093,15 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "commercial_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -968,7 +1115,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -993,7 +1140,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1007,82 +1154,54 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:ca-central-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1094,14 +1213,43 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-ca-central-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1173,7 +1321,76 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
     },
   },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1203,15 +1420,15 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "commercial_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1225,7 +1442,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -1250,7 +1467,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1264,82 +1481,54 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:eu-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1351,14 +1540,43 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-eu-west-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1438,16 +1656,17 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in eu-west-1",
+        "AlarmDescription": "Low success rate for canary in eu-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
-            "Label": "successPercent",
+            "Label": "successRate",
           },
           {
             "Id": "successPercentRaw",
@@ -1456,7 +1675,9 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -1491,12 +1712,12 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1526,15 +1747,15 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "commercial_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1548,7 +1769,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -1573,7 +1794,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1587,82 +1808,54 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:eu-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1674,14 +1867,43 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-eu-west-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -1753,7 +1975,76 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
     },
   },
   "Resources": {
-    "Canary": {
+    "Alarm7103F465": {
+      "Properties": {
+        "ActionsEnabled": false,
+        "AlarmActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+        "AlarmName": "commercial-canary-CODE",
+        "ComparisonOperator": "LessThanThreshold",
+        "DatapointsToAlarm": 5,
+        "EvaluationPeriods": 5,
+        "Metrics": [
+          {
+            "Expression": "FILL(successPercentRaw, 0)",
+            "Id": "expr_1",
+            "Label": "successRate",
+          },
+          {
+            "Id": "successPercentRaw",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "OKActions": [
+          {
+            "Ref": "TopicBFC7AF6E",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "breaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1783,15 +2074,15 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           },
           "S3Key": "CODE/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_code",
+        "Name": "commercial_canary_code",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -1805,7 +2096,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -1830,7 +2121,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1844,82 +2135,54 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:us-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_code-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/CODE",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/CODE/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -1931,14 +2194,43 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_code-us-west-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
@@ -2018,16 +2310,17 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Either a Front or an Article CMP has failed in us-west-1",
+        "AlarmDescription": "Low success rate for canary in us-west-1 over the last 10 minutes.
+See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
-        "ComparisonOperator": "LessThanOrEqualToThreshold",
+        "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
         "EvaluationPeriods": 5,
         "Metrics": [
           {
             "Expression": "FILL(successPercentRaw, 0)",
             "Id": "expr_1",
-            "Label": "successPercent",
+            "Label": "successRate",
           },
           {
             "Id": "successPercentRaw",
@@ -2036,7 +2329,9 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
-                    "Value": "comm_cmp_canary_prod",
+                    "Value": {
+                      "Ref": "Canary11957FE2",
+                    },
                   },
                 ],
                 "MetricName": "SuccessPercent",
@@ -2071,12 +2366,12 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Value": "PROD",
           },
         ],
-        "Threshold": 80,
+        "Threshold": 100,
         "TreatMissingData": "breaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary": {
+    "Canary11957FE2": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -2106,15 +2401,15 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           },
           "S3Key": "PROD/nodejs.zip",
         },
-        "DeleteLambdaResourcesOnCanaryDeletion": true,
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "Role1ABCC5F0",
+            "CanaryServiceRoleD132250E",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "comm_cmp_canary_prod",
+        "Name": "commercial_canary_prod",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2128,7 +2423,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
         "SuccessRetentionPeriod": 7,
         "Tags": [
           {
-            "Key": "BuildId",
+            "Key": "buildId",
             "Value": {
               "Ref": "BuildId",
             },
@@ -2153,7 +2448,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "Role1ABCC5F0": {
+    "CanaryServiceRoleD132250E": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -2167,82 +2462,54 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "Description": "CloudWatch Synthetics lambda execution role for running canaries",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess",
-        ],
         "Policies": [
           {
             "PolicyDocument": {
               "Statement": [
                 {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-canary-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:PutObject",
-                    "s3:GetObject",
-                    "s3:GetBucketLocation",
-                    "s3:DeleteObject",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogGroup",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:aws:logs:us-west-1:",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        ":log-group:/aws/lambda/cwsyn-comm_cmp_canary_prod-*",
-                      ],
-                    ],
-                  },
-                },
-                {
-                  "Action": [
-                    "s3:ListAllMyBuckets",
-                    "xray:PutTraceSegments",
-                  ],
+                  "Action": "s3:ListAllMyBuckets",
                   "Effect": "Allow",
                   "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/PROD",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/PROD/*",
+                      ],
+                    ],
+                  },
                 },
                 {
                   "Action": "cloudwatch:PutMetricData",
@@ -2254,14 +2521,43 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
                   "Effect": "Allow",
                   "Resource": "*",
                 },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
               ],
               "Version": "2012-10-17",
             },
-            "PolicyName": "PolicyDocument",
+            "PolicyName": "canaryPolicy",
           },
         ],
-        "RoleName": "CloudWatchSyntheticsRole-comm_cmp_canary_prod-us-west-1",
         "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
