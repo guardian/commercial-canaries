@@ -40,8 +40,9 @@ export class CommercialCanaries extends GuStack {
 				bucket: Bucket.fromBucketName(
 					this,
 					'CanaryArtifactsS3Bucket',
-					`${s3BucketNameResults}/${stage.toUpperCase()}`,
+					`${s3BucketNameResults}`,
 				),
+				prefix: `${stage.toUpperCase()}`,
 			},
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
