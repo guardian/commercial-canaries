@@ -15,10 +15,18 @@ const interactWithCMPTcfv2 = async (page) => {
 		}
 	});
 
-	// Accept cookies
-	await frame.click(
-		'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-	);
+	if (frame) {
+		await frame.waitForSelector(
+			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
+			{ timeout: TWO_SECONDS },
+		);
+		// Accept cookies
+		await frame.click(
+			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
+		);
+	} else {
+		logError('CMP frame not found');
+	}
 };
 
 const interactWithCMPCcpa = async (page) => {
