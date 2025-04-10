@@ -7,8 +7,12 @@ const interactWithCMPTcfv2 = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Yes I'm Happy"`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 
 	// Accept cookies
@@ -21,8 +25,12 @@ const interactWithCMPCcpa = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 
 	if (frame) {
@@ -46,8 +54,12 @@ const interactWithCMPAus = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Continue" on CMP`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 	await frame.click('button[title="Continue"]');
 };
