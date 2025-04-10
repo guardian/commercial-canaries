@@ -38,7 +38,7 @@ const checkTopAdHasLoaded = async (page, pageType) => {
 	try {
 		await page.waitForSelector(
 			'.ad-slot--top-above-nav .ad-slot__content iframe',
-			{ timeout: 30000 },
+			{ timeout: 10000 },
 		);
 	} catch (e) {
 		logError(`Failed to load top-above-nav ad: ${e.message}`);
@@ -84,7 +84,9 @@ const interactWithCMP = async (page) => {
 const checkCMPIsOnPage = async (page, pageType) => {
 	log(`Waiting for CMP: Start`);
 	try {
-		await page.waitForSelector('[id*="sp_message_container"]');
+		await page.waitForSelector('[id*="sp_message_container"]', {
+			timeout: 2000,
+		});
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
 		await synthetics.takeScreenshot(`${pageType}-page`, 'Could not find CMP');
@@ -125,10 +127,6 @@ const reloadPage = async (page) => {
 		logError(`Reloading page: Failed`);
 		throw 'Failed to refresh page!';
 	}
-
-	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(3000);
-
 	log(`Reloading page: Complete`);
 };
 
@@ -148,10 +146,6 @@ const loadPage = async (page, url) => {
 		logError(`Loading page: Failed. Status code: ${response.status()}`);
 		throw 'Failed to load page!';
 	}
-
-	// We see some run failures if we do not include a wait time after a page reload
-	await page.waitForTimeout(3000);
-
 	log(`Loading page: Complete`);
 };
 
@@ -167,70 +161,56 @@ const getCurrentLocation = async (page) => {
 };
 
 const checkPrebid = async (page) => {
-	// --------------- RELOAD PAGE START ---------------------------
-	log(`[TEST 4: RELOAD PAGE] Step start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: 30000,
-	});
-	if (!reloadResponse) {
-		logError(`[TEST 4: RELOAD PAGE] Reloading page : Failed`);
-		throw 'Failed to refresh page!';
-	}
-	log(`[TEST 4: RELOAD PAGE] Step complete`);
-	// --------------- RELOAD PAGE END ---------------------------
-
-	// --------------- CANADA START ---------------------------
-	log(`[TEST 4: CANADA] Step start`);
 	const currentLocation = await getCurrentLocation(page);
-	if (currentLocation === 'CA') {
-		log('[TEST 4: CANADA] In Canada we do not run Prebid');
-		return Promise.resolve();
-	}
-	log(`[TEST 4: CANADA] Step complete`);
-	// --------------- CANADA END ---------------------------
 
-	// --------------- BUNDLE START ---------------------------
+	await reloadPage(page);
+
 	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	await page.waitForRequest((req) =>
-		req.url().includes('graun.Prebid.js.commercial.js'),
-	);
-	log(`[TEST 4: PREBID BUNDLE] Step start`);
-	// --------------- BUNDLE END ---------------------------
+	try {
+		await page.waitForRequest(
+			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
+			{ timeout: 2000 },
+		);
+	} catch (timeoutError) {
+		if (currentLocation === 'CA') {
+			log('[TEST 4: PREBID BUNDLE] In Canada we do not run Prebid');
+			return Promise.resolve();
+		}
+		const hasPageskin = await page.evaluate(() =>
+			// eslint-disable-next-line no-undef -- document object exists in the browser only
+			document.body.classList.contains('has-page-skin'),
+		);
 
-	// --------------- PAGESKIN START ---------------------------
-	log(`[TEST 4: PAGESKIN] Step start`);
-	const hasPageskin = await page.evaluate(() =>
-		document.body.classList.contains('has-page-skin'),
-	);
+		if (hasPageskin) {
+			log('[TEST 4: PREBID BUNDLE] Pageskin detected. Prebid will not run');
+			return Promise.resolve();
+		}
 
-	if (hasPageskin) {
-		log('[TEST 4: PAGESKIN] Pageskin detected. Prebid will not run');
-		return Promise.resolve();
+		logError('[TEST 4: PREBID BUNDLE] Prebid bundle not loaded');
+		throw timeoutError;
 	}
-	log(`[TEST 4: PAGESKIN] Step complete`);
-	// --------------- PAGESKIN END ---------------------------
+	log(`[TEST 4: PREBID BUNDLE] Step complete`);
 
-	// --------------- PUBMATIC START ---------------------------
 	log(`[TEST 4: PUBMATIC] Step start`);
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 
-	await page.waitForRequest((req) => req.url().includes(prebidURL));
+	await page.waitForRequest((req) => req.url().includes(prebidURL), {
+		timeout: 2000,
+	});
 	log(`[TEST 4: PUBMATIC] Step complete`);
-	// --------------- PUBMATIC END ---------------------------
 
-	// --------------- PBJS START ---------------------------
 	log(`[TEST 4: PBJS] Step start`);
-	const hasPrebid = await page.waitForFunction(() => window.pbjs !== undefined);
+	const hasPrebid = await page.waitForFunction(
+		() => window.pbjs !== undefined,
+		{ timeout: 2000 },
+	);
 	if (!hasPrebid) {
 		logError('[TEST 4: PBJS] Prebid.js is not loaded');
 		throw new Error('Prebid.js is missing');
 	}
 	log(`[TEST 4: PBJS] Step complete`);
-	// --------------- PBJS END ---------------------------
 
-	// --------------- BID RESPONSE START ---------------------------
 	log(`[TEST 4: BID RESPONSE] Step start`);
 
 	await page.waitForFunction(
@@ -242,7 +222,7 @@ const checkPrebid = async (page) => {
 					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
 			);
 		},
-		{ timeout: 10000 },
+		{ timeout: 2000 },
 	);
 
 	const topAboveNavBidderRequests = await page.evaluate(() => {
@@ -304,8 +284,8 @@ const checkPrebid = async (page) => {
 		log(`[TEST 4: BID RESPONSE] Not all bidders matched`);
 	}
 	log(`[TEST 4: BID RESPONSE] Step complete`);
-	// --------------- BID RESPONSE END ---------------------------
 };
+
 /**
  * Checks that ads load correctly for the first time a user goes to
  * the site, with respect to and interaction with the CMP.
