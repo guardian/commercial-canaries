@@ -39,7 +39,7 @@ const interactWithCMPCcpa = async (page) => {
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(TWO_SECONDS);
+	await new Promise((r) => setTimeout(r, TWO_SECONDS));
 };
 
 const interactWithCMPAus = async (page) => {
