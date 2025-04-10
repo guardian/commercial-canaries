@@ -33,7 +33,7 @@ const clearLocalStorage = async (page) => {
 	log(`Cleared local storage`);
 };
 
-const checkTopAdHasLoaded = async (page) => {
+const checkTopAdHasLoaded = async (page, pageType) => {
 	log(`Waiting for ads to load: Start`);
 	try {
 		await page.waitForSelector(
@@ -43,7 +43,7 @@ const checkTopAdHasLoaded = async (page) => {
 	} catch (e) {
 		logError(`Failed to load top-above-nav ad: ${e.message}`);
 		await synthetics.takeScreenshot(
-			`${page}-page`,
+			`${pageType}-page`,
 			'Failed to load top-above-nav ad',
 		);
 		throw new Error('top-above-nav ad did not load');
@@ -81,13 +81,13 @@ const interactWithCMP = async (page) => {
 	);
 };
 
-const checkCMPIsOnPage = async (page) => {
+const checkCMPIsOnPage = async (page, pageType) => {
 	log(`Waiting for CMP: Start`);
 	try {
 		await page.waitForSelector('[id*="sp_message_container"]');
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
-		await synthetics.takeScreenshot(`${page}-page`, 'Could not find CMP');
+		await synthetics.takeScreenshot(`${pageType}-page`, 'Could not find CMP');
 		throw new Error('top-above-nav ad did not load');
 	}
 
@@ -327,7 +327,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await reloadPage(page);
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
-	await checkCMPIsOnPage(page);
+	await checkCMPIsOnPage(page, pageType);
 	await checkTopAdDidNotLoad(page);
 	log(`[TEST 1] completed`);
 
@@ -336,7 +336,7 @@ const checkPage = async (pageType, url) => {
 	);
 	await interactWithCMP(page);
 	await checkCMPIsNotVisible(page);
-	await checkTopAdHasLoaded(page);
+	await checkTopAdHasLoaded(page, pageType);
 	log(`[TEST 2]  completed`);
 
 	log(
@@ -348,7 +348,7 @@ const checkPage = async (pageType, url) => {
 		'CMP clicked then page reloaded',
 	);
 	await checkCMPIsNotVisible(page);
-	await checkTopAdHasLoaded(page);
+	await checkTopAdHasLoaded(page, pageType);
 	log(`[TEST 3] completed`);
 
 	log(`[TEST 4] start: Prebid`);
@@ -365,7 +365,7 @@ const checkPage = async (pageType, url) => {
 		`${pageType}-page`,
 		'cookies and local storage cleared then page reloaded',
 	);
-	await checkCMPIsOnPage(page);
+	await checkCMPIsOnPage(page, pageType);
 	await checkTopAdDidNotLoad(page);
 	log(`[TEST 5] completed`);
 };
