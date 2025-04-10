@@ -132,8 +132,8 @@ const checkPrebid = async (page) => {
 			return Promise.resolve();
 		}
 
-		logError('Prebid bundle not loaded');
-		throw new Error(timeoutError);
+		logError('[TEST 4: PREBID BUNDLE] Prebid bundle not loaded');
+		throw timeoutError;
 	}
 	log(`[TEST 4: PREBID BUNDLE] Step complete`);
 
