@@ -7,22 +7,38 @@ const interactWithCMPTcfv2 = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Yes I'm Happy"`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 
-	// Accept cookies
-	await frame.click(
-		'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-	);
+	if (frame) {
+		await frame.waitForSelector(
+			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
+			{ timeout: TWO_SECONDS },
+		);
+		// Accept cookies
+		await frame.click(
+			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
+		);
+	} else {
+		logError('CMP frame not found');
+	}
 };
 
 const interactWithCMPCcpa = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 
 	if (frame) {
@@ -39,15 +55,19 @@ const interactWithCMPCcpa = async (page) => {
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
-	await page.waitForTimeout(TWO_SECONDS);
+	await new Promise((r) => setTimeout(r, TWO_SECONDS));
 };
 
 const interactWithCMPAus = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Continue" on CMP`);
 	const frame = page.frames().find((f) => {
-		const parsedUrl = new URL(f.url());
-		return parsedUrl.host === 'sourcepoint.theguardian.com';
+		// Check that f.url is defined and that it's longer than a single character
+		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
+		if (f.url() && f.url().length > 1) {
+			const parsedUrl = new URL(f.url());
+			return parsedUrl.host === 'sourcepoint.theguardian.com';
+		}
 	});
 	await frame.click('button[title="Continue"]');
 };

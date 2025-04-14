@@ -211,7 +211,7 @@ const checkPage = async (pageType, url) => {
 		`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`,
 	);
 	await reloadPage(page);
-	await page.waitForTimeout(TWO_SECONDS); // Wait an extra two seconds after reloading the page
+	await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page, pageType);
 	await checkTopAdDidNotLoad(page);
@@ -229,7 +229,7 @@ const checkPage = async (pageType, url) => {
 		`[TEST 3] start: Adverts load and the CMP is NOT displayed when the page is reloaded`,
 	);
 	await reloadPage(page);
-	await page.waitForTimeout(TWO_SECONDS); // Wait an extra two seconds after reloading the page
+	await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'CMP clicked then page reloaded',
@@ -248,7 +248,7 @@ const checkPage = async (pageType, url) => {
 	await clearLocalStorage(page);
 	await clearCookies(page);
 	await reloadPage(page);
-	await page.waitForTimeout(TWO_SECONDS); // Wait an extra two seconds after reloading the page
+	await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'cookies and local storage cleared then page reloaded',
