@@ -44,9 +44,22 @@ const reloadPage = async (page) => {
 	log(`Reloading page: Complete`);
 };
 
+const getCurrentLocation = async (page) => {
+	const currentLocation = () => {
+		// eslint-disable-next-line no-undef -- document object exists in the browser only
+		return document.cookie
+			.split('; ')
+			.find((row) => row.startsWith('GU_geo_country='))
+			?.split('=')[1];
+	};
+
+	return await page.evaluate(currentLocation);
+};
+
 module.exports = {
 	clearCookies,
 	clearLocalStorage,
 	loadPage,
 	reloadPage,
+	getCurrentLocation,
 };
