@@ -1,10 +1,11 @@
 const { log } = require('console');
 const synthetics = require('Synthetics');
-const { TWO_SECONDS, TWENTY_SECONDS } = require('./constants');
+const {
+	TOP_ABOVE_NAV_SELECTOR,
+	TWO_SECONDS,
+	TWENTY_SECONDS,
+} = require('./constants');
 const { logError } = require('./logging');
-
-const TOP_ABOVE_NAV_SELECTOR =
-	'.ad-slot--top-above-nav .ad-slot__content iframe';
 
 const checkTopAdHasLoaded = async (page, pageType) => {
 	log(`Waiting for ads to load: Start`);
