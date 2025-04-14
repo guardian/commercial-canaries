@@ -82,7 +82,7 @@ const checkPbjsPresence = async (page) => {
 };
 
 const checkBidResponse = async (page, expectedBidders) => {
-	const topAboveNavAuctionInitEvent = await page.waitForFunction(
+	await page.waitForFunction(
 		() =>
 			// eslint-disable-next-line no-undef -- window object exists in the browser only
 			window.pbjs
@@ -95,10 +95,18 @@ const checkBidResponse = async (page, expectedBidders) => {
 		{ timeout: TWO_SECONDS },
 	);
 
-	const topAboveNavBidders =
-		topAboveNavAuctionInitEvent?.args.bidderRequests.map(
-			(bidder) => bidder.bidderCode,
-		) || [];
+	const topAboveNavBidders = await page.evaluate(
+		() =>
+			// eslint-disable-next-line no-undef -- window object exists in the browser only
+			window.pbjs
+				?.getEvents()
+				.find(
+					(event) =>
+						event.eventType === 'auctionInit' &&
+						event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+				)
+				?.args.bidderRequests.map((bidder) => bidder.bidderCode) || [],
+	);
 
 	if (topAboveNavBidders.length === 0) {
 		logError('Bid response not found');
