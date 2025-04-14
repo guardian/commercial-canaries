@@ -61,7 +61,7 @@ const checkCMPIsOnPage = async (page, pageType) => {
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
 		await synthetics.takeScreenshot(`${pageType}-page`, 'Could not find CMP');
-		throw new Error('top-above-nav ad did not load');
+		throw new Error(e);
 	}
 	log(`Waiting for CMP: Finish`);
 };
