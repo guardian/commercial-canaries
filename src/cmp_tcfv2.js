@@ -1,195 +1,29 @@
 const synthetics = require('Synthetics');
 const {
+	checkTopAdHasLoaded,
+	checkTopAdDidNotLoad,
+	checkPrebidBundle,
+	checkPrebidBidRequest,
+	checkPbjsPresence,
+	checkBidResponse,
+} = require('./utils/adverts');
+const {
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,
 	interactWithCMPTcfv2,
 } = require('./utils/cmp');
-const { TWO_SECONDS, TWENTY_SECONDS } = require('./utils/constants');
-const { log, logError } = require('./utils/logging');
+const { TWO_SECONDS } = require('./utils/constants');
+const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
 	clearCookies,
+	getCurrentLocation,
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
 
 const LOG_EVERY_REQUEST = false;
 const LOG_EVERY_RESPONSE = false;
-
-const checkTopAdHasLoaded = async (page, pageType) => {
-	log(`Waiting for ads to load: Start`);
-	try {
-		await page.waitForSelector(
-			'.ad-slot--top-above-nav .ad-slot__content iframe',
-			{ timeout: TWENTY_SECONDS },
-		);
-	} catch (e) {
-		logError(`Failed to load top-above-nav ad: ${e.message}`);
-		await synthetics.takeScreenshot(
-			`${pageType}-page`,
-			'Failed to load top-above-nav ad',
-		);
-		throw new Error('top-above-nav ad did not load');
-	}
-
-	log(`Waiting for ads to load: Complete`);
-};
-
-const checkTopAdDidNotLoad = async (page) => {
-	log(`Checking ads do not load: Start`);
-
-	const frame = await page.$(
-		'.ad-slot--top-above-nav .ad-slot__content iframe',
-	);
-
-	if (frame !== null) {
-		logError(`Checking ads do not load: Failed`);
-		throw Error('Top above nav frame present on page');
-	}
-
-	log(`Checking ads do not load: Complete`);
-};
-
-const getCurrentLocation = async (page) => {
-	const currentLocation = () => {
-		// eslint-disable-next-line no-undef -- document object exists in the browser only
-		return document.cookie
-			.split('; ')
-			.find((row) => row.startsWith('GU_geo_country='))
-			?.split('=')[1];
-	};
-
-	return await page.evaluate(currentLocation);
-};
-
-const checkPrebid = async (page) => {
-	const currentLocation = await getCurrentLocation(page);
-
-	await reloadPage(page);
-
-	log(`[TEST 4: PREBID BUNDLE] Checking: graun.Prebid.js.commercial.js`);
-	try {
-		await page.waitForRequest(
-			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
-			{ timeout: TWO_SECONDS },
-		);
-	} catch (timeoutError) {
-		if (currentLocation === 'CA') {
-			log('[TEST 4: PREBID BUNDLE] In Canada we do not run Prebid');
-			return Promise.resolve();
-		}
-		const hasPageskin = await page.evaluate(() =>
-			// eslint-disable-next-line no-undef -- document object exists in the browser only
-			document.body.classList.contains('has-page-skin'),
-		);
-
-		if (hasPageskin) {
-			log('[TEST 4: PREBID BUNDLE] Pageskin detected. Prebid will not run');
-			return Promise.resolve();
-		}
-
-		logError('[TEST 4: PREBID BUNDLE] Prebid bundle not loaded');
-		throw timeoutError;
-	}
-	log(`[TEST 4: PREBID BUNDLE] Step complete`);
-
-	log(`[TEST 4: PUBMATIC] Step start`);
-	const prebidURL =
-		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
-
-	await page.waitForRequest((req) => req.url().includes(prebidURL), {
-		timeout: TWO_SECONDS,
-	});
-	log(`[TEST 4: PUBMATIC] Step complete`);
-
-	log(`[TEST 4: PBJS] Step start`);
-	const hasPrebid = await page.waitForFunction(
-		() =>
-			// eslint-disable-next-line no-undef -- window object exists in the browser only
-			window.pbjs !== undefined,
-		{ timeout: TWO_SECONDS },
-	);
-	if (!hasPrebid) {
-		logError('[TEST 4: PBJS] Prebid.js is not loaded');
-		throw new Error('Prebid.js is missing');
-	}
-	log(`[TEST 4: PBJS] Step complete`);
-
-	log(`[TEST 4: BID RESPONSE] Step start`);
-	await page.waitForFunction(
-		() => {
-			// eslint-disable-next-line no-undef -- window object exists in the browser only
-			const events = window.pbjs?.getEvents() ?? [];
-			return events.find(
-				(event) =>
-					event.eventType === 'auctionInit' &&
-					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
-			);
-		},
-		{ timeout: TWO_SECONDS },
-	);
-
-	const topAboveNavBidderRequests = await page.evaluate(() => {
-		// eslint-disable-next-line no-undef -- window object exists in the browser only
-		const auctionInitEvent = window.pbjs
-			?.getEvents()
-			.find(
-				(event) =>
-					event.eventType === 'auctionInit' &&
-					event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
-			);
-
-		return auctionInitEvent?.args.bidderRequests || [];
-	});
-
-	const expectedBidders = [
-		'oxd',
-		'and',
-		'pubmatic',
-		'ix',
-		'adyoulike',
-		'ozone',
-		'criteo',
-		'ttd',
-		'rubicon',
-	];
-
-	if (currentLocation === 'UK') {
-		expectedBidders.push('xhb');
-	}
-
-	if (topAboveNavBidderRequests.length === 0) {
-		log('[TEST 4: BID RESPONSE] Bid Response not found.');
-	}
-	if (topAboveNavBidderRequests.length !== expectedBidders.length) {
-		log(
-			`[TEST 4: BID RESPONSE] Expected ${expectedBidders.length} bidders, got ${topAboveNavBidderRequests.length}`,
-		);
-	}
-
-	const theActualBidders = topAboveNavBidderRequests.map(
-		(bidder) => bidder.bidderCode,
-	);
-	log(
-		`[TEST 4: BID RESPONSE] Actual Bidders ${JSON.stringify(theActualBidders)}`,
-	);
-
-	let allMatched = true;
-
-	expectedBidders.forEach((bidder) => {
-		if (!theActualBidders.includes(bidder)) {
-			allMatched = false;
-			logError(`[TEST 4: BID RESPONSE] Missing bidder: ${bidder}`);
-			throw new Error('Bidders did not match');
-		}
-	});
-	if (allMatched) {
-		log(`[TEST 4: BID RESPONSE] All bidders matched`);
-	} else {
-		log(`[TEST 4: BID RESPONSE] Not all bidders matched`);
-	}
-	log(`[TEST 4: BID RESPONSE] Step complete`);
-};
 
 /**
  * Checks that ads load correctly for the first time a user goes to
@@ -239,7 +73,28 @@ const checkPage = async (pageType, url) => {
 	log(`[TEST 3] completed`);
 
 	log(`[TEST 4] start: Prebid`);
-	await checkPrebid(page);
+	const currentLocation = await getCurrentLocation(page);
+	if (currentLocation === 'CA') {
+		log('In Canada we do not run Prebid');
+	} else {
+		await reloadPage(page);
+		await checkPrebidBundle(page);
+		await checkPrebidBidRequest(page);
+		await checkPbjsPresence(page);
+		const expectedBidders = [
+			'oxd',
+			'and',
+			'pubmatic',
+			'ix',
+			'adyoulike',
+			'ozone',
+			'criteo',
+			'ttd',
+			'rubicon',
+			...(currentLocation === 'UK' ? ['xhb'] : []),
+		];
+		await checkBidResponse(page, expectedBidders);
+	}
 	log(`[TEST 4] completed`);
 
 	log(
