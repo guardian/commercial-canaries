@@ -4,7 +4,11 @@ const {
 	checkCMPIsNotVisible,
 	interactWithCMPAus,
 } = require('./utils/cmp');
-const { TWO_SECONDS, TWENTY_SECONDS } = require('./utils/constants');
+const {
+	TWO_SECONDS,
+	TWENTY_SECONDS,
+	TEN_SECONDS,
+} = require('./utils/constants');
 const { log, logError } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -177,7 +181,7 @@ const checkPage = async (pageType, url) => {
 	// Now we can run our tests.
 	log(`[TEST 1] start: Adverts load and the CMP is displayed on initial load`);
 	await reloadPage(page);
-	await page.waitForTimeout(TWO_SECONDS); // Wait an extra two seconds after reloading the page
+	await page.waitForTimeout(TEN_SECONDS); // Wait an extra ten seconds after reloading the page (Aus CMP is slow)
 	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page, pageType);
 	await checkTopAdHasLoaded(page, pageType);
