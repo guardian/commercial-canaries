@@ -76,25 +76,25 @@ const checkPage = async (pageType, url) => {
 	const currentLocation = await getCurrentLocation(page);
 	if (currentLocation === 'CA') {
 		log('In Canada we do not run Prebid');
-		Promise.resolve();
+	} else {
+		await reloadPage(page);
+		await checkPrebidBundle(page);
+		await checkPrebidBidRequest(page);
+		await checkPbjsPresence(page);
+		const expectedBidders = [
+			'oxd',
+			'and',
+			'pubmatic',
+			'ix',
+			'adyoulike',
+			'ozone',
+			'criteo',
+			'ttd',
+			'rubicon',
+			...(currentLocation === 'UK' ? ['xhb'] : []),
+		];
+		await checkBidResponse(page, expectedBidders);
 	}
-	await reloadPage(page);
-	await checkPrebidBundle(page);
-	await checkPrebidBidRequest(page);
-	await checkPbjsPresence(page);
-	const expectedBidders = [
-		'oxd',
-		'and',
-		'pubmatic',
-		'ix',
-		'adyoulike',
-		'ozone',
-		'criteo',
-		'ttd',
-		'rubicon',
-		...(currentLocation === 'UK' ? ['xhb'] : []),
-	];
-	await checkBidResponse(page, expectedBidders);
 	log(`[TEST 4] completed`);
 
 	log(
