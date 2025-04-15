@@ -12,6 +12,7 @@ const {
 	checkCMPIsNotVisible,
 	interactWithCMPTcfv2,
 } = require('./utils/cmp');
+const { setConfig } = require('./utils/config');
 const { TWO_SECONDS } = require('./utils/constants');
 const { log } = require('./utils/logging');
 const {
@@ -21,9 +22,6 @@ const {
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
-
-const LOG_EVERY_REQUEST = false;
-const LOG_EVERY_RESPONSE = false;
 
 /**
  * Checks that ads load correctly for the first time a user goes to
@@ -114,24 +112,7 @@ const checkPage = async (pageType, url) => {
 };
 
 const pageLoadBlueprint = async function () {
-	const synConfig = synthetics.getConfiguration();
-	synConfig.setConfig({
-		/**
-		 * Set harFile to true to see a detailed log of the HTTP requests that were made when the canary was run,
-		 * along with the responses and the amount of time that it took for the request to complete:
-		 */
-		harFile: false,
-		/**
-		 * Setting logRequest and logResponse to true will log all requests/responses in the Cloudwatch logs.
-		 * There are ~1000 of each, which makes it difficult to search through Cloudwatch
-		 * when set to true, yet may be helpful for extra debugging.
-		 */
-		logRequest: LOG_EVERY_REQUEST,
-		logResponse: LOG_EVERY_RESPONSE,
-		screenshotOnStepStart: false,
-		screenshotOnStepSuccess: false,
-		screenshotOnStepFailure: true,
-	});
+	setConfig();
 
 	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
 	await synthetics.executeStep('Test Front page', async function () {

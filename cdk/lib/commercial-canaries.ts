@@ -61,6 +61,10 @@ export class CommercialCanaries extends GuStack {
 			successRetentionPeriod: Duration.days(7),
 			failureRetentionPeriod: Duration.days(31),
 			startAfterCreation: true,
+			environmentVariables: {
+				logAllRequests: 'false',
+				logAllResponses: 'false',
+			},
 		});
 
 		/** Ensures the canary is redeployed with every code change, since the code lives in S3 separate to the canary itself */
