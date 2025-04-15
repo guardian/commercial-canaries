@@ -43,9 +43,8 @@ const checkPage = async (pageType, url) => {
 		`[TEST 1] start: CMP loads and the ads are NOT displayed on initial load`,
 	);
 	await reloadPage(page);
-	await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
-	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkCMPIsOnPage(page, pageType);
+	await synthetics.takeScreenshot(`${pageType}-page`, 'page loaded');
 	await checkTopAdDidNotLoad(page);
 	log(`[TEST 1] completed`);
 
@@ -101,12 +100,11 @@ const checkPage = async (pageType, url) => {
 	await clearLocalStorage(page);
 	await clearCookies(page);
 	await reloadPage(page);
-	await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
+	await checkCMPIsOnPage(page, pageType);
 	await synthetics.takeScreenshot(
 		`${pageType}-page`,
 		'cookies and local storage cleared then page reloaded',
 	);
-	await checkCMPIsOnPage(page, pageType);
 	await checkTopAdDidNotLoad(page);
 	log(`[TEST 5] completed`);
 };

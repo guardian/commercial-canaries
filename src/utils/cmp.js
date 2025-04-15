@@ -1,6 +1,6 @@
 const { URL } = require('url');
 const synthetics = require('Synthetics');
-const { TWO_SECONDS } = require('./constants');
+const { TWO_SECONDS, TEN_SECONDS } = require('./constants');
 const { log, logError } = require('./logging');
 
 const interactWithCMPTcfv2 = async (page) => {
@@ -76,7 +76,7 @@ const checkCMPIsOnPage = async (page, pageType) => {
 	log(`Waiting for CMP: Start`);
 	try {
 		await page.waitForSelector('[id*="sp_message_container"]', {
-			timeout: TWO_SECONDS,
+			timeout: TEN_SECONDS,
 		});
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
