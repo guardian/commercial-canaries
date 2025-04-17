@@ -44,7 +44,7 @@ const testPage = async function () {
 		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
 		await checkCMPIsOnPage(page, pageType);
-		await checkTopAdHasLoaded(page);
+		await checkTopAdHasLoaded(page, pageType);
 	});
 
 	await synthetics.executeStep('[STEP 3] Interact with CMP', async function () {
