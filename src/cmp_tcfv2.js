@@ -26,8 +26,8 @@ const {
 const testPage = async function () {
 	setConfig();
 
-	const url = process.env.testPageUrl;
-	const pageType = process.env.testPageType;
+	const url = process.env.url;
+	const pageType = process.env.pageType;
 
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();

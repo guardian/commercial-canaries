@@ -68,7 +68,7 @@ export class CommercialCanaries extends GuStack {
 		const canaryFront = new synthetics.Canary(this, 'CanaryFront', {
 			...commonCanaryProps,
 			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
-			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}-front`,
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}_front`,
 			artifactsBucketLocation: {
 				bucket: resultsBucket,
 				prefix: `${stage.toUpperCase()}/front`,
@@ -84,7 +84,7 @@ export class CommercialCanaries extends GuStack {
 		const canaryArticle = new synthetics.Canary(this, 'CanaryArticle', {
 			...commonCanaryProps,
 			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
-			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}-article`,
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}_article`,
 			artifactsBucketLocation: {
 				bucket: resultsBucket,
 				prefix: `${stage.toUpperCase()}/article`,

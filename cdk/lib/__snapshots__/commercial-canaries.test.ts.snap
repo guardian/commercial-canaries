@@ -139,7 +139,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-article",
+        "Name": "commercial_canary_code_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -352,7 +352,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -705,7 +705,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-article",
+        "Name": "commercial_canary_prod_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -918,7 +918,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1271,7 +1271,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-article",
+        "Name": "commercial_canary_code_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1484,7 +1484,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -1837,7 +1837,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-article",
+        "Name": "commercial_canary_prod_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2050,7 +2050,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2403,7 +2403,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-article",
+        "Name": "commercial_canary_code_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2616,7 +2616,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -2969,7 +2969,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-article",
+        "Name": "commercial_canary_prod_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -3182,7 +3182,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -3535,7 +3535,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-article",
+        "Name": "commercial_canary_code_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -3748,7 +3748,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -4101,7 +4101,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-article",
+        "Name": "commercial_canary_prod_article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
@@ -4314,7 +4314,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod_front",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
