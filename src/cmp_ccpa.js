@@ -30,7 +30,7 @@ const testPage = async function () {
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();
 
-	await synthetics.executeStep('loadPage', async function () {
+	await synthetics.executeStep('[STEP 1] Load page', async function () {
 		// Reset the page state to a point where the we can start testing.
 		// Local storage can only be cleared once the page has loaded.
 		await loadPage(page, url);
@@ -38,16 +38,16 @@ const testPage = async function () {
 		await clearCookies(page);
 	});
 
-	await synthetics.executeStep('checkCmp', async function () {
+	await synthetics.executeStep('[STEP 2] Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
 		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
-		await synthetics.takeScreenshot(`cmp-${pageType}`, 'page-loaded');
+		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdHasLoaded(page);
 	});
 
-	await synthetics.executeStep('cmpInteraction', async function () {
+	await synthetics.executeStep('[STEP 3] Interact with CMP', async function () {
 		log(
 			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
 		);
@@ -57,54 +57,69 @@ const testPage = async function () {
 		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 		await synthetics.takeScreenshot(
 			`cmp-${pageType}`,
-			'CMP clicked then page reloaded', //fixme
+			'CMP clicked then page reloaded',
 		);
 		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
 	});
 
-	await synthetics.executeStep('reloadAfterCmp', async function () {
-		log(
-			'After we clear local storage and cookies, the CMP banner is displayed once again',
-		);
-		await clearLocalStorage(page);
-		await clearCookies(page);
-		await reloadPage(page);
-		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
-		await synthetics.takeScreenshot(
-			`cmp-${pageType}`,
-			'cookies and local storage cleared then page reloaded',
-		);
-	});
+	await synthetics.executeStep(
+		'[STEP 4] Reload page after CMP interaction',
+		async function () {
+			log(
+				'After we clear local storage and cookies, the CMP banner is displayed once again',
+			);
+			await clearLocalStorage(page);
+			await clearCookies(page);
+			await reloadPage(page);
+			await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
+			await synthetics.takeScreenshot(
+				`cmp-${pageType}`,
+				'cookies and local storage cleared then page reloaded',
+			);
+		},
+	);
 
-	await synthetics.executeStep('prebidBundleCheck', async function () {
-		await reloadPage(page);
-		await checkPrebidBundle(page);
-	});
+	await synthetics.executeStep(
+		'[STEP 5] Prebid : Load bundle',
+		async function () {
+			await reloadPage(page);
+			await checkPrebidBundle(page);
+		},
+	);
 
-	await synthetics.executeStep('prebidPubmaticCheck', async function () {
-		await checkPrebidBidRequest(page);
-	});
+	await synthetics.executeStep(
+		'[STEP 6] Prebid : Bid request',
+		async function () {
+			await checkPrebidBidRequest(page);
+		},
+	);
 
-	await synthetics.executeStep('pbjsCheck', async function () {
-		await checkPbjsPresence(page);
-	});
+	await synthetics.executeStep(
+		'[STEP 7] Prebid : window.pbjs',
+		async function () {
+			await checkPbjsPresence(page);
+		},
+	);
 
-	await synthetics.executeStep('prebidBidResponse', async function () {
-		const expectedBidders = [
-			'ix',
-			'rubicon',
-			'criteo',
-			'trustx',
-			'pubmatic',
-			'ozone',
-			'ttd',
-			'kargo',
-			'adyoulike',
-			'triplelift',
-		];
-		await checkBidResponse(page, expectedBidders);
-	});
+	await synthetics.executeStep(
+		'[STEP 8] Prebid : Bid response',
+		async function () {
+			const expectedBidders = [
+				'ix',
+				'rubicon',
+				'criteo',
+				'trustx',
+				'pubmatic',
+				'ozone',
+				'ttd',
+				'kargo',
+				'adyoulike',
+				'triplelift',
+			];
+			await checkBidResponse(page, expectedBidders);
+		},
+	);
 };
 
 exports.handler = async () => {
