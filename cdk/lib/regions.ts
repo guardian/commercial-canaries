@@ -14,7 +14,7 @@ export const regions: Region[] = [
 		build: 'tcfv2',
 		region: 'eu-west-1',
 		/** The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot */
-		frontUrl: 'https://www.theguardian.com?adtest=fixed-puppies-ci',
+		frontUrl: 'https://www.theguardian.com/europe?adtest=fixed-puppies-ci',
 		articleUrl:
 			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
 	},
@@ -23,7 +23,8 @@ export const regions: Region[] = [
 		locationAbbr: 'CA',
 		build: 'tcfv2',
 		region: 'ca-central-1',
-		frontUrl: 'https://www.theguardian.com?adtest=fixed-puppies-ci',
+		frontUrl:
+			'https://www.theguardian.com/international?adtest=fixed-puppies-ci',
 		articleUrl:
 			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
 	},
