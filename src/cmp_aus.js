@@ -96,7 +96,7 @@ const checkPage = async (pageType, url) => {
 	log(`[TEST 4] completed`);
 };
 
-const pageLoadBlueprint = async function () {
+const testPage = async function () {
 	setConfig();
 
 	// The query param "adtest=fixed-puppies-ci" is used to ensure that GAM provides us with an ad for our slot
@@ -116,5 +116,5 @@ const pageLoadBlueprint = async function () {
 };
 
 exports.handler = async () => {
-	return await pageLoadBlueprint();
+	return await testPage();
 };

@@ -19,11 +19,16 @@ import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
+type Props = GuStackProps & {
+	testPageUrl: string;
+	testPageType: 'article' | 'front';
+};
+
 export class CommercialCanaries extends GuStack {
-	constructor(scope: App, id: string, props: GuStackProps) {
+	constructor(scope: App, id: string, props: Props) {
 		super(scope, id, props);
 
-		const { env, stage } = props;
+		const { env, stage, testPageType, testPageUrl } = props;
 
 		if (!env?.region) {
 			throw new Error('env.region is required');
@@ -36,21 +41,21 @@ export class CommercialCanaries extends GuStack {
 
 		const canary = new synthetics.Canary(this, 'Canary', {
 			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
-			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}-front`,
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}-${testPageType}`,
 			artifactsBucketLocation: {
 				bucket: Bucket.fromBucketName(
 					this,
 					'CanaryArtifactsS3Bucket',
 					`${s3BucketNameResults}`,
 				),
-				prefix: `${stage.toUpperCase()}/front`,
+				prefix: `${stage.toUpperCase()}/${testPageType}`,
 			},
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
 					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
 					`${stage.toUpperCase()}/nodejs.zip`,
 				),
-				handler: 'pageLoadFront.handler',
+				handler: 'testPage.handler',
 			}),
 			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_9_1,
 			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
@@ -65,6 +70,8 @@ export class CommercialCanaries extends GuStack {
 			environmentVariables: {
 				logAllRequests: 'false',
 				logAllResponses: 'false',
+				pageType: testPageType,
+				url: testPageUrl,
 			},
 		});
 
@@ -103,7 +110,7 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Front canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `${testPageType} canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			metric: alarmMetric,
 			/** Alarm is triggered if canary fails (or fails to run) 5 times in a row */

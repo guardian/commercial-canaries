@@ -11,22 +11,44 @@ const cloudFormationStackName = 'commercial-canary';
 
 const canaryApps = stages
 	.map((stage) =>
-		regions.map(({ locationAbbr, region }) => {
-			return {
-				app: new CommercialCanaries(
-					cdkApp,
-					`CommercialCanaries-${locationAbbr}-${stage}-front`,
+		regions
+			.map(({ locationAbbr, region, frontUrl, articleUrl }) => {
+				return [
 					{
-						stack,
-						stage,
-						env: { region },
-						cloudFormationStackName,
+						app: new CommercialCanaries(
+							cdkApp,
+							`CommercialCanaries-${locationAbbr}-${stage}-front`,
+							{
+								stack,
+								stage,
+								env: { region },
+								cloudFormationStackName,
+								testPageUrl: frontUrl,
+								testPageType: 'front',
+							},
+						),
+						locationAbbr,
+						region,
 					},
-				),
-				locationAbbr,
-				region,
-			};
-		}),
+					{
+						app: new CommercialCanaries(
+							cdkApp,
+							`CommercialCanaries-${locationAbbr}-${stage}-article`,
+							{
+								stack,
+								stage,
+								env: { region },
+								cloudFormationStackName,
+								testPageUrl: articleUrl,
+								testPageType: 'article',
+							},
+						),
+						locationAbbr,
+						region,
+					},
+				];
+			})
+			.flat(),
 	)
 	.flat();
 
