@@ -120,7 +120,7 @@ export class CommercialCanaries extends GuStack {
 		 */
 		const alarmMetric = new MathExpression({
 			label: 'successRate',
-			expression: 'AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))',
+			expression: 'FILL(AVG([frontSuccess, articleSuccess]), 0)',
 			period: Duration.minutes(1),
 			usingMetrics: {
 				frontSuccess: canaryFront.metricSuccessPercent({
