@@ -29,7 +29,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -595,7 +595,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -1161,7 +1161,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -1727,7 +1727,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -2293,7 +2293,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -2859,7 +2859,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -3425,7 +3425,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
@@ -3991,7 +3991,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(AVG([frontSuccess, articleSuccess]), 0)",
+            "Expression": "AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])",
             "Id": "expr_1",
             "Label": "successRate",
           },
