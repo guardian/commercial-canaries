@@ -21,7 +21,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in ap-southeast-2.
+        "AlarmDescription": "Commercial canary is failing in ap-southeast-2.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -29,19 +29,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -82,7 +102,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -92,12 +112,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/CODE/front",
+              "-ap-southeast-2/CODE/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -114,17 +134,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -163,7 +185,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/CODE/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2/CODE/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-ap-southeast-2",
+              ],
+            ],
+          },
+          "S3Key": "CODE/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_code-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com/au?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 3008,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "1800",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -352,7 +587,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in ap-southeast-2.
+        "AlarmDescription": "Commercial canary is failing in ap-southeast-2.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -360,19 +595,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -413,7 +668,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -423,12 +678,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ap-southeast-2/PROD/front",
+              "-ap-southeast-2/PROD/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -445,17 +700,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -494,7 +751,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ap-southeast-2/PROD/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-2:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2/PROD/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-ap-southeast-2",
+              ],
+            ],
+          },
+          "S3Key": "PROD/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_prod-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com/au?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 3008,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "0",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -683,7 +1153,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in ca-central-1.
+        "AlarmDescription": "Commercial canary is failing in ca-central-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -691,19 +1161,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -744,7 +1234,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -754,12 +1244,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/CODE/front",
+              "-ca-central-1/CODE/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -776,17 +1266,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -825,7 +1317,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/CODE/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1/CODE/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-ca-central-1",
+              ],
+            ],
+          },
+          "S3Key": "CODE/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_code-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 2048,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "1800",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1014,7 +1719,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in ca-central-1.
+        "AlarmDescription": "Commercial canary is failing in ca-central-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -1022,19 +1727,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -1075,7 +1800,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1085,12 +1810,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-ca-central-1/PROD/front",
+              "-ca-central-1/PROD/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1107,17 +1832,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1156,7 +1883,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-ca-central-1/PROD/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ca-central-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1/PROD/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-ca-central-1",
+              ],
+            ],
+          },
+          "S3Key": "PROD/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_prod-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 2048,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "0",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1345,7 +2285,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in eu-west-1.
+        "AlarmDescription": "Commercial canary is failing in eu-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -1353,19 +2293,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -1406,7 +2366,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1416,12 +2376,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/CODE/front",
+              "-eu-west-1/CODE/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1438,17 +2398,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1487,7 +2449,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/CODE/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1/CODE/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-eu-west-1",
+              ],
+            ],
+          },
+          "S3Key": "CODE/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_code-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 2048,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "1800",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1676,7 +2851,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in eu-west-1.
+        "AlarmDescription": "Commercial canary is failing in eu-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -1684,19 +2859,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -1737,7 +2932,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -1747,12 +2942,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-eu-west-1/PROD/front",
+              "-eu-west-1/PROD/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -1769,17 +2964,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 2048,
           "TimeoutInSeconds": 60,
@@ -1818,7 +3015,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-eu-west-1/PROD/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:eu-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1/PROD/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-eu-west-1",
+              ],
+            ],
+          },
+          "S3Key": "PROD/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_prod-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 2048,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "0",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -2007,7 +3417,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in us-west-1.
+        "AlarmDescription": "Commercial canary is failing in us-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
@@ -2015,19 +3425,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -2068,7 +3498,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -2078,12 +3508,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/CODE/front",
+              "-us-west-1/CODE/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -2100,17 +3530,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_code-front",
+        "Name": "commercial_canary_code-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2149,7 +3581,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/CODE/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1/CODE/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-us-west-1",
+              ],
+            ],
+          },
+          "S3Key": "CODE/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_code-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com/us?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 3008,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "1800",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -2338,7 +3983,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
             "Ref": "TopicBFC7AF6E",
           },
         ],
-        "AlarmDescription": "Front canary is failing in us-west-1.
+        "AlarmDescription": "Commercial canary is failing in us-west-1.
 See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
@@ -2346,19 +3991,39 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         "EvaluationPeriods": 5,
         "Metrics": [
           {
-            "Expression": "FILL(successPercentRaw, 0)",
+            "Expression": "AVG(FILL(frontSuccess, 0), FILL(articleSuccess, 0))",
             "Id": "expr_1",
             "Label": "successRate",
           },
           {
-            "Id": "successPercentRaw",
+            "Id": "frontSuccess",
             "MetricStat": {
               "Metric": {
                 "Dimensions": [
                   {
                     "Name": "CanaryName",
                     "Value": {
-                      "Ref": "Canary11957FE2",
+                      "Ref": "CanaryFront58565359",
+                    },
+                  },
+                ],
+                "MetricName": "SuccessPercent",
+                "Namespace": "CloudWatchSynthetics",
+              },
+              "Period": 60,
+              "Stat": "Average",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "articleSuccess",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "CanaryName",
+                    "Value": {
+                      "Ref": "CanaryArticle517CE327",
                     },
                   },
                 ],
@@ -2399,7 +4064,7 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "Canary11957FE2": {
+    "CanaryArticle517CE327": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
@@ -2409,12 +4074,12 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
               {
                 "Ref": "AWS::AccountId",
               },
-              "-us-west-1/PROD/front",
+              "-us-west-1/PROD/article",
             ],
           ],
         },
         "Code": {
-          "Handler": "pageLoadFront.handler",
+          "Handler": "testPage.handler",
           "S3Bucket": {
             "Fn::Join": [
               "",
@@ -2431,17 +4096,19 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
         },
         "ExecutionRoleArn": {
           "Fn::GetAtt": [
-            "CanaryServiceRoleD132250E",
+            "CanaryArticleServiceRoleF0E47D62",
             "Arn",
           ],
         },
         "FailureRetentionPeriod": 31,
-        "Name": "commercial_canary_prod-front",
+        "Name": "commercial_canary_prod-article",
         "ProvisionedResourceCleanup": "AUTOMATIC",
         "RunConfig": {
           "EnvironmentVariables": {
             "logAllRequests": "false",
             "logAllResponses": "false",
+            "pageType": "article",
+            "url": "https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci",
           },
           "MemoryInMB": 3008,
           "TimeoutInSeconds": 60,
@@ -2480,7 +4147,220 @@ See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
       },
       "Type": "AWS::Synthetics::Canary",
     },
-    "CanaryServiceRoleD132250E": {
+    "CanaryArticleServiceRoleF0E47D62": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "s3:ListAllMyBuckets",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": "s3:GetBucketLocation",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "s3:PutObject",
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":s3:::cw-syn-results-",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        "-us-west-1/PROD/article/*",
+                      ],
+                    ],
+                  },
+                },
+                {
+                  "Action": "cloudwatch:PutMetricData",
+                  "Condition": {
+                    "StringEquals": {
+                      "cloudwatch:namespace": "CloudWatchSynthetics",
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                {
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:us-west-1:",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":log-group:/aws/lambda/cwsyn-*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "canaryPolicy",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CanaryFront58565359": {
+      "Properties": {
+        "ArtifactS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1/PROD/front",
+            ],
+          ],
+        },
+        "Code": {
+          "Handler": "testPage.handler",
+          "S3Bucket": {
+            "Fn::Join": [
+              "",
+              [
+                "cw-syn-canary-",
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                "-us-west-1",
+              ],
+            ],
+          },
+          "S3Key": "PROD/nodejs.zip",
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "CanaryFrontServiceRole02088068",
+            "Arn",
+          ],
+        },
+        "FailureRetentionPeriod": 31,
+        "Name": "commercial_canary_prod-front",
+        "ProvisionedResourceCleanup": "AUTOMATIC",
+        "RunConfig": {
+          "EnvironmentVariables": {
+            "logAllRequests": "false",
+            "logAllResponses": "false",
+            "pageType": "front",
+            "url": "https://www.theguardian.com/us?adtest=fixed-puppies-ci",
+          },
+          "MemoryInMB": 3008,
+          "TimeoutInSeconds": 60,
+        },
+        "RuntimeVersion": "syn-nodejs-puppeteer-9.1",
+        "Schedule": {
+          "DurationInSeconds": "0",
+          "Expression": "rate(1 minute)",
+        },
+        "StartCanaryAfterCreation": true,
+        "SuccessRetentionPeriod": 7,
+        "Tags": [
+          {
+            "Key": "buildId",
+            "Value": {
+              "Ref": "BuildId",
+            },
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::Synthetics::Canary",
+    },
+    "CanaryFrontServiceRole02088068": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
