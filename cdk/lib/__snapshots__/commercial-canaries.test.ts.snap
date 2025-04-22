@@ -108,11 +108,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ap-southeast-2/CODE/article",
+              "/CODE/article",
             ],
           ],
         },
@@ -212,19 +212,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -235,15 +225,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/CODE/article/*",
+                        "/CODE/article/*",
                       ],
                     ],
                   },
@@ -315,17 +303,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ap-southeast-2/CODE/front",
+              "/CODE/front",
             ],
           ],
         },
@@ -425,19 +456,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -448,15 +469,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/CODE/front/*",
+                        "/CODE/front/*",
                       ],
                     ],
                   },
@@ -674,11 +693,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ap-southeast-2/PROD/article",
+              "/PROD/article",
             ],
           ],
         },
@@ -778,19 +797,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -801,15 +810,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/PROD/article/*",
+                        "/PROD/article/*",
                       ],
                     ],
                   },
@@ -881,17 +888,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ap-southeast-2/PROD/front",
+              "/PROD/front",
             ],
           ],
         },
@@ -991,19 +1041,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -1014,15 +1054,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ap-southeast-2/PROD/front/*",
+                        "/PROD/front/*",
                       ],
                     ],
                   },
@@ -1240,11 +1278,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ca-central-1/CODE/article",
+              "/CODE/article",
             ],
           ],
         },
@@ -1344,19 +1382,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -1367,15 +1395,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/CODE/article/*",
+                        "/CODE/article/*",
                       ],
                     ],
                   },
@@ -1447,17 +1473,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ca-central-1/CODE/front",
+              "/CODE/front",
             ],
           ],
         },
@@ -1557,19 +1626,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -1580,15 +1639,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/CODE/front/*",
+                        "/CODE/front/*",
                       ],
                     ],
                   },
@@ -1806,11 +1863,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ca-central-1/PROD/article",
+              "/PROD/article",
             ],
           ],
         },
@@ -1910,19 +1967,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -1933,15 +1980,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/PROD/article/*",
+                        "/PROD/article/*",
                       ],
                     ],
                   },
@@ -2013,17 +2058,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-ca-central-1/PROD/front",
+              "/PROD/front",
             ],
           ],
         },
@@ -2123,19 +2211,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -2146,15 +2224,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-ca-central-1/PROD/front/*",
+                        "/PROD/front/*",
                       ],
                     ],
                   },
@@ -2372,11 +2448,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-eu-west-1/CODE/article",
+              "/CODE/article",
             ],
           ],
         },
@@ -2476,19 +2552,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -2499,15 +2565,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/CODE/article/*",
+                        "/CODE/article/*",
                       ],
                     ],
                   },
@@ -2579,17 +2643,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-eu-west-1/CODE/front",
+              "/CODE/front",
             ],
           ],
         },
@@ -2689,19 +2796,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -2712,15 +2809,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/CODE/front/*",
+                        "/CODE/front/*",
                       ],
                     ],
                   },
@@ -2938,11 +3033,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-eu-west-1/PROD/article",
+              "/PROD/article",
             ],
           ],
         },
@@ -3042,19 +3137,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -3065,15 +3150,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/PROD/article/*",
+                        "/PROD/article/*",
                       ],
                     ],
                   },
@@ -3145,17 +3228,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-eu-west-1/PROD/front",
+              "/PROD/front",
             ],
           ],
         },
@@ -3255,19 +3381,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -3278,15 +3394,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-eu-west-1/PROD/front/*",
+                        "/PROD/front/*",
                       ],
                     ],
                   },
@@ -3504,11 +3618,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-us-west-1/CODE/article",
+              "/CODE/article",
             ],
           ],
         },
@@ -3608,19 +3722,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -3631,15 +3735,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/CODE/article/*",
+                        "/CODE/article/*",
                       ],
                     ],
                   },
@@ -3711,17 +3813,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-us-west-1/CODE/front",
+              "/CODE/front",
             ],
           ],
         },
@@ -3821,19 +3966,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -3844,15 +3979,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/CODE/front/*",
+                        "/CODE/front/*",
                       ],
                     ],
                   },
@@ -4070,11 +4203,11 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-us-west-1/PROD/article",
+              "/PROD/article",
             ],
           ],
         },
@@ -4174,19 +4307,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -4197,15 +4320,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/PROD/article/*",
+                        "/PROD/article/*",
                       ],
                     ],
                   },
@@ -4277,17 +4398,60 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       },
       "Type": "AWS::IAM::Role",
     },
+    "CanaryArtifactsS3Bucket9443BC75": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-results-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
           "Fn::Join": [
             "",
             [
-              "s3://cw-syn-results-",
+              "s3://",
               {
-                "Ref": "AWS::AccountId",
+                "Ref": "CanaryArtifactsS3Bucket9443BC75",
               },
-              "-us-west-1/PROD/front",
+              "/PROD/front",
             ],
           ],
         },
@@ -4387,19 +4551,9 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                   "Action": "s3:GetBucketLocation",
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition",
-                        },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1",
-                      ],
+                    "Fn::GetAtt": [
+                      "CanaryArtifactsS3Bucket9443BC75",
+                      "Arn",
                     ],
                   },
                 },
@@ -4410,15 +4564,13 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
                     "Fn::Join": [
                       "",
                       [
-                        "arn:",
                         {
-                          "Ref": "AWS::Partition",
+                          "Fn::GetAtt": [
+                            "CanaryArtifactsS3Bucket9443BC75",
+                            "Arn",
+                          ],
                         },
-                        ":s3:::cw-syn-results-",
-                        {
-                          "Ref": "AWS::AccountId",
-                        },
-                        "-us-west-1/PROD/front/*",
+                        "/PROD/front/*",
                       ],
                     ],
                   },

@@ -16,7 +16,7 @@ import {
 	TreatMissingData,
 } from 'aws-cdk-lib/aws-cloudwatch';
 import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
-import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
 type Props = GuStackProps & {
@@ -39,6 +39,11 @@ export class CommercialCanaries extends GuStack {
 		const s3BucketNameResults = `cw-syn-results-${accountId}-${env.region}`;
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
+		const resultsBucket = new Bucket(this, 'CanaryArtifactsS3Bucket', {
+			bucketName: s3BucketNameResults,
+			blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+		});
+
 		const commonCanaryProps: synthetics.CanaryProps = {
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
@@ -58,12 +63,6 @@ export class CommercialCanaries extends GuStack {
 			failureRetentionPeriod: Duration.days(31),
 			startAfterCreation: true,
 		};
-
-		const resultsBucket = Bucket.fromBucketName(
-			this,
-			'CanaryArtifactsS3Bucket',
-			`${s3BucketNameResults}`,
-		);
 
 		const canaryFront = new synthetics.Canary(this, 'CanaryFront', {
 			...commonCanaryProps,
