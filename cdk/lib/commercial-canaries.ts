@@ -35,19 +35,23 @@ export class CommercialCanaries extends GuStack {
 		}
 
 		const accountId = this.account;
-		const s3BucketNameCanary = `cw-syn-canary-${accountId}-${env.region}`;
-		const s3BucketNameResults = `cw-syn-results-${accountId}-${env.region}`;
+
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
+		const codeBucket = new Bucket(this, 'CanaryCodesS3Bucket', {
+			bucketName: `cw-syn-canary-${accountId}-${env.region}`,
+			blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+		});
+
 		const resultsBucket = new Bucket(this, 'CanaryArtifactsS3Bucket', {
-			bucketName: s3BucketNameResults,
+			bucketName: `cw-syn-results-${accountId}-${env.region}`,
 			blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
 		});
 
 		const commonCanaryProps: synthetics.CanaryProps = {
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
-					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
+					codeBucket,
 					`${stage.toUpperCase()}/nodejs.zip`,
 				),
 				handler: 'testPage.handler',

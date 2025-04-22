@@ -119,16 +119,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ap-southeast-2",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -346,6 +337,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -363,16 +397,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ap-southeast-2",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -704,16 +729,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ap-southeast-2",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -931,6 +947,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ap-southeast-2",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -948,16 +1007,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ap-southeast-2",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -1289,16 +1339,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ca-central-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -1516,6 +1557,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -1533,16 +1617,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ca-central-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -1874,16 +1949,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ca-central-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -2101,6 +2167,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-ca-central-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -2118,16 +2227,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-ca-central-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -2459,16 +2559,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-eu-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -2686,6 +2777,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -2703,16 +2837,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-eu-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -3044,16 +3169,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-eu-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -3271,6 +3387,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-eu-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -3288,16 +3447,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-eu-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -3629,16 +3779,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-us-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -3856,6 +3997,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "CODE",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -3873,16 +4057,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-us-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "CODE/nodejs.zip",
         },
@@ -4214,16 +4389,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-us-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
@@ -4441,6 +4607,49 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
+    "CanaryCodesS3Bucket911D7E6D": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              "cw-syn-canary-",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              "-us-west-1",
+            ],
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/commercial-canaries",
+          },
+          {
+            "Key": "Stack",
+            "Value": "frontend",
+          },
+          {
+            "Key": "Stage",
+            "Value": "PROD",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
     "CanaryFront58565359": {
       "Properties": {
         "ArtifactS3Location": {
@@ -4458,16 +4667,7 @@ See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "Code": {
           "Handler": "testPage.handler",
           "S3Bucket": {
-            "Fn::Join": [
-              "",
-              [
-                "cw-syn-canary-",
-                {
-                  "Ref": "AWS::AccountId",
-                },
-                "-us-west-1",
-              ],
-            ],
+            "Ref": "CanaryCodesS3Bucket911D7E6D",
           },
           "S3Key": "PROD/nodejs.zip",
         },
