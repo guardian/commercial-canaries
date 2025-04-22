@@ -22,7 +22,7 @@ exports[`The CommercialCanaries stack matches the Australia CODE snapshot 1`] = 
           },
         ],
         "AlarmDescription": "Commercial canary is failing in ap-southeast-2.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -588,7 +588,7 @@ exports[`The CommercialCanaries stack matches the Australia PROD snapshot 1`] = 
           },
         ],
         "AlarmDescription": "Commercial canary is failing in ap-southeast-2.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -1154,7 +1154,7 @@ exports[`The CommercialCanaries stack matches the Canada CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in ca-central-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -1720,7 +1720,7 @@ exports[`The CommercialCanaries stack matches the Canada PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in ca-central-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -2286,7 +2286,7 @@ exports[`The CommercialCanaries stack matches the Europe CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in eu-west-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -2852,7 +2852,7 @@ exports[`The CommercialCanaries stack matches the Europe PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in eu-west-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -3418,7 +3418,7 @@ exports[`The CommercialCanaries stack matches the US CODE snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in us-west-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-CODE",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
@@ -3984,7 +3984,7 @@ exports[`The CommercialCanaries stack matches the US PROD snapshot 1`] = `
           },
         ],
         "AlarmDescription": "Commercial canary is failing in us-west-1.
-See https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details",
+See https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details",
         "AlarmName": "commercial-canary-PROD",
         "ComparisonOperator": "LessThanThreshold",
         "DatapointsToAlarm": 5,
