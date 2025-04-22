@@ -4,27 +4,37 @@ import { regions } from '../lib/regions';
 import { CommercialCanaries } from './commercial-canaries';
 
 describe('The CommercialCanaries stack', () => {
-	it.each(regions)('matches the $location CODE snapshot', ({ region }) => {
-		const app = new App();
-		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
-			stack: 'frontend',
-			stage: 'CODE',
-			env: { region },
-		});
+	it.each(regions)(
+		'matches the $location CODE snapshot',
+		({ region, articleUrl, frontUrl }) => {
+			const app = new App();
+			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
+				stack: 'frontend',
+				stage: 'CODE',
+				env: { region },
+				articleUrl,
+				frontUrl,
+			});
 
-		const template = Template.fromStack(stack);
-		expect(template.toJSON()).toMatchSnapshot();
-	});
+			const template = Template.fromStack(stack);
+			expect(template.toJSON()).toMatchSnapshot();
+		},
+	);
 
-	it.each(regions)('matches the $location PROD snapshot', ({ region }) => {
-		const app = new App();
-		const stack = new CommercialCanaries(app, 'CommercialCanaries', {
-			stack: 'frontend',
-			stage: 'PROD',
-			env: { region },
-		});
+	it.each(regions)(
+		'matches the $location PROD snapshot',
+		({ region, articleUrl, frontUrl }) => {
+			const app = new App();
+			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
+				stack: 'frontend',
+				stage: 'PROD',
+				env: { region },
+				articleUrl,
+				frontUrl,
+			});
 
-		const template = Template.fromStack(stack);
-		expect(template.toJSON()).toMatchSnapshot();
-	});
+			const template = Template.fromStack(stack);
+			expect(template.toJSON()).toMatchSnapshot();
+		},
+	);
 });

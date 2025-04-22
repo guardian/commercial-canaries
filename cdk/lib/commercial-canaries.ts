@@ -19,11 +19,16 @@ import { SnsAction } from 'aws-cdk-lib/aws-cloudwatch-actions';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
+type Props = GuStackProps & {
+	articleUrl: string;
+	frontUrl: string;
+};
+
 export class CommercialCanaries extends GuStack {
-	constructor(scope: App, id: string, props: GuStackProps) {
+	constructor(scope: App, id: string, props: Props) {
 		super(scope, id, props);
 
-		const { env, stage } = props;
+		const { env, stage, articleUrl, frontUrl } = props;
 
 		if (!env?.region) {
 			throw new Error('env.region is required');
@@ -34,22 +39,13 @@ export class CommercialCanaries extends GuStack {
 		const s3BucketNameResults = `cw-syn-results-${accountId}-${env.region}`;
 		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
-		const canary = new synthetics.Canary(this, 'Canary', {
-			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}`,
-			artifactsBucketLocation: {
-				bucket: Bucket.fromBucketName(
-					this,
-					'CanaryArtifactsS3Bucket',
-					`${s3BucketNameResults}`,
-				),
-				prefix: `${stage.toUpperCase()}`,
-			},
+		const commonCanaryProps: synthetics.CanaryProps = {
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
 					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
 					`${stage.toUpperCase()}/nodejs.zip`,
 				),
-				handler: 'pageLoadBlueprint.handler',
+				handler: 'testPage.handler',
 			}),
 			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_9_1,
 			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
@@ -61,9 +57,43 @@ export class CommercialCanaries extends GuStack {
 			successRetentionPeriod: Duration.days(7),
 			failureRetentionPeriod: Duration.days(31),
 			startAfterCreation: true,
+		};
+
+		const resultsBucket = Bucket.fromBucketName(
+			this,
+			'CanaryArtifactsS3Bucket',
+			`${s3BucketNameResults}`,
+		);
+
+		const canaryFront = new synthetics.Canary(this, 'CanaryFront', {
+			...commonCanaryProps,
+			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}_front`,
+			artifactsBucketLocation: {
+				bucket: resultsBucket,
+				prefix: `${stage.toUpperCase()}/front`,
+			},
 			environmentVariables: {
 				logAllRequests: 'false',
 				logAllResponses: 'false',
+				pageType: 'front',
+				url: frontUrl,
+			},
+		});
+
+		const canaryArticle = new synthetics.Canary(this, 'CanaryArticle', {
+			...commonCanaryProps,
+			// Limitation of max 21 characaters and lower case. Pattern: ^[0-9a-z_\-]+$
+			canaryName: `commercial_canary_${stage.toLocaleLowerCase()}_article`,
+			artifactsBucketLocation: {
+				bucket: resultsBucket,
+				prefix: `${stage.toUpperCase()}/article`,
+			},
+			environmentVariables: {
+				logAllRequests: 'false',
+				logAllResponses: 'false',
+				pageType: 'article',
+				url: articleUrl,
 			},
 		});
 
@@ -73,7 +103,8 @@ export class CommercialCanaries extends GuStack {
 			description:
 				'The riff-raff build id, automatically generated and provided by riff-raff',
 		});
-		Tags.of(canary).add('buildId', buildId.valueAsString);
+		Tags.of(canaryFront).add('buildId', buildId.valueAsString);
+		Tags.of(canaryArticle).add('buildId', buildId.valueAsString);
 
 		const topic = new Topic(this, 'Topic');
 		new Subscription(this, 'Subscription', {
@@ -89,10 +120,14 @@ export class CommercialCanaries extends GuStack {
 		 */
 		const alarmMetric = new MathExpression({
 			label: 'successRate',
-			expression: 'FILL(successPercentRaw, 0)',
+			expression: 'AVG([FILL(frontSuccess,0), FILL(articleSuccess,0)])',
 			period: Duration.minutes(1),
 			usingMetrics: {
-				successPercentRaw: canary.metricSuccessPercent({
+				frontSuccess: canaryFront.metricSuccessPercent({
+					statistic: Stats.AVERAGE,
+					period: Duration.minutes(1),
+				}),
+				articleSuccess: canaryArticle.metricSuccessPercent({
 					statistic: Stats.AVERAGE,
 					period: Duration.minutes(1),
 				}),
@@ -102,7 +137,7 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Low success rate for canary in ${env.region} over the last 10 minutes.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `Commercial canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			metric: alarmMetric,
 			/** Alarm is triggered if canary fails (or fails to run) 5 times in a row */
