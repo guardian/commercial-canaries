@@ -137,7 +137,7 @@ export class CommercialCanaries extends GuStack {
 		const alarm = new Alarm(this, 'Alarm', {
 			// Only allow alarm actions in PROD
 			actionsEnabled: stage === 'PROD',
-			alarmDescription: `Commercial canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/degb6prp5nqpsc/canary-status for details`,
+			alarmDescription: `Commercial canary is failing in ${env.region}.\nSee https://metrics.gutools.co.uk/d/aej6crz3hvz0gc/canary-status for details`,
 			alarmName: `commercial-canary-${stage}`,
 			metric: alarmMetric,
 			/** Alarm is triggered if canary fails (or fails to run) 5 times in a row */
