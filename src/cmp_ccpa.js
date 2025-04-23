@@ -12,7 +12,6 @@ const {
 	interactWithCMPCcpa,
 } = require('./utils/cmp');
 const { setConfig } = require('./utils/config');
-const { TWO_SECONDS } = require('./utils/constants');
 const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -41,7 +40,6 @@ const testPage = async function () {
 	await synthetics.executeStep('[STEP 2] Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdHasLoaded(page, pageType);
@@ -54,7 +52,6 @@ const testPage = async function () {
 		await interactWithCMPCcpa(page);
 		await checkCMPIsNotVisible(page);
 		await reloadPage(page);
-		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 		await synthetics.takeScreenshot(
 			`cmp-${pageType}`,
 			'CMP clicked then page reloaded',
@@ -72,7 +69,6 @@ const testPage = async function () {
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 			await synthetics.takeScreenshot(
 				`cmp-${pageType}`,
 				'cookies and local storage cleared then page reloaded',
