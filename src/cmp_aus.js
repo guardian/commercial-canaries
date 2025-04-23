@@ -34,7 +34,10 @@ const testPage = async function () {
 		// Reset the page state to a point where the we can start testing.
 		// Local storage can only be cleared once the page has loaded.
 		await loadPage(page, url);
-		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after loading the page
+		// The Australian front page is slow so need to wait an extra two seconds after loading the page
+		if (pageType === 'front') {
+			await new Promise((r) => setTimeout(r, TWO_SECONDS));
+		}
 		await clearLocalStorage(page);
 		await clearCookies(page);
 	});
