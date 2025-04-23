@@ -1,4 +1,4 @@
-const { TEN_SECONDS } = require('./constants');
+const { TEN_SECONDS, TWO_SECONDS } = require('./constants');
 const { log, logError } = require('./logging');
 
 const clearCookies = async (page) => {
@@ -28,6 +28,8 @@ const loadPage = async (page, url) => {
 		logError(`Loading page: Failed. Status code: ${response.status()}`);
 		throw 'Failed to load page!';
 	}
+	// Wait an extra two seconds to allow the page to load
+	await new Promise((r) => setTimeout(r, TWO_SECONDS));
 	log(`Loading page: Complete`);
 };
 

@@ -43,7 +43,6 @@ const testPage = async function () {
 	await synthetics.executeStep('[STEP 2] Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdDidNotLoad(page);
@@ -65,7 +64,6 @@ const testPage = async function () {
 				'Adverts load and the CMP is NOT displayed when the page is reloaded',
 			);
 			await reloadPage(page);
-			await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 			await synthetics.takeScreenshot(
 				`cmp-${pageType}`,
 				'CMP clicked then page reloaded',
