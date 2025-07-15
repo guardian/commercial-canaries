@@ -3,10 +3,8 @@ const synthetics = require('Synthetics');
 const { TWO_SECONDS } = require('./constants');
 const { log, logError } = require('./logging');
 
-const interactWithCMPTcfv2 = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Yes I'm Happy"`);
-	const frame = page.frames().find((f) => {
+const findCMPFrame = (page) => {
+	return page.frames().find((f) => {
 		// Check that f.url is defined and that it's longer than a single character
 		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
 		if (f.url() && f.url().length > 1) {
@@ -14,6 +12,12 @@ const interactWithCMPTcfv2 = async (page) => {
 			return parsedUrl.host === 'sourcepoint.theguardian.com';
 		}
 	});
+};
+
+const interactWithCMPTcfv2 = async (page) => {
+	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
+	log(`Clicking on "Yes I'm Happy"`);
+	const frame = findCMPFrame(page);
 
 	if (frame) {
 		await frame.waitForSelector(
@@ -29,26 +33,16 @@ const interactWithCMPTcfv2 = async (page) => {
 	}
 };
 
-const interactWithCMPCcpa = async (page) => {
+const interactWithCMPUs = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Do not sell or share my personal information" on CMP`);
-	const frame = page.frames().find((f) => {
-		// Check that f.url is defined and that it's longer than a single character
-		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
-		if (f.url() && f.url().length > 1) {
-			const parsedUrl = new URL(f.url());
-			return parsedUrl.host === 'sourcepoint.theguardian.com';
-		}
-	});
+	const frame = findCMPFrame(page);
 
 	if (frame) {
-		await frame.waitForSelector(
-			'button[title="Do not sell or share my personal information"]',
-			{ timeout: TWO_SECONDS },
-		);
-		await frame.click(
-			'button[title="Do not sell or share my personal information"]',
-		);
+		const doNotSellButton =
+			'button[title="Do not sell or share my personal information"]';
+		await frame.waitForSelector(doNotSellButton, { timeout: TWO_SECONDS });
+		await frame.click(doNotSellButton);
 	} else {
 		logError('CMP frame not found');
 	}
@@ -61,14 +55,8 @@ const interactWithCMPCcpa = async (page) => {
 const interactWithCMPAus = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
 	log(`Clicking on "Continue" on CMP`);
-	const frame = page.frames().find((f) => {
-		// Check that f.url is defined and that it's longer than a single character
-		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
-		if (f.url() && f.url().length > 1) {
-			const parsedUrl = new URL(f.url());
-			return parsedUrl.host === 'sourcepoint.theguardian.com';
-		}
-	});
+	const frame = findCMPFrame(page);
+
 	await frame.click('button[title="Continue"]');
 };
 
@@ -111,7 +99,7 @@ const checkCMPIsNotVisible = async (page) => {
 
 module.exports = {
 	interactWithCMPTcfv2,
-	interactWithCMPCcpa,
+	interactWithCMPUs,
 	interactWithCMPAus,
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,

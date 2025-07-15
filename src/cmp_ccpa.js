@@ -9,7 +9,7 @@ const {
 const {
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,
-	interactWithCMPCcpa,
+	interactWithCMPUs,
 } = require('./utils/cmp');
 const { setConfig } = require('./utils/config');
 const { log } = require('./utils/logging');
@@ -49,7 +49,7 @@ const testPage = async function () {
 		log(
 			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
 		);
-		await interactWithCMPCcpa(page);
+		await interactWithCMPUs(page);
 		await checkCMPIsNotVisible(page);
 		await reloadPage(page);
 		await synthetics.takeScreenshot(
