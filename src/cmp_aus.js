@@ -112,7 +112,6 @@ const testPage = async function () {
 				'criteo',
 				'pubmatic',
 				'ttd',
-				'adyoulike',
 				'triplelift',
 				'and',
 				'oxd',
