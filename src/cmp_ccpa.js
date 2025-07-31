@@ -110,7 +110,6 @@ const testPage = async function () {
 				'ozone',
 				'ttd',
 				'kargo',
-				'adyoulike',
 				'triplelift',
 			];
 			await checkBidResponse(page, expectedBidders);
