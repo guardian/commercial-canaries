@@ -1,5 +1,5 @@
 const { TEN_SECONDS, TWO_SECONDS } = require('./constants');
-const { log, logError } = require('./logging');
+const { log, logError, subscribeToCommercialLogger } = require('./logging');
 
 const clearCookies = async (page) => {
 	const allCookies = await page.cookies();
@@ -43,6 +43,7 @@ const reloadPage = async (page) => {
 		logError(`Reloading page: Failed`);
 		throw 'Failed to refresh page!';
 	}
+	subscribeToCommercialLogger();
 	log(`Reloading page: Complete`);
 };
 
