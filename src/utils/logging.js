@@ -10,7 +10,12 @@ const log = (message) => logger.info(formatMessage(message));
 
 const logError = (message) => logger.error(formatMessage(message));
 
+const subscribeToCommercialLogger = () =>
+	// eslint-disable-next-line no-undef -- window object exists in the browser only
+	window.guardian.logger.subscribeTo('commercial');
+
 module.exports = {
 	log,
 	logError,
+	subscribeToCommercialLogger,
 };
