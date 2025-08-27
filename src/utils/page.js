@@ -30,7 +30,6 @@ const loadPage = async (page, url) => {
 	}
 	// Wait an extra two seconds to allow the page to load
 	await new Promise((r) => setTimeout(r, TWO_SECONDS));
-	subscribeToCommercialLogger();
 	log(`Loading page: Complete`);
 };
 
