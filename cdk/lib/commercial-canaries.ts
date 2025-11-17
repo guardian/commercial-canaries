@@ -47,7 +47,7 @@ export class CommercialCanaries extends GuStack {
 				),
 				handler: 'testPage.handler',
 			}),
-			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_9_1,
+			runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_11_0,
 			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
 			// Don't run non-prod canaries indefinitely
 			timeToLive: stage === 'PROD' ? undefined : Duration.minutes(30),
