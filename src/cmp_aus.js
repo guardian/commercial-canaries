@@ -82,7 +82,7 @@ const testPage = async function () {
 	);
 
 	await synthetics.executeStep(
-		'STEP 5 - Prebid : Load bundle',
+		'STEP 5 - Prebid - Load bundle',
 		async function () {
 			await reloadPage(page);
 			await checkPrebidBundle(page);
@@ -90,21 +90,21 @@ const testPage = async function () {
 	);
 
 	await synthetics.executeStep(
-		'STEP 6 - Prebid : Bid request',
+		'STEP 6 - Prebid - Bid request',
 		async function () {
 			await checkPrebidBidRequest(page);
 		},
 	);
 
 	await synthetics.executeStep(
-		'STEP 7 - Prebid : window.pbjs',
+		'STEP 7 - Prebid - window.pbjs',
 		async function () {
 			await checkPbjsPresence(page);
 		},
 	);
 
 	await synthetics.executeStep(
-		'STEP 8 - Prebid : Bid response',
+		'STEP 8 - Prebid - Bid response',
 		async function () {
 			const expectedBidders = [
 				'ix',
