@@ -8,7 +8,6 @@ const clearCookies = async (page) => {
 };
 
 const clearLocalStorage = async (page) => {
-	// eslint-disable-next-line no-undef -- localStorage object exists in the browser only
 	await page.evaluate(() => localStorage.clear());
 	log(`Cleared local storage`);
 };
