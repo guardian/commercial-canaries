@@ -29,7 +29,7 @@ const testPage = async function () {
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();
 
-	await synthetics.executeStep('STEP 1 - Load page', async function () {
+	await synthetics.executeStep('[STEP 1] Load page', async function () {
 		// Reset the page state to a point where the we can start testing.
 		// Local storage can only be cleared once the page has loaded.
 		await loadPage(page, url);
@@ -37,7 +37,7 @@ const testPage = async function () {
 		await clearCookies(page);
 	});
 
-	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
+	await synthetics.executeStep('[STEP 2] Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
 		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
@@ -45,7 +45,7 @@ const testPage = async function () {
 		await checkTopAdHasLoaded(page, pageType);
 	});
 
-	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
+	await synthetics.executeStep('[STEP 3] Interact with CMP', async function () {
 		log(
 			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
 		);
@@ -61,7 +61,7 @@ const testPage = async function () {
 	});
 
 	await synthetics.executeStep(
-		'STEP 4 - Reload page after CMP interaction',
+		'[STEP 4] Reload page after CMP interaction',
 		async function () {
 			log(
 				'After we clear local storage and cookies, the CMP banner is displayed once again',
@@ -77,7 +77,7 @@ const testPage = async function () {
 	);
 
 	await synthetics.executeStep(
-		'STEP 5 - Prebid - Load bundle',
+		'[STEP 5] Prebid : Load bundle',
 		async function () {
 			await reloadPage(page);
 			await checkPrebidBundle(page);
@@ -85,21 +85,21 @@ const testPage = async function () {
 	);
 
 	await synthetics.executeStep(
-		'STEP 6 - Prebid - Bid request',
+		'[STEP 6] Prebid : Bid request',
 		async function () {
 			await checkPrebidBidRequest(page);
 		},
 	);
 
 	await synthetics.executeStep(
-		'STEP 7 - Prebid - window.pbjs',
+		'[STEP 7] Prebid : window.pbjs',
 		async function () {
 			await checkPbjsPresence(page);
 		},
 	);
 
 	await synthetics.executeStep(
-		'STEP 8 - Prebid - Bid response',
+		'[STEP 8] Prebid : Bid response',
 		async function () {
 			const expectedBidders = [
 				'ix',
