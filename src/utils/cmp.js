@@ -89,6 +89,8 @@ const checkCMPIsOnPage = async (page, pageType) => {
 const checkCMPIsNotVisible = async (page) => {
 	log(`Checking CMP is Hidden: Start`);
 
+	await new Promise((r) => setTimeout(r, 100)); // Wait 100ms before checking if the CMP has been dismissed
+
 	const getSpMessageDisplayProperty = function () {
 		// eslint-disable-next-line no-undef -- document object exists in the browser only
 		const element = document.querySelector('[id*="sp_message_container"]');
