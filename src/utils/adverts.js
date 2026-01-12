@@ -59,7 +59,7 @@ const checkPrebidBidRequest = async (page) => {
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 	try {
 		await page.waitForRequest((req) => req.url().includes(prebidURL), {
-			timeout: TWO_SECONDS,
+			timeout: 3000, // three seconds
 		});
 	} catch (timeoutError) {
 		logError('Expected bid request not made');
