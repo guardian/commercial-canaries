@@ -1,7 +1,7 @@
 const { log } = require('console');
 const synthetics = require('Synthetics');
 const { logError } = require('./logging');
-const { secondsInMillis } = require('./utils');
+const { secondsInMillis } = require('./time');
 
 const TOP_ABOVE_NAV_SELECTOR =
 	'.ad-slot--top-above-nav .ad-slot__content iframe';

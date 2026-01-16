@@ -1,7 +1,7 @@
 const { URL } = require('url');
 const synthetics = require('Synthetics');
 const { log, logError } = require('./logging');
-const { secondsInMillis } = require('./utils');
+const { secondsInMillis } = require('./time');
 
 const interactWithCMPTcfv2 = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()

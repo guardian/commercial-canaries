@@ -1,5 +1,5 @@
 const { log, logError } = require('./logging');
-const { secondsInMillis } = require('./utils');
+const { secondsInMillis } = require('./time');
 
 const clearCookies = async (page) => {
 	const allCookies = await page.cookies();
