@@ -12,7 +12,6 @@ const {
 	interactWithCMPAus,
 } = require('./utils/cmp');
 const { setConfig } = require('./utils/config');
-const { TWO_SECONDS } = require('./utils/constants');
 const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -20,6 +19,7 @@ const {
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
+const { secondsInMillis } = require('./utils/time');
 
 const testPage = async function () {
 	setConfig();
@@ -71,7 +71,7 @@ const testPage = async function () {
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
+			await new Promise((r) => setTimeout(r, secondsInMillis(2))); // Wait an extra two seconds after reloading the page
 			await synthetics.takeScreenshot(
 				`cmp-${pageType}`,
 				'cookies and local storage cleared then page reloaded',
