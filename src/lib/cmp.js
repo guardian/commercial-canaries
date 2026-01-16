@@ -18,7 +18,7 @@ const interactWithCMPTcfv2 = async (page) => {
 	if (frame) {
 		await frame.waitForSelector(
 			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-			{ timeout: secondsInMillis(2) },
+			{ timeout: secondsInMillis(5) },
 		);
 		// Accept cookies
 		await frame.click(
