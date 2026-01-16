@@ -5,20 +5,20 @@ const {
 	checkPrebidBidRequest,
 	checkPbjsPresence,
 	checkBidResponse,
-} = require('./utils/adverts');
+} = require('./lib/adverts');
 const {
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,
 	interactWithCMPCcpa,
-} = require('./utils/cmp');
-const { setConfig } = require('./utils/config');
-const { log } = require('./utils/logging');
+} = require('./lib/cmp');
+const { setConfig } = require('./lib/config');
+const { log } = require('./lib/logging');
 const {
 	clearLocalStorage,
 	clearCookies,
 	loadPage,
 	reloadPage,
-} = require('./utils/page');
+} = require('./lib/page');
 
 const testPage = async function () {
 	setConfig();
