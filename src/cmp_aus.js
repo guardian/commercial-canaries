@@ -5,21 +5,21 @@ const {
 	checkPrebidBidRequest,
 	checkPbjsPresence,
 	checkBidResponse,
-} = require('./lib/adverts');
+} = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
 	checkCMPIsNotVisible,
 	interactWithCMPAus,
-} = require('./lib/cmp');
-const { setConfig } = require('./lib/config');
-const { log } = require('./lib/logging');
+} = require('./utils/cmp');
+const { setConfig } = require('./utils/config');
+const { TWO_SECONDS } = require('./utils/constants');
+const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
 	clearCookies,
 	loadPage,
 	reloadPage,
-} = require('./lib/page');
-const { secondsInMillis } = require('./lib/utils');
+} = require('./utils/page');
 
 const testPage = async function () {
 	setConfig();
@@ -71,7 +71,7 @@ const testPage = async function () {
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await new Promise((r) => setTimeout(r, secondsInMillis(2))); // Wait an extra two seconds after reloading the page
+			await new Promise((r) => setTimeout(r, TWO_SECONDS)); // Wait an extra two seconds after reloading the page
 			await synthetics.takeScreenshot(
 				`cmp-${pageType}`,
 				'cookies and local storage cleared then page reloaded',

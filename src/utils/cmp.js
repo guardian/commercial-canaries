@@ -1,7 +1,7 @@
 const { URL } = require('url');
 const synthetics = require('Synthetics');
+const { TWO_SECONDS } = require('./constants');
 const { log, logError } = require('./logging');
-const { secondsInMillis } = require('./utils');
 
 const interactWithCMPTcfv2 = async (page) => {
 	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
@@ -18,7 +18,7 @@ const interactWithCMPTcfv2 = async (page) => {
 	if (frame) {
 		await frame.waitForSelector(
 			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-			{ timeout: secondsInMillis(5) },
+			{ timeout: TWO_SECONDS },
 		);
 		// Accept cookies
 		await frame.click(
@@ -44,7 +44,7 @@ const interactWithCMPCcpa = async (page) => {
 	if (frame) {
 		await frame.waitForSelector(
 			'button[title="Do not sell or share my personal information"]',
-			{ timeout: secondsInMillis(2) },
+			{ timeout: TWO_SECONDS },
 		);
 		await frame.click(
 			'button[title="Do not sell or share my personal information"]',
@@ -55,7 +55,7 @@ const interactWithCMPCcpa = async (page) => {
 
 	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	// We see some run failures if we do not include a wait time after a page load
-	await new Promise((r) => setTimeout(r, secondsInMillis(2)));
+	await new Promise((r) => setTimeout(r, TWO_SECONDS));
 };
 
 const interactWithCMPAus = async (page) => {
@@ -76,7 +76,7 @@ const checkCMPIsOnPage = async (page, pageType) => {
 	log(`Waiting for CMP: Start`);
 	try {
 		await page.waitForSelector('[id*="sp_message_container"]', {
-			timeout: secondsInMillis(5),
+			timeout: TWO_SECONDS,
 		});
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
