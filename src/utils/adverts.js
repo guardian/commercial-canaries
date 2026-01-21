@@ -1,17 +1,16 @@
 const { log } = require('console');
 const synthetics = require('Synthetics');
-const {
-	TOP_ABOVE_NAV_SELECTOR,
-	TWO_SECONDS,
-	TWENTY_SECONDS,
-} = require('./constants');
 const { logError } = require('./logging');
+const { secondsInMillis } = require('./time');
+
+const TOP_ABOVE_NAV_SELECTOR =
+	'.ad-slot--top-above-nav .ad-slot__content iframe';
 
 const checkTopAdHasLoaded = async (page, pageType) => {
 	log(`Waiting for ads to load: Start`);
 	try {
 		await page.waitForSelector(TOP_ABOVE_NAV_SELECTOR, {
-			timeout: TWENTY_SECONDS,
+			timeout: secondsInMillis(20),
 		});
 	} catch (timeoutError) {
 		logError(`Failed to load top-above-nav ad: ${timeoutError.message}`);
@@ -38,7 +37,7 @@ const checkPrebidBundle = async (page) => {
 	try {
 		await page.waitForRequest(
 			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
-			{ timeout: TWO_SECONDS },
+			{ timeout: secondsInMillis(2) },
 		);
 	} catch (timeoutError) {
 		const hasPageskin = await page.evaluate(() =>
@@ -59,7 +58,7 @@ const checkPrebidBidRequest = async (page) => {
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 	try {
 		await page.waitForRequest((req) => req.url().includes(prebidURL), {
-			timeout: 3000, // three seconds
+			timeout: secondsInMillis(3),
 		});
 	} catch (timeoutError) {
 		logError('Expected bid request not made');
@@ -73,7 +72,7 @@ const checkPbjsPresence = async (page) => {
 			() =>
 				// eslint-disable-next-line no-undef -- window object exists in the browser only
 				window.pbjs !== undefined,
-			{ timeout: TWO_SECONDS },
+			{ timeout: secondsInMillis(2) },
 		);
 	} catch (timeoutError) {
 		logError('Prebid.js is not loaded');
@@ -92,7 +91,7 @@ const checkBidResponse = async (page, expectedBidders) => {
 						event.eventType === 'auctionInit' &&
 						event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
 				),
-		{ timeout: TWO_SECONDS },
+		{ timeout: secondsInMillis(2) },
 	);
 
 	const topAboveNavBidders = await page.evaluate(

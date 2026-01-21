@@ -1,5 +1,5 @@
-const { TEN_SECONDS, TWO_SECONDS } = require('./constants');
 const { log, logError } = require('./logging');
+const { secondsInMillis } = require('./time');
 
 const clearCookies = async (page) => {
 	const allCookies = await page.cookies();
@@ -16,7 +16,7 @@ const loadPage = async (page, url) => {
 	log(`Loading page: Start`);
 	const response = await page.goto(url, {
 		waitUntil: 'domcontentloaded',
-		timeout: TEN_SECONDS,
+		timeout: secondsInMillis(10),
 	});
 	if (!response) {
 		logError('Loading page: Failed');
@@ -28,7 +28,7 @@ const loadPage = async (page, url) => {
 		throw 'Failed to load page!';
 	}
 	// Wait an extra two seconds to allow the page to load
-	await new Promise((r) => setTimeout(r, TWO_SECONDS));
+	await new Promise((r) => setTimeout(r, secondsInMillis(2)));
 	log(`Loading page: Complete`);
 };
 
@@ -36,7 +36,7 @@ const reloadPage = async (page) => {
 	log(`Reloading page: Start`);
 	const reloadResponse = await page.reload({
 		waitUntil: 'domcontentloaded',
-		timeout: TEN_SECONDS,
+		timeout: secondsInMillis(10),
 	});
 	if (!reloadResponse) {
 		logError(`Reloading page: Failed`);
