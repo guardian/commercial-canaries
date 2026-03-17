@@ -1,6 +1,5 @@
-const { log } = require('console');
 const synthetics = require('Synthetics');
-const { logError } = require('./logging');
+const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
 const TOP_ABOVE_NAV_SELECTOR =
