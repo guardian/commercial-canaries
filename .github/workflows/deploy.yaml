@@ -44,7 +44,7 @@ jobs:
         run: .github/scripts/create-artifacts.sh
         shell: bash
 
-      - uses: guardian/actions-riff-raff@v4.1.8
+      - uses: guardian/actions-riff-raff@v4.2.6
         with:
           projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
