@@ -105,7 +105,6 @@ const testPage = async function () {
 				'ix',
 				'rubicon',
 				'criteo',
-				'trustx',
 				'pubmatic',
 				'ozone',
 				'ttd',
