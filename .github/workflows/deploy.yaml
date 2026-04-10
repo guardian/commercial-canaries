@@ -15,18 +15,19 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Corepack
         run: corepack enable
 
-      - uses: actions/setup-node@v6.3.0
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
-          node-version-file: '.nvmrc'
-          cache: 'pnpm'
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Test
         run: pnpm test
@@ -44,7 +45,7 @@ jobs:
         run: .github/scripts/create-artifacts.sh
         shell: bash
 
-      - uses: guardian/actions-riff-raff@v4.2.6
+      - uses: guardian/actions-riff-raff@13ced2bc56d837683b64d5c8384cf08dfb6d626e # v4.2.6
         with:
           projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
