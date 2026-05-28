@@ -21,8 +21,8 @@ importers:
         specifier: 14.0.0
         version: 14.0.0(@typescript-eslint/utils@8.55.0(eslint@9.39.4)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.24.0(@typescript-eslint/parser@8.55.0(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4))(eslint@9.39.4)(typescript@5.9.3)
       '@guardian/prettier':
-        specifier: 8.0.1
-        version: 8.0.1(prettier@3.8.1)(tslib@2.8.1)
+        specifier: 10.0.0
+        version: 10.0.0(prettier@3.8.1)(tslib@2.8.1)
       '@types/jest':
         specifier: 30.0.0
         version: 30.0.0
@@ -456,11 +456,11 @@ packages:
       eslint-plugin-storybook:
         optional: true
 
-  '@guardian/prettier@8.0.1':
-    resolution: {integrity: sha512-mELIji0FezEj5YTyHkylB6VNeCN1+/jsHW/iZ0RItDMn/GjU6gbaPP5D2m+BZwrTYNrxYhCoFqCE/ObkEghtdg==}
+  '@guardian/prettier@10.0.0':
+    resolution: {integrity: sha512-b/ITMGfAxL5Rz+HZqmn5AGTI/Bb7Ep50SmRvcDo0QqahTmeAneiWOc1eFBA3pFRkMCR2UwU79v7kDXaMQwS2DQ==}
     peerDependencies:
-      prettier: ^3.2.2
-      tslib: ^2.6.2
+      prettier: ^3.7.4
+      tslib: ^2.8.1
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3806,7 +3806,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@guardian/prettier@8.0.1(prettier@3.8.1)(tslib@2.8.1)':
+  '@guardian/prettier@10.0.0(prettier@3.8.1)(tslib@2.8.1)':
     dependencies:
       prettier: 3.8.1
       tslib: 2.8.1

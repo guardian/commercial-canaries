@@ -17,7 +17,7 @@
 	"devDependencies": {
 		"@guardian/cdk": "62.5.4",
 		"@guardian/eslint-config": "14.0.0",
-		"@guardian/prettier": "8.0.1",
+		"@guardian/prettier": "10.0.0",
 		"@types/jest": "30.0.0",
 		"@types/node": "25.3.2",
 		"aws-cdk": "2.1111.0",
