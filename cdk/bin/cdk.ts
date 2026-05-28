@@ -31,18 +31,17 @@ const canaryApps = stages
 	.flat();
 
 const riffRaff = new RiffRaffYamlFile(cdkApp);
-const {
-	riffRaffYaml: { deployments },
-} = riffRaff;
+const { configuration } = riffRaff;
+const deployments = configuration.get(`${stack}::${cloudFormationStackName}`)?.deployments;
 
-deployments.forEach((deployment) => {
+deployments?.forEach((deployment) => {
 	deployment.parameters.cloudFormationStackName = cloudFormationStackName;
 	deployment.parameters.prependStackToCloudFormationStackName = false;
 	deployment.parameters.cloudFormationStackByTags = false;
 });
 
 canaryApps.forEach(({ locationAbbr, region }) => {
-	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
+	deployments?.set(`upload-${locationAbbr.toLowerCase()}`, {
 		type: 'aws-s3',
 		app: 'commercial-canaries',
 		regions: new Set([region]),
