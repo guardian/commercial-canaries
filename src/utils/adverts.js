@@ -71,7 +71,7 @@ const checkPbjsPresence = async (page) => {
 			() =>
 				// eslint-disable-next-line no-undef -- window object exists in the browser only
 				window.pbjs !== undefined,
-			{ timeout: secondsInMillis(2) },
+			{ timeout: secondsInMillis(3) },
 		);
 	} catch (timeoutError) {
 		logError('Prebid.js is not loaded');
