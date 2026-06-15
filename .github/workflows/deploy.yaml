@@ -15,7 +15,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Corepack
         run: corepack enable
@@ -45,7 +45,7 @@ jobs:
         run: .github/scripts/create-artifacts.sh
         shell: bash
 
-      - uses: guardian/actions-riff-raff@d39172548e0d231b1394d32116644c23958c54a0 # v4.3.1
+      - uses: guardian/actions-riff-raff@f0806aac5659b052afe2416f5d35723448e7807f # v4.3.3
         with:
           projectName: frontend::commercial-canaries
           githubToken: ${{ secrets.GITHUB_TOKEN }}
