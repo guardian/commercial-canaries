@@ -14,7 +14,7 @@ describe('The CommercialCanaries stack', () => {
 				env: { region },
 				articleUrl,
 				frontUrl,
-				pageskinUrl
+				pageskinUrl,
 			});
 
 			const template = Template.fromStack(stack);
@@ -32,7 +32,7 @@ describe('The CommercialCanaries stack', () => {
 				env: { region },
 				articleUrl,
 				frontUrl,
-				pageskinUrl
+				pageskinUrl,
 			});
 
 			const template = Template.fromStack(stack);

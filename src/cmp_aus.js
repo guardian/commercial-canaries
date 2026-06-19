@@ -122,7 +122,7 @@ const testPage = async function () {
 		},
 	);
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
-		await loadPage(page, pageskinUrl);
+		await reloadPage(page, pageskinUrl);
 		await checkPageskinHasLoaded(page);
 		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
 	});
