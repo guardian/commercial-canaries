@@ -6,7 +6,7 @@ import { CommercialCanaries } from './commercial-canaries';
 describe('The CommercialCanaries stack', () => {
 	it.each(regions)(
 		'matches the $location CODE snapshot',
-		({ region, articleUrl, frontUrl }) => {
+		({ region, articleUrl, frontUrl, pageskinUrl }) => {
 			const app = new App();
 			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 				stack: 'frontend',
@@ -14,6 +14,7 @@ describe('The CommercialCanaries stack', () => {
 				env: { region },
 				articleUrl,
 				frontUrl,
+				pageskinUrl
 			});
 
 			const template = Template.fromStack(stack);
@@ -23,7 +24,7 @@ describe('The CommercialCanaries stack', () => {
 
 	it.each(regions)(
 		'matches the $location PROD snapshot',
-		({ region, articleUrl, frontUrl }) => {
+		({ region, articleUrl, frontUrl, pageskinUrl }) => {
 			const app = new App();
 			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 				stack: 'frontend',
@@ -31,6 +32,7 @@ describe('The CommercialCanaries stack', () => {
 				env: { region },
 				articleUrl,
 				frontUrl,
+				pageskinUrl
 			});
 
 			const template = Template.fromStack(stack);
