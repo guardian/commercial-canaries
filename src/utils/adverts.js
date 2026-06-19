@@ -32,6 +32,19 @@ const checkTopAdDidNotLoad = async (page) => {
 	log(`Checking ads do not load: Complete`);
 };
 
+const checkPageskinHasLoaded = async (page) => {
+    log('Checking pageskin has loaded: Start');
+    const hasPageskin = await page.evaluate(() =>
+		// eslint-disable-next-line no-undef -- document object exists in the browser only
+        document.body.classList.contains('has-page-skin'),
+    );
+    if (!hasPageskin) {
+        logError('Pageskin not detected on page');
+        throw new Error('Page does not have pageskin class');
+    }
+    log('Checking pageskin has loaded: Complete');
+};
+
 const checkPrebidBundle = async (page) => {
 	try {
 		await page.waitForRequest(
@@ -131,4 +144,5 @@ module.exports = {
 	checkPrebidBidRequest,
 	checkPbjsPresence,
 	checkBidResponse,
+	checkPageskinHasLoaded
 };

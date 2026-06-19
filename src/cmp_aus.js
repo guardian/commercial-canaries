@@ -5,6 +5,7 @@ const {
 	checkPrebidBidRequest,
 	checkPbjsPresence,
 	checkBidResponse,
+	checkPageskinHasLoaded,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -26,6 +27,7 @@ const testPage = async function () {
 
 	const url = process.env.url;
 	const pageType = process.env.pageType;
+	const pageskinUrl = process.env.pageskinUrl || url;
 
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();
@@ -119,6 +121,11 @@ const testPage = async function () {
 			await checkBidResponse(page, expectedBidders);
 		},
 	);
+	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
+		await loadPage(page, pageskinUrl);
+		await checkPageskinHasLoaded(page);
+		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
+	});
 };
 
 exports.handler = async () => {

@@ -22,13 +22,14 @@ import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 type Props = GuStackProps & {
 	articleUrl: string;
 	frontUrl: string;
+	pageskinUrl: string;
 };
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: Props) {
 		super(scope, id, props);
 
-		const { env, stage, articleUrl, frontUrl } = props;
+		const { env, stage, articleUrl, frontUrl, pageskinUrl } = props;
 
 		if (!env?.region) {
 			throw new Error('env.region is required');
@@ -81,6 +82,7 @@ export class CommercialCanaries extends GuStack {
 				logAllResponses: 'false',
 				pageType: 'front',
 				url: frontUrl,
+				pageskinUrl,
 			},
 		});
 
@@ -97,6 +99,7 @@ export class CommercialCanaries extends GuStack {
 				logAllResponses: 'false',
 				pageType: 'article',
 				url: articleUrl,
+				pageskinUrl,
 			},
 		});
 
