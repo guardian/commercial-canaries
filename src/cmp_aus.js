@@ -123,6 +123,8 @@ const testPage = async function () {
 	);
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
+		await interactWithCMPAus(page);
+		await checkCMPIsNotVisible(page);
 		await checkPageskinHasLoaded(page);
 		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
 	});

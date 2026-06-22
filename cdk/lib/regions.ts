@@ -36,7 +36,8 @@ export const regions: Region[] = [
 			'https://www.theguardian.com/international?adtest=fixed-puppies-ci',
 		articleUrl:
 			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/europe?adtest=puppies-pageskin',
+		pageskinUrl:
+			'https://www.theguardian.com/international?adtest=puppies-pageskin',
 	},
 	{
 		location: 'US',
@@ -46,7 +47,7 @@ export const regions: Region[] = [
 		frontUrl: 'https://www.theguardian.com/us?adtest=fixed-puppies-ci',
 		articleUrl:
 			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/europe?adtest=puppies-pageskin',
+		pageskinUrl: 'https://www.theguardian.com/us?adtest=puppies-pageskin',
 	},
 	{
 		location: 'Australia',
@@ -56,6 +57,6 @@ export const regions: Region[] = [
 		frontUrl: 'https://www.theguardian.com/au?adtest=fixed-puppies-ci',
 		articleUrl:
 			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/europe?adtest=puppies-pageskin',
+		pageskinUrl: 'https://www.theguardian.com/au?adtest=puppies-pageskin',
 	},
 ];

@@ -34,11 +34,14 @@ const checkTopAdDidNotLoad = async (page) => {
 
 const checkPageskinHasLoaded = async (page) => {
 	log('Checking pageskin has loaded: Start');
-	const hasPageskin = await page.evaluate(() =>
-		// eslint-disable-next-line no-undef -- document object exists in the browser only
-		document.body.classList.contains('has-page-skin'),
-	);
-	if (!hasPageskin) {
+	try {
+		await page.waitForFunction(
+			() =>
+				// eslint-disable-next-line no-undef -- document object exists in the browser only
+				document.body.classList.contains('has-page-skin'),
+			{ timeout: secondsInMillis(10) },
+		);
+	} catch {
 		logError('Pageskin not detected on page');
 		throw new Error('Page does not have pageskin class');
 	}
