@@ -6,6 +6,9 @@ const {
 	checkPbjsPresence,
 	checkBidResponse,
 	checkPageskinHasLoaded,
+	checkPageskinBackgroundImageHasLoaded,
+	checkPageskinWidthIsConstrained,
+	checkPageskinCollapsesFrontsSlots,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -120,7 +123,11 @@ const testPage = async function () {
 		await loadPage(page, pageskinUrl);
 		await interactWithCMPCcpa(page);
 		await checkCMPIsNotVisible(page);
+		await checkTopAdHasLoaded(page, pageType);
 		await checkPageskinHasLoaded(page);
+		await checkPageskinBackgroundImageHasLoaded(page);
+		await checkPageskinWidthIsConstrained(page);
+		await checkPageskinCollapsesFrontsSlots(page);
 		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
 	});
 };
