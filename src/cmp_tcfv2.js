@@ -116,6 +116,7 @@ const testPage = async function () {
 					'criteo',
 					'ttd',
 					'rubicon',
+					'teads',
 					...(currentLocation === 'UK' ? ['xhb'] : []),
 				];
 				await checkBidResponse(page, expectedBidders);

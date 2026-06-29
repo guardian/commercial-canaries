@@ -120,6 +120,7 @@ const testPage = async function () {
 				'triplelift',
 				'and',
 				'oxd',
+				'teads'
 			];
 			await checkBidResponse(page, expectedBidders);
 		},

@@ -115,6 +115,7 @@ const testPage = async function () {
 				'ttd',
 				'kargo',
 				'triplelift',
+				'teads'
 			];
 			await checkBidResponse(page, expectedBidders);
 		},
