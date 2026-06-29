@@ -53,8 +53,8 @@ const interactWithCMPCcpa = async (page) => {
 		logError('CMP frame not found');
 	}
 
-	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
-	// We see some run failures if we do not include a wait time after a page load
+	// The consent action does not always trigger a full navigation, so wait for
+	// the UI state change instead of a hard navigation event.
 	await new Promise((r) => setTimeout(r, secondsInMillis(2)));
 };
 

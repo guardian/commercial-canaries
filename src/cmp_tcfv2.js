@@ -6,6 +6,10 @@ const {
 	checkPrebidBidRequest,
 	checkPbjsPresence,
 	checkBidResponse,
+	checkPageskinHasLoaded,
+	checkPageskinBackgroundImageHasLoaded,
+	checkPageskinWidthIsConstrained,
+	checkPageskinCollapsesFrontsSlots,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -28,6 +32,11 @@ const testPage = async function () {
 
 	const url = process.env.url;
 	const pageType = process.env.pageType;
+	const pageskinUrl = process.env.pageskinUrl;
+
+	if (!pageskinUrl) {
+		throw new Error('Missing required env var: pageskinUrl');
+	}
 
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();
@@ -111,6 +120,7 @@ const testPage = async function () {
 					'criteo',
 					'ttd',
 					'rubicon',
+					'teads',
 					...(currentLocation === 'UK' ? ['xhb'] : []),
 				];
 				await checkBidResponse(page, expectedBidders);
@@ -133,6 +143,19 @@ const testPage = async function () {
 			await checkTopAdDidNotLoad(page);
 		},
 	);
+	await synthetics.executeStep('STEP 10 - Pageskin', async function () {
+		await loadPage(page, pageskinUrl);
+		await checkCMPIsOnPage(page, pageType);
+		await interactWithCMPTcfv2(page);
+		await new Promise((r) => setTimeout(r, secondsInMillis(2)));
+		await checkCMPIsNotVisible(page);
+		await checkTopAdHasLoaded(page, pageType);
+		await checkPageskinHasLoaded(page);
+		await checkPageskinBackgroundImageHasLoaded(page);
+		await checkPageskinWidthIsConstrained(page);
+		await checkPageskinCollapsesFrontsSlots(page);
+		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
+	});
 };
 
 exports.handler = async () => {
