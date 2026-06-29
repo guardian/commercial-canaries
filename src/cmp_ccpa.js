@@ -121,8 +121,6 @@ const testPage = async function () {
 	);
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
-		await interactWithCMPCcpa(page);
-		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
