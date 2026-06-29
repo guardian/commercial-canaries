@@ -30,7 +30,11 @@ const testPage = async function () {
 
 	const url = process.env.url;
 	const pageType = process.env.pageType;
-	const pageskinUrl = process.env.pageskinUrl || url;
+	const pageskinUrl = process.env.pageskinUrl;
+
+	if (!pageskinUrl) {
+		throw new Error('Missing required env var: pageskinUrl');
+	}
 
 	log(`Start checking page: ${url}`);
 	let page = await synthetics.getPage();
