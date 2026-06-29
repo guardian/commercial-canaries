@@ -78,6 +78,9 @@ const checkPageskinWidthIsConstrained = async (page) => {
 	try {
 		await page.waitForFunction(
 			() => {
+				// Require at least 100px spare viewport width so pageskin rails can fit.
+				const minimumPageskinGutter = 100;
+
 				// eslint-disable-next-line no-undef -- document object exists in the browser only
 				const main = document.querySelector(
 					'main#maincontent[data-layout="FrontLayout"]',
@@ -105,7 +108,7 @@ const checkPageskinWidthIsConstrained = async (page) => {
 				return (
 					maxWidth !== 'none' &&
 					rect.width < viewportWidth &&
-					viewportWidth - rect.width > 100
+					viewportWidth - rect.width > minimumPageskinGutter
 				);
 			},
 			{ timeout: secondsInMillis(10) },
