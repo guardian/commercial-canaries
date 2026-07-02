@@ -3,10 +3,8 @@ const synthetics = require('Synthetics');
 const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
-const interactWithCMPTcfv2 = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Yes I'm Happy"`);
-	const frame = page.frames().find((f) => {
+const findCmpFrame = (page) => {
+  return page.frames().find((f) => {
 		// Check that f.url is defined and that it's longer than a single character
 		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
 		if (f.url() && f.url().length > 1) {
@@ -14,62 +12,47 @@ const interactWithCMPTcfv2 = async (page) => {
 			return parsedUrl.host === 'sourcepoint.theguardian.com';
 		}
 	});
+}
 
+const interactWithCMPTcfv2 = async (page) => {
+  const frame = findCmpFrame(page)
 	if (frame) {
-		await frame.waitForSelector(
-			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-			{ timeout: secondsInMillis(5) },
-		);
+    log(`Clicking on "Yes I'm Happy"`);
+    const acceptAllButtonSelector = 'div.message-component.message-row > button.btn-primary.sp_choice_type_11'
+		await frame.waitForSelector(acceptAllButtonSelector, { timeout: secondsInMillis(5) });
 		// Accept cookies
-		await frame.click(
-			'div.message-component.message-row > button.btn-primary.sp_choice_type_11',
-		);
+		await frame.click(acceptAllButtonSelector);
 	} else {
 		logError('CMP frame not found');
 	}
 };
 
 const interactWithCMPCcpa = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Do not sell or share my personal information" on CMP`);
-	const frame = page.frames().find((f) => {
-		// Check that f.url is defined and that it's longer than a single character
-		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
-		if (f.url() && f.url().length > 1) {
-			const parsedUrl = new URL(f.url());
-			return parsedUrl.host === 'sourcepoint.theguardian.com';
-		}
-	});
-
+  const frame = findCmpFrame(page);
 	if (frame) {
-		await frame.waitForSelector(
-			'button[title="Do not sell or share my personal information"]',
-			{ timeout: secondsInMillis(2) },
-		);
-		await frame.click(
-			'button[title="Do not sell or share my personal information"]',
-		);
+    log(`Clicking on "Do not sell or share my personal information" on CMP`);
+    const doNotSellButtonSelector = 'button[title="Do not sell or share my personal information"]'
+		await frame.waitForSelector(doNotSellButtonSelector,{ timeout: secondsInMillis(2) });
+		await frame.click(doNotSellButtonSelector);
 	} else {
 		logError('CMP frame not found');
 	}
 
-	// The consent action does not always trigger a full navigation, so wait for
-	// the UI state change instead of a hard navigation event.
-	await new Promise((r) => setTimeout(r, secondsInMillis(2)));
+  // The page reloads after clicking "do not sell" so need to wait for this to happen before moving on
+  await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+  await new Promise((r) => setTimeout(r, secondsInMillis(1)));
 };
 
 const interactWithCMPAus = async (page) => {
-	// When AWS Synthetics use a more up-to-date version of Puppeteer, we can make use of waitForFrame()
-	log(`Clicking on "Continue" on CMP`);
-	const frame = page.frames().find((f) => {
-		// Check that f.url is defined and that it's longer than a single character
-		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
-		if (f.url() && f.url().length > 1) {
-			const parsedUrl = new URL(f.url());
-			return parsedUrl.host === 'sourcepoint.theguardian.com';
-		}
-	});
-	await frame.click('button[title="Continue"]');
+  const frame = findCmpFrame(page);
+  if (frame) {
+    log(`Clicking on "Continue" on CMP`);
+    const continueButtonSelector = 'button[title="Continue"]'
+    await frame.waitForSelector(continueButtonSelector,{ timeout: secondsInMillis(2) });
+    await frame.click(continueButtonSelector)
+  } else {
+    	logError('CMP frame not found');
+  }
 };
 
 const checkCMPIsOnPage = async (page, pageType) => {
