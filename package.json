@@ -18,7 +18,8 @@
 		"@guardian/cdk": "62.5.4",
 		"@guardian/eslint-config": "16.0.0",
 		"@guardian/prettier": "11.0.0",
-		"@types/jest": "30.0.0",
+		"@guardian/tsconfig": "2.0.0",
+    "@types/jest": "30.0.0",
 		"@types/node": "25.9.4",
 		"aws-cdk": "2.1111.0",
 		"aws-cdk-lib": "2.243.0",
@@ -28,7 +29,7 @@
 		"prettier": "3.9.6",
 		"ts-jest": "29.4.12",
 		"ts-node": "10.9.2",
-		"typescript": "5.9.3"
+		"typescript": "6.0.2"
 	},
 	"pnpm": {
 		"overrides": {
