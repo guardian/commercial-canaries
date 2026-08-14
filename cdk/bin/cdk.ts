@@ -34,31 +34,29 @@ const canaryApps = stages
 	.flat();
 
 const riffRaff = new RiffRaffYamlFile(cdkApp);
-const {
-	riffRaffYaml: { deployments },
-} = riffRaff;
-
-deployments.forEach((deployment) => {
-	deployment.parameters.cloudFormationStackName = cloudFormationStackName;
-	deployment.parameters.prependStackToCloudFormationStackName = false;
-	deployment.parameters.cloudFormationStackByTags = false;
-});
+const { configuration } = riffRaff;
+const riffRaffProjectName = 'frontend::commercial-canaries';
 
 canaryApps.forEach(({ locationAbbr, region }) => {
-	deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
-		type: 'aws-s3',
-		app: 'commercial-canaries',
-		regions: new Set([region]),
-		stacks: new Set([stack]),
-		parameters: {
-			bucketSsmKey: `/account/services/commercial-canary.bucket`,
-			cacheControl: 'private',
-			publicReadAcl: false,
-			prefixStack: false,
-			prefixPackage: false,
-		},
-		contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
-	});
+	configuration
+		.get(riffRaffProjectName)
+		?.deployments.set(`upload-${locationAbbr.toLowerCase()}`, {
+			type: 'aws-s3',
+			app: 'commercial-canaries',
+			regions: new Set([region]),
+			stacks: new Set([stack]),
+			parameters: {
+				bucketSsmKey: `/account/services/commercial-canary.bucket`,
+				cacheControl: 'private',
+				cloudFormationStackByTags: false,
+				cloudFormationStackName,
+				prefixPackage: false,
+				prefixStack: false,
+				prependStackToCloudFormationStackName: false,
+				publicReadAcl: false,
+			},
+			contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
+		});
 });
 
 riffRaff.synth();
