@@ -1,6 +1,6 @@
 # Commercial Canaries
 
-The commercial canaries are a set of [AWS Synthetics Canaries](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html) that monitor advert and CMP behaviour on fronts and article pages. A canary is a series of lambda functions that use Puppeteer to load the site within a headless browser and check that the page is working as expected with regard to ads and the CMP.
+The commercial canaries are a set of [AWS Synthetics Canaries](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html) that monitor advert and CMP behaviour on fronts and article pages. A canary is a series of lambda functions that use the AWS Synthetics Playwright runtime to load the site within a headless browser and check that the page is working as expected with regard to ads and the CMP.
 
 ## Configuration
 

@@ -14,6 +14,9 @@ importers:
 
   .:
     devDependencies:
+      '@aws/synthetics-playwright':
+        specifier: ^7.0.0
+        version: 7.0.0
       '@guardian/cdk':
         specifier: 64.5.1
         version: 64.5.1(aws-cdk-lib@2.266.0(constructs@10.8.1))(aws-cdk@2.1138.0)(constructs@10.8.1)
@@ -154,6 +157,10 @@ packages:
   '@aws/lambda-invoke-store@0.3.0':
     resolution: {integrity: sha512-sl4Bm6yiMNYrZKkqqDFWN0UfnWhlS8ivKxrYl+6t0gCLrqr8y3B2IqZZbFRkfaVVp7C/baApyh71P+LeE1A2sQ==}
     engines: {node: '>=18.0.0'}
+
+  '@aws/synthetics-playwright@7.0.0':
+    resolution: {integrity: sha512-1mH0hBeGpoknxRpeMHhJCkYdU0mnZsVfpz3CG8J2ocRI9td91nd/YnxO51TRBaS1iqAlnF+vSeO4v44uJ2PZwA==}
+    engines: {node: '>= 18.x'}
 
   '@babel/code-frame@7.29.0':
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
@@ -1555,6 +1562,11 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -2378,6 +2390,16 @@ packages:
     resolution: {integrity: sha512-fjAPuiws93rm7mPUu21RdBnkeZNrbfCFCwfAhPWY+rR3zG0ubpe5cEReHOw5fIbfmsxEV/g2kSxGTATY3Bpnwg==}
     engines: {node: '>=4'}
 
+  playwright-core@1.59.1:
+    resolution: {integrity: sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.59.1:
+    resolution: {integrity: sha512-C8oWjPR3F81yljW9o5OxcWzfh6avkVwDD2VYdwIGqTkl+OGFISgypqzfu7dOe4QNLL2aqcWBmI3PMtLIK233lw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
     engines: {node: '>= 0.4'}
@@ -3107,6 +3129,10 @@ snapshots:
       tslib: 2.8.1
 
   '@aws/lambda-invoke-store@0.3.0': {}
+
+  '@aws/synthetics-playwright@7.0.0':
+    dependencies:
+      playwright: 1.59.1
 
   '@babel/code-frame@7.29.0':
     dependencies:
@@ -4807,6 +4833,9 @@ snapshots:
 
   fs.realpath@1.0.0: {}
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -5857,6 +5886,14 @@ snapshots:
     dependencies:
       find-up: 2.1.0
     optional: true
+
+  playwright-core@1.59.1: {}
+
+  playwright@1.59.1:
+    dependencies:
+      playwright-core: 1.59.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   possible-typed-array-names@1.1.0: {}
 

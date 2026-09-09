@@ -2,8 +2,8 @@ const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
 const clearCookies = async (page) => {
-	const allCookies = await page.cookies();
-	await page.deleteCookie(...allCookies);
+	const context = await page.context();
+	await context.clearCookies();
 	log(`Cleared Cookies`);
 };
 
