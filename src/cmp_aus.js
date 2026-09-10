@@ -15,7 +15,6 @@ const {
 	checkCMPIsNotVisible,
 	interactWithCMPAus,
 } = require('./utils/cmp');
-const { setConfig } = require('./utils/config');
 const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -26,8 +25,6 @@ const {
 const { secondsInMillis } = require('./utils/time');
 
 const testPage = async function () {
-	setConfig();
-
 	const url = process.env.url;
 	const pageType = process.env.pageType;
 	const pageskinUrl = process.env.pageskinUrl;
