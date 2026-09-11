@@ -1,4 +1,4 @@
-const synthetics = require('Synthetics');
+const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
 	checkPrebidBundle,
@@ -15,7 +15,6 @@ const {
 	checkCMPIsNotVisible,
 	interactWithCMPCcpa,
 } = require('./utils/cmp');
-const { setConfig } = require('./utils/config');
 const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -25,8 +24,6 @@ const {
 } = require('./utils/page');
 
 const testPage = async function () {
-	setConfig();
-
 	const url = process.env.url;
 	const pageType = process.env.pageType;
 	const pageskinUrl = process.env.pageskinUrl;
@@ -36,7 +33,10 @@ const testPage = async function () {
 	}
 
 	log(`Start checking page: ${url}`);
-	let page = await synthetics.getPage();
+	const browser = await synthetics.launch();
+	// Open a completely fresh, clean context (session)
+	const browserContext = await browser.newContext();
+	const page = await synthetics.newPage(browserContext);
 
 	await synthetics.executeStep('STEP 1 - Load page', async function () {
 		// Reset the page state to a point where the we can start testing.
@@ -49,7 +49,8 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+		log('Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdHasLoaded(page, pageType);
 	});
@@ -61,10 +62,8 @@ const testPage = async function () {
 		await interactWithCMPCcpa(page);
 		await checkCMPIsNotVisible(page);
 		await reloadPage(page);
-		await synthetics.takeScreenshot(
-			`cmp-${pageType}`,
-			'CMP clicked then page reloaded',
-		);
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+		log('CMP clicked then page reloaded');
 		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
 	});
@@ -78,10 +77,8 @@ const testPage = async function () {
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await synthetics.takeScreenshot(
-				`cmp-${pageType}`,
-				'cookies and local storage cleared then page reloaded',
-			);
+			await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+			log('cookies and local storage cleared then page reloaded');
 		},
 	);
 
@@ -119,7 +116,7 @@ const testPage = async function () {
 				'ttd',
 				'kargo',
 				'triplelift',
-				'teads'
+				'teads',
 			];
 			await checkBidResponse(page, expectedBidders);
 		},
@@ -131,10 +128,15 @@ const testPage = async function () {
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
-		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
+		await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
+		log('Pageskin loaded');
 	});
 };
 
 exports.handler = async () => {
-	return await testPage();
+	try {
+		return await testPage();
+	} finally {
+		await synthetics.close();
+	}
 };

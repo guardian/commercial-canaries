@@ -1,4 +1,4 @@
-const synthetics = require('Synthetics');
+const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
 	checkTopAdDidNotLoad,
@@ -16,7 +16,6 @@ const {
 	checkCMPIsNotVisible,
 	interactWithCMPTcfv2,
 } = require('./utils/cmp');
-const { setConfig } = require('./utils/config');
 const { log } = require('./utils/logging');
 const {
 	clearLocalStorage,
@@ -28,8 +27,6 @@ const {
 const { secondsInMillis } = require('./utils/time');
 
 const testPage = async function () {
-	setConfig();
-
 	const url = process.env.url;
 	const pageType = process.env.pageType;
 	const pageskinUrl = process.env.pageskinUrl;
@@ -39,7 +36,10 @@ const testPage = async function () {
 	}
 
 	log(`Start checking page: ${url}`);
-	let page = await synthetics.getPage();
+	const browser = await synthetics.launch();
+	// Open a completely fresh, clean context (session)
+	const browserContext = await browser.newContext();
+	const page = await synthetics.newPage(browserContext);
 
 	await synthetics.executeStep('STEP 1 - Load page', async function () {
 		// Reset the page state to a point where the we can start testing.
@@ -52,7 +52,8 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Page loaded');
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+		log('Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdDidNotLoad(page);
 	});
@@ -73,10 +74,8 @@ const testPage = async function () {
 				'Adverts load and the CMP is NOT displayed when the page is reloaded',
 			);
 			await reloadPage(page);
-			await synthetics.takeScreenshot(
-				`cmp-${pageType}`,
-				'CMP clicked then page reloaded',
-			);
+			await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+			log('CMP clicked then page reloaded');
 			await checkCMPIsNotVisible(page);
 			await checkTopAdHasLoaded(page, pageType);
 		},
@@ -135,10 +134,8 @@ const testPage = async function () {
 			await clearCookies(page);
 			await reloadPage(page);
 			await new Promise((r) => setTimeout(r, secondsInMillis(2))); // Wait an extra two seconds after reloading the page
-			await synthetics.takeScreenshot(
-				`cmp-${pageType}`,
-				'cookies and local storage cleared then page reloaded',
-			);
+			await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+			log('cookies and local storage cleared then page reloaded');
 			await checkCMPIsOnPage(page, pageType);
 			await checkTopAdDidNotLoad(page);
 		},
@@ -154,10 +151,15 @@ const testPage = async function () {
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
-		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
+		await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
+		log('Pageskin loaded');
 	});
 };
 
 exports.handler = async () => {
-	return await testPage();
+	try {
+		return await testPage();
+	} finally {
+		await synthetics.close();
+	}
 };

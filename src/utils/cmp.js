@@ -1,10 +1,9 @@
 const { URL } = require('url');
-const synthetics = require('Synthetics');
 const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
 const findCmpFrame = (page) => {
-  return page.frames().find((f) => {
+	return page.frames().find((f) => {
 		// Check that f.url is defined and that it's longer than a single character
 		// Some URLs were coming through as just a colon, which causes an error as it isn't a valid URL
 		if (f.url() && f.url().length > 1) {
@@ -12,14 +11,17 @@ const findCmpFrame = (page) => {
 			return parsedUrl.host === 'sourcepoint.theguardian.com';
 		}
 	});
-}
+};
 
 const interactWithCMPTcfv2 = async (page) => {
-  const frame = findCmpFrame(page)
+	const frame = findCmpFrame(page);
 	if (frame) {
-    log(`Clicking on "Yes I'm Happy"`);
-    const acceptAllButtonSelector = 'div.message-component.message-row > button.btn-primary.sp_choice_type_11'
-		await frame.waitForSelector(acceptAllButtonSelector, { timeout: secondsInMillis(5) });
+		log(`Clicking on "Yes I'm Happy"`);
+		const acceptAllButtonSelector =
+			'div.message-component.message-row > button.btn-primary.sp_choice_type_11';
+		await frame.waitForSelector(acceptAllButtonSelector, {
+			timeout: secondsInMillis(5),
+		});
 		// Accept cookies
 		await frame.click(acceptAllButtonSelector);
 	} else {
@@ -28,31 +30,36 @@ const interactWithCMPTcfv2 = async (page) => {
 };
 
 const interactWithCMPCcpa = async (page) => {
-  const frame = findCmpFrame(page);
+	const frame = findCmpFrame(page);
 	if (frame) {
-    log(`Clicking on "Do not sell or share my personal information" on CMP`);
-    const doNotSellButtonSelector = 'button[title="Do not sell or share my personal information"]'
-		await frame.waitForSelector(doNotSellButtonSelector,{ timeout: secondsInMillis(2) });
+		log(`Clicking on "Do not sell or share my personal information" on CMP`);
+		const doNotSellButtonSelector =
+			'button[title="Do not sell or share my personal information"]';
+		await frame.waitForSelector(doNotSellButtonSelector, {
+			timeout: secondsInMillis(2),
+		});
+		await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 		await frame.click(doNotSellButtonSelector);
 	} else {
 		logError('CMP frame not found');
 	}
 
-  // The page reloads after clicking "do not sell" so need to wait for this to happen before moving on
-  await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
-  await new Promise((r) => setTimeout(r, secondsInMillis(1)));
+	// The page reloads after clicking "do not sell" so need to wait for this to happen before moving on
+	await new Promise((r) => setTimeout(r, secondsInMillis(1)));
 };
 
 const interactWithCMPAus = async (page) => {
-  const frame = findCmpFrame(page);
-  if (frame) {
-    log(`Clicking on "Continue" on CMP`);
-    const continueButtonSelector = 'button[title="Continue"]'
-    await frame.waitForSelector(continueButtonSelector,{ timeout: secondsInMillis(2) });
-    await frame.click(continueButtonSelector)
-  } else {
-    	logError('CMP frame not found');
-  }
+	const frame = findCmpFrame(page);
+	if (frame) {
+		log(`Clicking on "Continue" on CMP`);
+		const continueButtonSelector = 'button[title="Continue"]';
+		await frame.waitForSelector(continueButtonSelector, {
+			timeout: secondsInMillis(2),
+		});
+		await frame.click(continueButtonSelector);
+	} else {
+		logError('CMP frame not found');
+	}
 };
 
 const checkCMPIsOnPage = async (page, pageType) => {
@@ -63,7 +70,8 @@ const checkCMPIsOnPage = async (page, pageType) => {
 		});
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
-		await synthetics.takeScreenshot(`cmp-${pageType}`, 'Could not find CMP');
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+		log('Could not find CMP');
 		throw new Error(e);
 	}
 	log(`Waiting for CMP: Finish`);

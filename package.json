@@ -15,11 +15,12 @@
 		"diff": "cdk diff --path-metadata false --version-reporting false"
 	},
 	"devDependencies": {
+		"@aws/synthetics-playwright": "^7.0.0",
 		"@guardian/cdk": "64.5.1",
 		"@guardian/eslint-config": "16.0.0",
 		"@guardian/prettier": "11.0.0",
 		"@guardian/tsconfig": "2.0.0",
-    "@types/jest": "30.0.0",
+		"@types/jest": "30.0.0",
 		"@types/node": "26.1.1",
 		"aws-cdk": "2.1138.0",
 		"aws-cdk-lib": "2.266.0",
