@@ -49,11 +49,8 @@ canaryApps.forEach(({ locationAbbr, region }) => {
       parameters: {
         bucketSsmKey: `/account/services/commercial-canary.bucket`,
         cacheControl: 'private',
-        cloudFormationStackByTags: false,
-        cloudFormationStackName,
         prefixPackage: false,
         prefixStack: false,
-        prependStackToCloudFormationStackName: false,
         publicReadAcl: false,
       },
       contentDirectory: `upload-${locationAbbr.toLowerCase()}`,
