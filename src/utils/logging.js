@@ -4,7 +4,7 @@
  */
 const formatMessage = (message) => `GuCanaryRun: ${message}`;
 
-const log = (message) => console.log(formatMessage(message));
+const log = (message) => console.info(formatMessage(message));
 
 const logError = (message) => console.error(formatMessage(message));
 
