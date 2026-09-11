@@ -12,7 +12,7 @@ const checkTopAdHasLoaded = async (page, pageType) => {
 		});
 	} catch (timeoutError) {
 		logError(`Failed to load top-above-nav ad: ${timeoutError.message}`);
-		await page.screenshot({ path: `${pageType}-page.png` });
+		await page.screenshot({ path: `/tmp/${pageType}-page.png` });
 		log('Failed to load top-above-nav ad');
 		throw timeoutError;
 	}

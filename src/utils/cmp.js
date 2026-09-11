@@ -70,7 +70,7 @@ const checkCMPIsOnPage = async (page, pageType) => {
 		});
 	} catch (e) {
 		logError(`Could not find CMP: ${e.message}`);
-		await page.screenshot({ path: `cmp-${pageType}.png` });
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
 		log('Could not find CMP');
 		throw new Error(e);
 	}

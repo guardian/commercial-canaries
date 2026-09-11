@@ -49,7 +49,7 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await page.screenshot({ path: `cmp-${pageType}.png` });
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
 		log('Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdHasLoaded(page, pageType);
@@ -62,7 +62,7 @@ const testPage = async function () {
 		await interactWithCMPCcpa(page);
 		await checkCMPIsNotVisible(page);
 		await reloadPage(page);
-		await page.screenshot({ path: `cmp-${pageType}.png` });
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
 		log('CMP clicked then page reloaded');
 		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
@@ -77,7 +77,7 @@ const testPage = async function () {
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await page.screenshot({ path: `cmp-${pageType}.png` });
+			await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
 			log('cookies and local storage cleared then page reloaded');
 		},
 	);
@@ -128,7 +128,7 @@ const testPage = async function () {
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
-		await page.screenshot({ path: `pageskin-${pageType}.png` });
+		await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
 		log('Pageskin loaded');
 	});
 };
