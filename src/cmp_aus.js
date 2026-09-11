@@ -1,3 +1,4 @@
+// HELLO!!!!!!!!
 const synthetics = require('Synthetics');
 const {
 	checkTopAdHasLoaded,
@@ -124,20 +125,20 @@ const testPage = async function () {
 				'triplelift',
 				'and',
 				'oxd',
-				'teads'
+				'teads',
 			];
 			await checkBidResponse(page, expectedBidders);
 		},
 	);
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
-    await loadPage(page, pageskinUrl);
-    await checkTopAdHasLoaded(page, pageType);
-    await checkPageskinHasLoaded(page);
-    await checkPageskinBackgroundImageHasLoaded(page);
-    await checkPageskinWidthIsConstrained(page);
-    await checkPageskinCollapsesFrontsSlots(page);
-    await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
-});
+		await loadPage(page, pageskinUrl);
+		await checkTopAdHasLoaded(page, pageType);
+		await checkPageskinHasLoaded(page);
+		await checkPageskinBackgroundImageHasLoaded(page);
+		await checkPageskinWidthIsConstrained(page);
+		await checkPageskinCollapsesFrontsSlots(page);
+		await synthetics.takeScreenshot(`pageskin-${pageType}`, 'Pageskin loaded');
+	});
 };
 
 exports.handler = async () => {
