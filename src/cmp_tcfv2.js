@@ -1,3 +1,4 @@
+// HELLO!!!!!!!!
 const synthetics = require('Synthetics');
 const {
 	checkTopAdHasLoaded,

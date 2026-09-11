@@ -1,3 +1,4 @@
+// HELLO!!!!!!!!
 const synthetics = require('Synthetics');
 const {
 	checkTopAdHasLoaded,
@@ -119,7 +120,7 @@ const testPage = async function () {
 				'ttd',
 				'kargo',
 				'triplelift',
-				'teads'
+				'teads',
 			];
 			await checkBidResponse(page, expectedBidders);
 		},
