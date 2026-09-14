@@ -38,13 +38,13 @@ const interactWithCMPCcpa = async (page) => {
 		await frame.waitForSelector(doNotSellButtonSelector, {
 			timeout: secondsInMillis(2),
 		});
-		await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 		await frame.click(doNotSellButtonSelector);
 	} else {
 		logError('CMP frame not found');
 	}
 
 	// The page reloads after clicking "do not sell" so need to wait for this to happen before moving on
+	await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
 	await new Promise((r) => setTimeout(r, secondsInMillis(1)));
 };
 
