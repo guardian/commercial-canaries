@@ -31,12 +31,6 @@ const testPage = async function () {
 	const pageType = process.env.pageType;
 	const pageskinUrl = process.env.pageskinUrl;
 
-	const stepConfig = {
-		screenshotOnStepStart: false,
-		screenshotOnStepSuccess: false,
-		screenshotOnStepFailure: true,
-	};
-
 	if (!pageskinUrl) {
 		throw new Error('Missing required env var: pageskinUrl');
 	}
@@ -47,43 +41,31 @@ const testPage = async function () {
 	const browserContext = await browser.newContext();
 	const page = await synthetics.newPage(browserContext);
 
-	await synthetics.executeStep(
-		'STEP 1 - Load page',
-		async function () {
-			// Reset the page state to a point where the we can start testing.
-			// Local storage can only be cleared once the page has loaded.
-			await loadPage(page, url);
-			await clearLocalStorage(page);
-			await clearCookies(page);
-		},
-		stepConfig,
-	);
+	await synthetics.executeStep('STEP 1 - Load page', async function () {
+		// Reset the page state to a point where the we can start testing.
+		// Local storage can only be cleared once the page has loaded.
+		await loadPage(page, url);
+		await clearLocalStorage(page);
+		await clearCookies(page);
+	});
 
-	await synthetics.executeStep(
-		'STEP 2 - Check CMP',
-		async function () {
-			log('CMP loads and the ads are NOT displayed on initial load');
-			await reloadPage(page);
-			await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
-			log('Page loaded');
-			await checkCMPIsOnPage(page, pageType);
-			await checkTopAdDidNotLoad(page);
-		},
-		stepConfig,
-	);
+	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
+		log('CMP loads and the ads are NOT displayed on initial load');
+		await reloadPage(page);
+		await page.screenshot({ path: `/tmp/cmp-${pageType}.png` });
+		log('Page loaded');
+		await checkCMPIsOnPage(page, pageType);
+		await checkTopAdDidNotLoad(page);
+	});
 
-	await synthetics.executeStep(
-		'STEP 3 - Interact with CMP',
-		async function () {
-			log(
-				'Adverts load and the CMP is NOT displayed following interaction with the CMP',
-			);
-			await interactWithCMPTcfv2(page);
-			await checkCMPIsNotVisible(page);
-			await checkTopAdHasLoaded(page, pageType);
-		},
-		stepConfig,
-	);
+	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
+		log(
+			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
+		);
+		await interactWithCMPTcfv2(page);
+		await checkCMPIsNotVisible(page);
+		await checkTopAdHasLoaded(page, pageType);
+	});
 
 	await synthetics.executeStep(
 		'STEP 4 - Reload page after CMP interaction',
@@ -97,7 +79,6 @@ const testPage = async function () {
 			await checkCMPIsNotVisible(page);
 			await checkTopAdHasLoaded(page, pageType);
 		},
-		stepConfig,
 	);
 
 	const currentLocation = await getCurrentLocation(page);
@@ -110,7 +91,6 @@ const testPage = async function () {
 				await reloadPage(page);
 				await checkPrebidBundle(page);
 			},
-			stepConfig,
 		);
 
 		await synthetics.executeStep(
@@ -118,7 +98,6 @@ const testPage = async function () {
 			async function () {
 				await checkPrebidBidRequest(page);
 			},
-			stepConfig,
 		);
 
 		await synthetics.executeStep(
@@ -126,7 +105,6 @@ const testPage = async function () {
 			async function () {
 				await checkPbjsPresence(page);
 			},
-			stepConfig,
 		);
 
 		await synthetics.executeStep(
@@ -146,7 +124,6 @@ const testPage = async function () {
 				];
 				await checkBidResponse(page, expectedBidders);
 			},
-			stepConfig,
 		);
 	}
 
@@ -162,27 +139,22 @@ const testPage = async function () {
 			await checkCMPIsOnPage(page, pageType);
 			await checkTopAdDidNotLoad(page);
 		},
-		stepConfig,
 	);
 
-	await synthetics.executeStep(
-		'STEP 10 - Pageskin',
-		async function () {
-			await loadPage(page, pageskinUrl);
-			await checkCMPIsOnPage(page, pageType);
-			await interactWithCMPTcfv2(page);
-			await new Promise((r) => setTimeout(r, secondsInMillis(2)));
-			await checkCMPIsNotVisible(page);
-			await checkTopAdHasLoaded(page, pageType);
-			await checkPageskinHasLoaded(page);
-			await checkPageskinBackgroundImageHasLoaded(page);
-			await checkPageskinWidthIsConstrained(page);
-			await checkPageskinCollapsesFrontsSlots(page);
-			await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
-			log('Pageskin loaded');
-		},
-		stepConfig,
-	);
+	await synthetics.executeStep('STEP 10 - Pageskin', async function () {
+		await loadPage(page, pageskinUrl);
+		await checkCMPIsOnPage(page, pageType);
+		await interactWithCMPTcfv2(page);
+		await new Promise((r) => setTimeout(r, secondsInMillis(2)));
+		await checkCMPIsNotVisible(page);
+		await checkTopAdHasLoaded(page, pageType);
+		await checkPageskinHasLoaded(page);
+		await checkPageskinBackgroundImageHasLoaded(page);
+		await checkPageskinWidthIsConstrained(page);
+		await checkPageskinCollapsesFrontsSlots(page);
+		await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
+		log('Pageskin loaded');
+	});
 };
 
 exports.handler = async () => {
