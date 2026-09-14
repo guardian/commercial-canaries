@@ -9,9 +9,11 @@ mkdir -p tcfv2/nodejs/node_modules
 cd tcfv2
 cp ../../src/cmp_tcfv2.js nodejs/node_modules/testPage.js
 cp -r ../../src/utils nodejs/node_modules
-cp ../../src/synthetics.json nodejs/node_modules/synthetics.json
+cp ../../src/synthetics.json synthetics.json
 zip -r nodejs.zip nodejs
+zip -r nodejs.zip synthetics.json
 rm -rf nodejs
+rm synthetics.json
 cd ..
 echo "TCFV2 artifact created"
 
@@ -20,9 +22,11 @@ mkdir -p ccpa/nodejs/node_modules
 cd ccpa
 cp ../../src/cmp_ccpa.js nodejs/node_modules/testPage.js
 cp -r ../../src/utils nodejs/node_modules
-cp ../../src/synthetics.json nodejs/node_modules/synthetics.json
+cp ../../src/synthetics.json synthetics.json
 zip -r nodejs.zip nodejs
+zip -r nodejs.zip synthetics.json
 rm -rf nodejs
+rm synthetics.json
 cd ..
 echo "CCPA artifact created"
 
@@ -31,8 +35,10 @@ mkdir -p aus/nodejs/node_modules
 cd aus
 cp ../../src/cmp_aus.js nodejs/node_modules/testPage.js
 cp -r ../../src/utils nodejs/node_modules
-cp ../../src/synthetics.json nodejs/node_modules/synthetics.json
+cp ../../src/synthetics.json synthetics.json
 zip -r nodejs.zip nodejs
+zip -r nodejs.zip synthetics.json
 rm -rf nodejs
+rm synthetics.json
 cd ..
 echo "AUS artifact created"
