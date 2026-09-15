@@ -2,8 +2,8 @@ const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
 const clearCookies = async (page) => {
-	const allCookies = await page.cookies();
-	await page.deleteCookie(...allCookies);
+	const context = await page.context();
+	await context.clearCookies();
 	log(`Cleared Cookies`);
 };
 
@@ -14,10 +14,14 @@ const clearLocalStorage = async (page) => {
 
 const loadPage = async (page, url) => {
 	log(`Loading page: Start`);
-	const response = await page.goto(url, {
-		waitUntil: 'domcontentloaded',
-		timeout: secondsInMillis(10),
-	});
+	const response = await page.goto(
+		url,
+		{
+			waitUntil: 'domcontentloaded',
+			timeout: secondsInMillis(10),
+		},
+		page,
+	);
 	if (!response) {
 		logError('Loading page: Failed');
 		throw 'Failed to load page!';
@@ -34,10 +38,13 @@ const loadPage = async (page, url) => {
 
 const reloadPage = async (page) => {
 	log(`Reloading page: Start`);
-	const reloadResponse = await page.reload({
-		waitUntil: 'domcontentloaded',
-		timeout: secondsInMillis(10),
-	});
+	const reloadResponse = await page.reload(
+		{
+			waitUntil: 'domcontentloaded',
+			timeout: secondsInMillis(10),
+		},
+		page,
+	);
 	if (!reloadResponse) {
 		logError(`Reloading page: Failed`);
 		throw 'Failed to refresh page!';

@@ -1,4 +1,3 @@
-const synthetics = require('Synthetics');
 const { log, logError } = require('./logging');
 const { secondsInMillis } = require('./time');
 
@@ -13,10 +12,8 @@ const checkTopAdHasLoaded = async (page, pageType) => {
 		});
 	} catch (timeoutError) {
 		logError(`Failed to load top-above-nav ad: ${timeoutError.message}`);
-		await synthetics.takeScreenshot(
-			`${pageType}-page`,
-			'Failed to load top-above-nav ad',
-		);
+		await page.screenshot({ path: `/tmp/${pageType}-page.png` });
+		log('Failed to load top-above-nav ad');
 		throw timeoutError;
 	}
 	log(`Waiting for ads to load: Complete`);

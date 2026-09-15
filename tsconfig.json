@@ -1,13 +1,13 @@
 {
-  "extends": "@guardian/tsconfig/tsconfig.json",
+	"extends": "@guardian/tsconfig/tsconfig.json",
 	"compilerOptions": {
 		"module": "nodenext",
-    "moduleResolution": "nodenext",
+		"moduleResolution": "nodenext",
 		"strict": true,
 		"strictNullChecks": true,
 		"outDir": "dist",
-    "types": ["node", "@types/jest"],
-    "rootDir": "."
+		"types": ["node", "@types/jest"],
+		"rootDir": "."
 	},
 	"include": ["src/**, cdk/lib/**/*", "cdk/bin/**/*"],
 	"exclude": ["node_modules", "cdk.out", "lib/**/__snapshots__/**"]
