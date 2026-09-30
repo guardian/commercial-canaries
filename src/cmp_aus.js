@@ -83,6 +83,11 @@ const testPage = async function () {
 			log('cookies and local storage cleared then page reloaded');
 			await checkCMPIsOnPage(page, pageType);
 			await checkTopAdHasLoaded(page, pageType);
+			log('Accepting the CMP again before checking Prebid bidders');
+			await interactWithCMPAus(page);
+			await checkCMPIsNotVisible(page);
+			await reloadPage(page);
+			await checkCMPIsNotVisible(page);
 		},
 	);
 
@@ -105,6 +110,17 @@ const testPage = async function () {
 		'STEP 7 - Prebid - window.pbjs',
 		async function () {
 			await checkPbjsPresence(page);
+			const ozoneConfig = await page.evaluate(() => {
+				// eslint-disable-next-line no-undef -- runs in the browser page
+				const config = window.guardian?.config;
+				return {
+					edition: config?.page?.edition,
+					prebidHeaderBidding:
+						config?.switches?.prebidHeaderBidding ?? false,
+					prebidOzone: config?.switches?.prebidOzone ?? false,
+				};
+			});
+			log(`Ozone runtime config: ${JSON.stringify(ozoneConfig)}`);
 		},
 	);
 
