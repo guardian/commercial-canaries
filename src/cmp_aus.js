@@ -121,6 +121,7 @@ const testPage = async function () {
 				'and',
 				'oxd',
 				'teads',
+				'ozone',
 			];
 			await checkBidResponse(page, expectedBidders);
 		},
