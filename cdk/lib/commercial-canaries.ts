@@ -80,7 +80,7 @@ export class CommercialCanaries extends GuStack {
 				logAllRequests: 'false',
 				logAllResponses: 'false',
 				pageType: 'front',
-				url: `https://www.theguardian.com/${frontPath}?adtest=fixed-puppies-ci`,
+				url: `https://www.theguardian.com/tone/minutebyminute?adtest=fixed-puppies-ci`,
 				pageskinUrl: `https://www.theguardian.com/${frontPath}?adtest=puppies-pageskin`,
 			},
 		});
