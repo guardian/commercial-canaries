@@ -3,17 +3,8 @@ export type Region = {
 	locationAbbr: 'EU' | 'CA' | 'US' | 'AUS';
 	build: 'tcfv2' | 'ccpa' | 'aus';
 	region: 'eu-west-1' | 'ca-central-1' | 'us-west-1' | 'ap-southeast-2';
-	pageskinUrl: string;
-	/**
-	 * URL of the front to test. Ensure query param "adtest=fixed-puppies-ci"
-	 * is used so that GAM provides us with an ad for our slot
-	 */
-	frontUrl: string;
-	/**
-	 * URL of the article to test. Ensure query param "adtest=fixed-puppies-ci"
-	 * is used so that GAM provides us with an ad for our slot
-	 */
-	articleUrl: string;
+	articlePath: string;
+	frontPath: string;
 };
 
 export const regions: Region[] = [
@@ -22,41 +13,35 @@ export const regions: Region[] = [
 		locationAbbr: 'EU',
 		build: 'tcfv2',
 		region: 'eu-west-1',
-		frontUrl: 'https://www.theguardian.com/europe?adtest=fixed-puppies-ci',
-		articleUrl:
-			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/europe?adtest=puppies-pageskin',
+		frontPath: 'europe',
+		articlePath:
+			'environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk',
 	},
 	{
 		location: 'Canada',
 		locationAbbr: 'CA',
 		build: 'tcfv2',
 		region: 'ca-central-1',
-		frontUrl:
-			'https://www.theguardian.com/international?adtest=fixed-puppies-ci',
-		articleUrl:
-			'https://www.theguardian.com/environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk?adtest=fixed-puppies-ci',
-		pageskinUrl:
-			'https://www.theguardian.com/international?adtest=puppies-pageskin',
+		frontPath: 'international',
+		articlePath:
+			'environment/2022/apr/22/disbanding-of-dorset-wildlife-team-puts-birds-pray-at-risk',
 	},
 	{
 		location: 'US',
 		locationAbbr: 'US',
 		build: 'ccpa',
 		region: 'us-west-1',
-		frontUrl: 'https://www.theguardian.com/us?adtest=fixed-puppies-ci',
-		articleUrl:
-			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/us?adtest=puppies-pageskin',
+		frontPath: 'us',
+		articlePath:
+			'food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake',
 	},
 	{
 		location: 'Australia',
 		locationAbbr: 'AUS',
 		build: 'aus',
 		region: 'ap-southeast-2',
-		frontUrl: 'https://www.theguardian.com/au?adtest=fixed-puppies-ci',
-		articleUrl:
-			'https://www.theguardian.com/food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake?adtest=fixed-puppies-ci',
-		pageskinUrl: 'https://www.theguardian.com/au?adtest=puppies-pageskin',
+		frontPath: 'au',
+		articlePath:
+			'food/2020/dec/16/how-to-make-the-perfect-vegetarian-sausage-rolls-recipe-felicity-cloake',
 	},
 ];

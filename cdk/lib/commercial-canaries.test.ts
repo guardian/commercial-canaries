@@ -6,15 +6,14 @@ import { CommercialCanaries } from './commercial-canaries';
 describe('The CommercialCanaries stack', () => {
 	it.each(regions)(
 		'matches the $location CODE snapshot',
-		({ region, articleUrl, frontUrl, pageskinUrl }) => {
+		({ region, articlePath, frontPath }) => {
 			const app = new App();
 			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 				stack: 'frontend',
 				stage: 'CODE',
 				env: { region },
-				articleUrl,
-				frontUrl,
-				pageskinUrl,
+				articlePath,
+				frontPath,
 			});
 
 			const template = Template.fromStack(stack);
@@ -24,15 +23,14 @@ describe('The CommercialCanaries stack', () => {
 
 	it.each(regions)(
 		'matches the $location PROD snapshot',
-		({ region, articleUrl, frontUrl, pageskinUrl }) => {
+		({ region, articlePath, frontPath }) => {
 			const app = new App();
 			const stack = new CommercialCanaries(app, 'CommercialCanaries', {
 				stack: 'frontend',
 				stage: 'PROD',
 				env: { region },
-				articleUrl,
-				frontUrl,
-				pageskinUrl,
+				articlePath,
+				frontPath,
 			});
 
 			const template = Template.fromStack(stack);
