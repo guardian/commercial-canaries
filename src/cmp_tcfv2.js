@@ -31,12 +31,19 @@ const testPage = async function () {
 	const pageType = process.env.pageType;
 	const pageskinUrl = process.env.pageskinUrl;
 
-	if (!pageskinUrl) {
+	if (!url) {
+		throw new Error('Missing required env var: url');
+	}
+  if (!pageType) {
+		throw new Error('Missing required env var: pageType');
+	}
+  if (!pageskinUrl) {
 		throw new Error('Missing required env var: pageskinUrl');
 	}
 
 	log(`Start checking page: ${url}`);
-	const browser = await synthetics.launch();
+
+  const browser = await synthetics.launch();
 	// Open a completely fresh, clean context (session)
 	const browserContext = await browser.newContext();
 	const page = await synthetics.newPage(browserContext);

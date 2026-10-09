@@ -12,26 +12,24 @@ const riffRaffProjectName = 'frontend::commercial-canaries';
 
 const canaryApps = stages
 	.map((stage) =>
-		regions.map(
-			({ locationAbbr, region, frontUrl, articleUrl, pageskinUrl }) => ({
-				app: new CommercialCanaries(
-					cdkApp,
-					`CommercialCanaries-${locationAbbr}-${stage}-front`,
-					{
-						stack,
-						stage,
-						env: { region },
-						cloudFormationStackName,
-						frontUrl,
-						articleUrl,
-						pageskinUrl,
-						riffRaffProjectName,
-					},
-				),
-				locationAbbr,
-				region,
-			}),
-		),
+		regions.map(({ locationAbbr, region, articlePath, frontPath }) => ({
+			app: new CommercialCanaries(
+				cdkApp,
+				`CommercialCanaries-${locationAbbr}-${stage}-front`,
+				{
+					stack,
+					stage,
+					env: { region },
+					cloudFormationStackName,
+					articlePath,
+					frontPath,
+
+					riffRaffProjectName,
+				},
+			),
+			locationAbbr,
+			region,
+		})),
 	)
 	.flat();
 

@@ -20,16 +20,15 @@ import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 
 type Props = GuStackProps & {
-	articleUrl: string;
-	frontUrl: string;
-	pageskinUrl: string;
+	articlePath: string;
+	frontPath: string;
 };
 
 export class CommercialCanaries extends GuStack {
 	constructor(scope: App, id: string, props: Props) {
 		super(scope, id, props);
 
-		const { env, stage, articleUrl, frontUrl, pageskinUrl } = props;
+		const { env, stage, articlePath, frontPath } = props;
 
 		if (!env?.region) {
 			throw new Error('env.region is required');
@@ -81,8 +80,8 @@ export class CommercialCanaries extends GuStack {
 				logAllRequests: 'false',
 				logAllResponses: 'false',
 				pageType: 'front',
-				url: frontUrl,
-				pageskinUrl,
+				url: `https://www.theguardian.com/${frontPath}?adtest=fixed-puppies-ci`,
+				pageskinUrl: `https://www.theguardian.com/${frontPath}?adtest=puppies-pageskin`,
 			},
 		});
 
@@ -98,8 +97,8 @@ export class CommercialCanaries extends GuStack {
 				logAllRequests: 'false',
 				logAllResponses: 'false',
 				pageType: 'article',
-				url: articleUrl,
-				pageskinUrl,
+				url: `https://www.theguardian.com/${articlePath}?adtest=fixed-puppies-ci`,
+				pageskinUrl: `https://www.theguardian.com/${frontPath}?adtest=puppies-pageskin`,
 			},
 		});
 
