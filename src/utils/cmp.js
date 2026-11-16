@@ -32,9 +32,8 @@ const interactWithCMPTcfv2 = async (page) => {
 const interactWithCMPCcpa = async (page) => {
 	const frame = findCmpFrame(page);
 	if (frame) {
-		log(`Clicking on "Do not sell or share my personal information" on CMP`);
-		const doNotSellButtonSelector =
-			'button[title="Do not sell or share my personal information"]';
+		log(`Clicking on "Continue" on CMP`);
+		const doNotSellButtonSelector = 'button[title="Continue button"]';
 		await frame.waitForSelector(doNotSellButtonSelector, {
 			timeout: secondsInMillis(2),
 		});
