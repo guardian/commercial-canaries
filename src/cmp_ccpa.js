@@ -80,6 +80,7 @@ const testPage = async function () {
 			await page.screenshot({ path: `/tmp/step4-cmp-${pageType}.png` });
 			log('Cookies and local storage cleared, then page reloaded');
 
+			await checkCMPIsOnPage(page, pageType);
 			await interactWithCMPCcpa(page);
 			await checkCMPIsNotVisible(page);
 		},
