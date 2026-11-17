@@ -49,7 +49,7 @@ export class CommercialCanaries extends GuStack {
 				handler: 'testPage.handler',
 			}),
 			runtime: {
-				name: 'syn-nodejs-playwright-8.0',
+				name: 'syn-nodejs-playwright-9.0',
 				family: synthetics.RuntimeFamily.NODEJS,
 			},
 			schedule: synthetics.Schedule.rate(Duration.minutes(1)),
