@@ -123,7 +123,9 @@ const checkPageskinCollapsesFrontsSlots = async (page) => {
 	// Confirming it is absent from the DOM is the simplest reliable signal.
 	const frontsBannerSlot = await page.$('[id^="dfp-ad--fronts-banner-"]');
 	if (frontsBannerSlot !== null) {
-		logError('Fronts-banner slot present — pageskin suppression not in effect');
+		logError(
+			'Fronts-banner slot present — pageskin suppression not in effect',
+		);
 		throw new Error('Pageskin did not collapse expected front ad slots');
 	}
 	log('Checking pageskin front slot suppression: Complete');
@@ -186,7 +188,9 @@ const checkBidResponse = async (page, expectedBidders) => {
 				.find(
 					(event) =>
 						event.eventType === 'auctionInit' &&
-						event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+						event.args.adUnitCodes.includes(
+							'dfp-ad--top-above-nav',
+						),
 				),
 		{ timeout: secondsInMillis(2) },
 	);
@@ -199,7 +203,9 @@ const checkBidResponse = async (page, expectedBidders) => {
 				.find(
 					(event) =>
 						event.eventType === 'auctionInit' &&
-						event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
+						event.args.adUnitCodes.includes(
+							'dfp-ad--top-above-nav',
+						),
 				)
 				?.args.bidderRequests.map((bidder) => bidder.bidderCode) || [],
 	);

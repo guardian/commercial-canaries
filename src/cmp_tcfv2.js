@@ -58,14 +58,17 @@ const testPage = async function () {
 		await checkTopAdDidNotLoad(page);
 	});
 
-	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
-		log(
-			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
-		);
-		await interactWithCMPTcfv2(page);
-		await checkCMPIsNotVisible(page);
-		await checkTopAdHasLoaded(page, pageType);
-	});
+	await synthetics.executeStep(
+		'STEP 3 - Interact with CMP',
+		async function () {
+			log(
+				'Adverts load and the CMP is NOT displayed following interaction with the CMP',
+			);
+			await interactWithCMPTcfv2(page);
+			await checkCMPIsNotVisible(page);
+			await checkTopAdHasLoaded(page, pageType);
+		},
+	);
 
 	await synthetics.executeStep(
 		'STEP 4 - Reload page after CMP interaction',
