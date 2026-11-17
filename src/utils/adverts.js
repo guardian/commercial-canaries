@@ -131,6 +131,7 @@ const checkPageskinCollapsesFrontsSlots = async (page) => {
 
 const checkPrebidBundle = async (page) => {
 	try {
+		log('Checking Prebid bundle');
 		await page.waitForRequest(
 			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
 			{ timeout: secondsInMillis(2) },
