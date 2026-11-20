@@ -41,29 +41,29 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 1 - Load page', async function () {
 		// Reset the page state to a point where the we can start testing.
 		// Local storage can only be cleared once the page has loaded.
+		log('Loading page...');
 		await loadPage(page, url);
+		log('Page loaded');
 		await clearLocalStorage(page);
 		await clearCookies(page);
 	});
 
 	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
-		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await page.screenshot({ path: `/tmp/step2-cmp-${pageType}.png` });
-		log('Page loaded');
+		log('Checking that the CMP loads and ads are displayed');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdHasLoaded(page, pageType);
+		await page.screenshot({ path: `/tmp/step2-cmp-${pageType}.png` });
 	});
 
 	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
-		log(
-			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
-		);
+		log('Checking that the CMP is removed from the DOM after interaction');
 		await interactWithCMPCcpa(page);
 		await checkCMPIsNotVisible(page);
-		await reloadPage(page);
 		await page.screenshot({ path: `/tmp/step3-cmp-${pageType}.png` });
-		log('CMP clicked then page reloaded');
+
+		log('Checking that the CMP is not visible when reloading the page');
+		await reloadPage(page);
 		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
 	});
@@ -72,15 +72,13 @@ const testPage = async function () {
 		'STEP 4 - Reload page after CMP interaction',
 		async function () {
 			log(
-				'After we clear local storage and cookies, the CMP banner is displayed once again',
+				'Checking that the CMP banner is displayed again after clearing local storage and cookies',
 			);
 			await clearLocalStorage(page);
 			await clearCookies(page);
 			await reloadPage(page);
-			await page.screenshot({ path: `/tmp/step4-cmp-${pageType}.png` });
-			log('Cookies and local storage cleared, then page reloaded');
-
 			await checkCMPIsOnPage(page, pageType);
+			await page.screenshot({ path: `/tmp/step4-cmp-${pageType}.png` });
 			await interactWithCMPCcpa(page);
 			await checkCMPIsNotVisible(page);
 		},
@@ -142,6 +140,7 @@ exports.handler = async () => {
 	try {
 		return await testPage();
 	} finally {
+		// Close all browser contexts and browser
 		await synthetics.close();
 	}
 };

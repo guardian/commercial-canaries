@@ -33,11 +33,7 @@ const interactWithCMPCcpa = async (page) => {
 	const frame = findCmpFrame(page);
 	if (frame) {
 		log(`Clicking on "Continue" on CMP`);
-		const doNotSellButtonSelector = 'button[title="Continue button"]';
-		await frame.waitForSelector(doNotSellButtonSelector, {
-			timeout: secondsInMillis(2),
-		});
-		await frame.click(doNotSellButtonSelector);
+		await frame.getByRole('button', { name: 'Continue' }).click();
 	} else {
 		logError('CMP frame not found');
 	}

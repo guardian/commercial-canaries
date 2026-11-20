@@ -129,9 +129,13 @@ const checkPageskinCollapsesFrontsSlots = async (page) => {
 	log('Checking pageskin front slot suppression: Complete');
 };
 
+/**
+ * Checks that the prebid bundle is loaded. If there is a pageskin, then
+ * it is expected that the prebid bundle will not be loaded.
+ */
 const checkPrebidBundle = async (page) => {
 	try {
-		log('Checking Prebid bundle');
+		log('Checking Prebid bundle has loaded');
 		await page.waitForRequest(
 			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
 			{ timeout: secondsInMillis(2) },
@@ -153,6 +157,7 @@ const checkPrebidBundle = async (page) => {
 const checkPrebidBidRequest = async (page) => {
 	const prebidURL =
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
+	log('Checking Prebid bid request');
 	try {
 		await page.waitForRequest((req) => req.url().includes(prebidURL), {
 			timeout: secondsInMillis(3),
