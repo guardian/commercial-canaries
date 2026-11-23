@@ -1,6 +1,7 @@
 const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
+	checkTopAdDidNotLoad,
 	checkPrebidBundle,
 	checkPrebidBidRequest,
 	checkPbjsPresence,
@@ -52,7 +53,7 @@ const testPage = async function () {
 		await page.screenshot({ path: `/tmp/step2-cmp-${pageType}.png` });
 		log('Page loaded');
 		await checkCMPIsOnPage(page, pageType);
-		await checkTopAdHasLoaded(page, pageType);
+		await checkTopAdDidNotLoad(page);
 	});
 
 	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
@@ -128,7 +129,7 @@ const testPage = async function () {
 
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
-		await checkTopAdHasLoaded(page, pageType);
+		await checkTopAdDidNotLoad(page);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
