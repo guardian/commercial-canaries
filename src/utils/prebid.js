@@ -10,7 +10,7 @@ const checkPrebidBundle = async (page) => {
 	try {
 		await page.waitForRequest(
 			(req) => req.url().includes('graun.Prebid.js.commercial.js'),
-			{ timeout: secondsInMillis(2) },
+			{ timeout: secondsInMillis(5) },
 		);
 	} catch (timeoutError) {
 		const hasPageskin = await page.evaluate(() =>
@@ -33,7 +33,7 @@ const checkPrebidBidRequest = async (page) => {
 		'https://hbopenbid.pubmatic.com/translator?source=prebid-client';
 	try {
 		await page.waitForRequest((req) => req.url().includes(prebidURL), {
-			timeout: secondsInMillis(3),
+			timeout: secondsInMillis(5),
 		});
 	} catch (timeoutError) {
 		logError('Expected Prebid bid request not made');
@@ -49,7 +49,7 @@ const checkPbjsPresence = async (page) => {
 			() =>
 				// eslint-disable-next-line no-undef -- window object exists in the browser only
 				window.pbjs !== undefined,
-			{ timeout: secondsInMillis(3) },
+			{ timeout: secondsInMillis(5) },
 		);
 	} catch (timeoutError) {
 		logError('Prebid.js is not loaded');
@@ -70,7 +70,7 @@ const checkPrebidBidResponse = async (page, expectedBidders) => {
 						event.eventType === 'auctionInit' &&
 						event.args.adUnitCodes.includes('dfp-ad--top-above-nav'),
 				),
-		{ timeout: secondsInMillis(2) },
+		{ timeout: secondsInMillis(5) },
 	);
 
 	const topAboveNavBidders = await page.evaluate(

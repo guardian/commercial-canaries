@@ -87,6 +87,7 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 3 - Prebid', async function () {
 		log('Checking Prebid bundle');
 		await reloadPage(page);
+		await checkCMPIsNotVisible(page);
 		await checkPrebidBundle(page);
 		await checkPrebidBidRequest(page);
 		await checkPbjsPresence(page);
