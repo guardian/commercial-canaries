@@ -102,11 +102,17 @@ const testPage = async function () {
 			'ozone',
 		];
 		await checkBidResponse(page, expectedBidders);
+		await page.screenshot({ path: `/tmp/prebid-${pageType}.png` });
 	});
 
 	await synthetics.executeStep('STEP 4 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
-		await checkTopAdHasLoaded(page, pageType);
+		await clearLocalStorage(page);
+		await clearCookies(page);
+		await reloadPage(page);
+		await checkCMPIsOnPage(page, pageType);
+		await interactWithCMPAus(page);
+		await checkCMPIsNotVisible(page);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);

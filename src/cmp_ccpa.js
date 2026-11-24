@@ -103,10 +103,17 @@ const testPage = async function () {
 			'teads',
 		];
 		await checkBidResponse(page, expectedBidders);
+		await page.screenshot({ path: `/tmp/prebid-${pageType}.png` });
 	});
 
 	await synthetics.executeStep('STEP 4 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
+		await clearLocalStorage(page);
+		await clearCookies(page);
+		await reloadPage(page);
+		await checkCMPIsOnPage(page, pageType);
+		await interactWithCMPCcpa(page);
+		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);

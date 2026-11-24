@@ -114,11 +114,18 @@ const testPage = async function () {
 				...(currentLocation === 'UK' ? ['xhb'] : []),
 			];
 			await checkBidResponse(page, expectedBidders);
+			await page.screenshot({ path: `/tmp/prebid-${pageType}.png` });
 		});
 	}
 
 	await synthetics.executeStep('STEP 4 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
+		await clearLocalStorage(page);
+		await clearCookies(page);
+		await reloadPage(page);
+		await checkCMPIsOnPage(page, pageType);
+		await interactWithCMPTcfv2(page);
+		await checkCMPIsNotVisible(page);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
