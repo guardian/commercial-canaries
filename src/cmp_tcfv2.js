@@ -2,14 +2,6 @@ const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
 	checkTopAdDidNotLoad,
-	checkPrebidBundle,
-	checkPrebidBidRequest,
-	checkPbjsPresence,
-	checkBidResponse,
-	checkPageskinHasLoaded,
-	checkPageskinBackgroundImageHasLoaded,
-	checkPageskinWidthIsConstrained,
-	checkPageskinCollapsesFrontsSlots,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -24,7 +16,18 @@ const {
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
-const { secondsInMillis } = require('./utils/time');
+const {
+	checkPageskinHasLoaded,
+	checkPageskinBackgroundImageHasLoaded,
+	checkPageskinWidthIsConstrained,
+	checkPageskinCollapsesFrontsSlots,
+} = require('./utils/pageskin');
+const {
+	checkPrebidBundle,
+	checkPrebidBidRequest,
+	checkPbjsPresence,
+	checkBidResponse,
+} = require('./utils/prebid');
 
 const testPage = async function () {
 	const url = process.env.url;
@@ -37,6 +40,7 @@ const testPage = async function () {
 
 	log(`Start checking page: ${url}`);
 	const browser = await synthetics.launch();
+
 	// Open a completely fresh, clean context (session)
 	const browserContext = await browser.newContext();
 	const page = await synthetics.newPage(browserContext);
@@ -52,107 +56,74 @@ const testPage = async function () {
 	await synthetics.executeStep('STEP 2 - Check CMP', async function () {
 		log('CMP loads and the ads are NOT displayed on initial load');
 		await reloadPage(page);
-		await page.screenshot({ path: `/tmp/step2-cmp-${pageType}.png` });
-		log('Page loaded');
 		await checkCMPIsOnPage(page, pageType);
 		await checkTopAdDidNotLoad(page);
-	});
+		await page.screenshot({ path: `/tmp/cmp-loads-${pageType}.png` });
 
-	await synthetics.executeStep('STEP 3 - Interact with CMP', async function () {
 		log(
-			'Adverts load and the CMP is NOT displayed following interaction with the CMP',
+			'Checking that the CMP is removed from the DOM and adverts load after interaction',
 		);
 		await interactWithCMPTcfv2(page);
 		await checkCMPIsNotVisible(page);
 		await checkTopAdHasLoaded(page, pageType);
-	});
+		await page.screenshot({ path: `/tmp/cmp-removed-${pageType}.png` });
 
-	await synthetics.executeStep(
-		'STEP 4 - Reload page after CMP interaction',
-		async function () {
-			log(
-				'Adverts load and the CMP is NOT displayed when the page is reloaded',
-			);
-			await reloadPage(page);
-			await page.screenshot({ path: `/tmp/step4-cmp-${pageType}.png` });
-			log('CMP clicked then page reloaded');
-			await checkCMPIsNotVisible(page);
-			await checkTopAdHasLoaded(page, pageType);
-		},
-	);
+		log(
+			'Checking that the CMP is not visible and adverts load when reloading the page',
+		);
+		await reloadPage(page);
+		await checkCMPIsNotVisible(page);
+		await checkTopAdHasLoaded(page, pageType);
+		await page.screenshot({
+			path: `/tmp/cmp-hidden-on-reload-${pageType}.png`,
+		});
+
+		log(
+			'Checking that the CMP banner is displayed again after clearing local storage and cookies',
+		);
+		await clearLocalStorage(page);
+		await clearCookies(page);
+		await reloadPage(page);
+		await checkCMPIsOnPage(page, pageType);
+		await checkTopAdDidNotLoad(page);
+		await page.screenshot({ path: `/tmp/cmp-loads-again-${pageType}.png` });
+		await interactWithCMPTcfv2(page);
+		await checkCMPIsNotVisible(page);
+	});
 
 	const currentLocation = await getCurrentLocation(page);
 	if (currentLocation === 'CA') {
-		log('In Canada we do not run Prebid. Skipping Prebid steps.');
+		log('In Canada we do not run Prebid. Skipping STEP 3 - Prebid.');
 	} else {
-		await synthetics.executeStep(
-			'STEP 5 - Prebid - Load bundle',
-			async function () {
-				await reloadPage(page);
-				await checkPrebidBundle(page);
-			},
-		);
+		await synthetics.executeStep('STEP 3 - Prebid', async function () {
+			await reloadPage(page);
+			await checkPrebidBundle(page);
+			await checkPrebidBidRequest(page);
+			await checkPbjsPresence(page);
 
-		await synthetics.executeStep(
-			'STEP 6 - Prebid - Bid request',
-			async function () {
-				await checkPrebidBidRequest(page);
-			},
-		);
-
-		await synthetics.executeStep(
-			'STEP 7 - Prebid - window.pbjs',
-			async function () {
-				await checkPbjsPresence(page);
-			},
-		);
-
-		await synthetics.executeStep(
-			'STEP 8 - Prebid - Bid response',
-			async function () {
-				const expectedBidders = [
-					'oxd',
-					'and',
-					'pubmatic',
-					'ix',
-					'ozone',
-					'criteo',
-					'ttd',
-					'rubicon',
-					'teads',
-					...(currentLocation === 'UK' ? ['xhb'] : []),
-				];
-				await checkBidResponse(page, expectedBidders);
-			},
-		);
+			const expectedBidders = [
+				'oxd',
+				'and',
+				'pubmatic',
+				'ix',
+				'ozone',
+				'criteo',
+				'ttd',
+				'rubicon',
+				'teads',
+				...(currentLocation === 'UK' ? ['xhb'] : []),
+			];
+			await checkBidResponse(page, expectedBidders);
+		});
 	}
 
-	await synthetics.executeStep(
-		'STEP 9 - Clear cookies and local storage',
-		async function () {
-			await clearLocalStorage(page);
-			await clearCookies(page);
-			await reloadPage(page);
-			await new Promise((r) => setTimeout(r, secondsInMillis(2))); // Wait an extra two seconds after reloading the page
-			await page.screenshot({ path: `/tmp/step9-cmp-${pageType}.png` });
-			log('cookies and local storage cleared then page reloaded');
-			await checkCMPIsOnPage(page, pageType);
-			await checkTopAdDidNotLoad(page);
-		},
-	);
-
-	await synthetics.executeStep('STEP 10 - Pageskin', async function () {
+	await synthetics.executeStep('STEP 4 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
-		await checkCMPIsOnPage(page, pageType);
-		await interactWithCMPTcfv2(page);
-		await new Promise((r) => setTimeout(r, secondsInMillis(2)));
-		await checkCMPIsNotVisible(page);
-		await checkTopAdHasLoaded(page, pageType);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
-		await page.screenshot({ path: `/tmp/step10-pageskin-${pageType}.png` });
+		await page.screenshot({ path: `/tmp/pageskin-${pageType}.png` });
 	});
 };
 
@@ -160,6 +131,7 @@ exports.handler = async () => {
 	try {
 		return await testPage();
 	} finally {
+		// Close all browser contexts and browser
 		await synthetics.close();
 	}
 };

@@ -56,11 +56,7 @@ const interactWithCMPCcpa = async (page) => {
 	const frame = findCmpFrame(page);
 	if (frame) {
 		log(`Clicking on "Continue" on CMP`);
-		const continueButtonSelector = 'button[title="Continue button"]';
-		await frame.waitForSelector(continueButtonSelector, {
-			timeout: secondsInMillis(5),
-		});
-		await frame.click(continueButtonSelector);
+		await frame.getByRole('button', { name: 'Continue' }).click();
 		await waitForConsentDataUpdateInLocalStorage(page, 'usnat');
 	} else {
 		logError('CMP frame not found');
