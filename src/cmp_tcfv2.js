@@ -153,7 +153,6 @@ const testPage = async function () {
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
 		await page.screenshot({ path: `/tmp/step10-pageskin-${pageType}.png` });
-		log('Pageskin loaded');
 	});
 };
 

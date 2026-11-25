@@ -129,13 +129,12 @@ const testPage = async function () {
 
 	await synthetics.executeStep('STEP 9 - Pageskin', async function () {
 		await loadPage(page, pageskinUrl);
-		await checkTopAdDidNotLoad(page);
+		await checkTopAdHasLoaded(page, pageType);
 		await checkPageskinHasLoaded(page);
 		await checkPageskinBackgroundImageHasLoaded(page);
 		await checkPageskinWidthIsConstrained(page);
 		await checkPageskinCollapsesFrontsSlots(page);
 		await page.screenshot({ path: `/tmp/step9-pageskin-${pageType}.png` });
-		log('Pageskin loaded');
 	});
 };
 
