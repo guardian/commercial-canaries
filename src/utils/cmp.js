@@ -38,8 +38,8 @@ const interactWithCMPCcpa = async (page) => {
 			timeout: secondsInMillis(5),
 		});
 		await frame.click(continueButtonSelector);
-    // Wait a short period to ensure the CMP interaction has been processed before continuing
-    await new Promise((r) => setTimeout(r, secondsInMillis(1)));
+		// Wait a short period to ensure the CMP interaction has been processed before continuing
+		await new Promise((r) => setTimeout(r, secondsInMillis(1)));
 	} else {
 		logError('CMP frame not found');
 	}
