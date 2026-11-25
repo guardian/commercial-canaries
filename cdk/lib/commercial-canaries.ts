@@ -38,12 +38,17 @@ export class CommercialCanaries extends GuStack {
 		const accountId = this.account;
 		const s3BucketNameCanary = `cw-syn-canary-${accountId}-${env.region}`;
 		const s3BucketNameResults = `cw-syn-results-${accountId}-${env.region}`;
-		const isTcf = env.region === 'eu-west-1' || env.region === 'ca-central-1';
+		const isTcf =
+			env.region === 'eu-west-1' || env.region === 'ca-central-1';
 
 		const commonCanaryProps: synthetics.CanaryProps = {
 			test: synthetics.Test.custom({
 				code: synthetics.Code.fromBucket(
-					Bucket.fromBucketName(this, 'CanaryS3Bucket', s3BucketNameCanary),
+					Bucket.fromBucketName(
+						this,
+						'CanaryS3Bucket',
+						s3BucketNameCanary,
+					),
 					`${stage.toUpperCase()}/nodejs.zip`,
 				),
 				handler: 'testPage.handler',
