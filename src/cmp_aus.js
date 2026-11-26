@@ -4,7 +4,7 @@ const {
 	checkPrebidBundle,
 	checkPrebidBidRequest,
 	checkPbjsPresence,
-	checkBidResponse,
+	checkPrebidBidResponse,
 	checkPageskinHasLoaded,
 	checkPageskinBackgroundImageHasLoaded,
 	checkPageskinWidthIsConstrained,
@@ -123,7 +123,7 @@ const testPage = async function () {
 				'teads',
 				'ozone',
 			];
-			await checkBidResponse(page, expectedBidders);
+			await checkPrebidBidResponse(page, expectedBidders);
 		},
 	);
 

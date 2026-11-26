@@ -5,7 +5,7 @@ const {
 	checkPrebidBundle,
 	checkPrebidBidRequest,
 	checkPbjsPresence,
-	checkBidResponse,
+	checkPrebidBidResponse,
 	checkPageskinHasLoaded,
 	checkPageskinBackgroundImageHasLoaded,
 	checkPageskinWidthIsConstrained,
@@ -122,7 +122,7 @@ const testPage = async function () {
 					'teads',
 					...(currentLocation === 'UK' ? ['xhb'] : []),
 				];
-				await checkBidResponse(page, expectedBidders);
+				await checkPrebidBidResponse(page, expectedBidders);
 			},
 		);
 	}
