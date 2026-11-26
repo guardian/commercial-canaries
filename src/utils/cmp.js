@@ -13,6 +13,29 @@ const findCmpFrame = (page) => {
 	});
 };
 
+/**
+ * Waits for localstorage item to be updated following CMP interaction.
+ * If the page is reloaded before localStorage is updated, the CMP may show again.
+ */
+const waitForConsentDataUpdateInLocalStorage = async (page, consentValueObject) => {
+	await page.waitForFunction(
+		(consentValueObject) => {
+			// eslint-disable-next-line no-undef -- window object exists in the browser only
+			const consentKey = Object.keys(window.localStorage).filter((key) =>
+				key.includes('_sp_user_consent_'),
+			)[0];
+
+			return (
+				// eslint-disable-next-line no-undef -- window object exists in the browser only
+				JSON.parse(window.localStorage.getItem(consentKey))[consentValueObject]
+					.consentStatus.hasConsentData === true
+			);
+		},
+		consentValueObject,
+		{ timeout: 5000 },
+	);
+};
+
 const interactWithCMPTcfv2 = async (page) => {
 	const frame = findCmpFrame(page);
 	if (frame) {
@@ -22,8 +45,8 @@ const interactWithCMPTcfv2 = async (page) => {
 		await frame.waitForSelector(acceptAllButtonSelector, {
 			timeout: secondsInMillis(5),
 		});
-		// Accept cookies
 		await frame.click(acceptAllButtonSelector);
+		await waitForConsentDataUpdateInLocalStorage(page, 'gdpr');
 	} else {
 		logError('CMP frame not found');
 	}
@@ -38,8 +61,7 @@ const interactWithCMPCcpa = async (page) => {
 			timeout: secondsInMillis(5),
 		});
 		await frame.click(continueButtonSelector);
-		// Wait a short period to ensure the CMP interaction has been processed before continuing
-		await new Promise((r) => setTimeout(r, secondsInMillis(1)));
+		await waitForConsentDataUpdateInLocalStorage(page, 'usnat');
 	} else {
 		logError('CMP frame not found');
 	}
@@ -54,6 +76,7 @@ const interactWithCMPAus = async (page) => {
 			timeout: secondsInMillis(5),
 		});
 		await frame.click(continueButtonSelector);
+		await waitForConsentDataUpdateInLocalStorage(page, 'globalcmp');
 	} else {
 		logError('CMP frame not found');
 	}
