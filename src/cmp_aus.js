@@ -1,14 +1,6 @@
 const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
-	checkPrebidBundle,
-	checkPrebidBidRequest,
-	checkPbjsPresence,
-	checkBidResponse,
-	checkPageskinHasLoaded,
-	checkPageskinBackgroundImageHasLoaded,
-	checkPageskinWidthIsConstrained,
-	checkPageskinCollapsesFrontsSlots,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -22,6 +14,18 @@ const {
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
+const {
+	checkPageskinHasLoaded,
+	checkPageskinBackgroundImageHasLoaded,
+	checkPageskinWidthIsConstrained,
+	checkPageskinCollapsesFrontsSlots,
+} = require('./utils/pageskin');
+const {
+	checkPrebidBundle,
+	checkPrebidBidRequest,
+	checkPbjsPresence,
+	checkPrebidBidResponse,
+} = require('./utils/prebid');
 const { secondsInMillis } = require('./utils/time');
 
 const testPage = async function () {
@@ -123,7 +127,7 @@ const testPage = async function () {
 				'teads',
 				'ozone',
 			];
-			await checkBidResponse(page, expectedBidders);
+			await checkPrebidBidResponse(page, expectedBidders);
 		},
 	);
 

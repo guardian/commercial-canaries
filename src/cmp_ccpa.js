@@ -2,14 +2,6 @@ const { synthetics } = require('@aws/synthetics-playwright');
 const {
 	checkTopAdHasLoaded,
 	checkTopAdDidNotLoad,
-	checkPrebidBundle,
-	checkPrebidBidRequest,
-	checkPbjsPresence,
-	checkBidResponse,
-	checkPageskinHasLoaded,
-	checkPageskinBackgroundImageHasLoaded,
-	checkPageskinWidthIsConstrained,
-	checkPageskinCollapsesFrontsSlots,
 } = require('./utils/adverts');
 const {
 	checkCMPIsOnPage,
@@ -23,6 +15,18 @@ const {
 	loadPage,
 	reloadPage,
 } = require('./utils/page');
+const {
+	checkPageskinHasLoaded,
+	checkPageskinBackgroundImageHasLoaded,
+	checkPageskinWidthIsConstrained,
+	checkPageskinCollapsesFrontsSlots,
+} = require('./utils/pageskin');
+const {
+	checkPrebidBundle,
+	checkPrebidBidRequest,
+	checkPbjsPresence,
+	checkPrebidBidResponse,
+} = require('./utils/prebid');
 
 const testPage = async function () {
 	const url = process.env.url;
@@ -123,7 +127,7 @@ const testPage = async function () {
 				'triplelift',
 				'teads',
 			];
-			await checkBidResponse(page, expectedBidders);
+			await checkPrebidBidResponse(page, expectedBidders);
 		},
 	);
 
